@@ -23,31 +23,6 @@
 </head>
 <body>
 
-  <!-- Demo Switcher Bar (Existing Project Utility) -->
-  <aside class="demo-bar" aria-label="Demo Role Switcher" style="background: #0f172a; color: #94a3b8; padding: 0.45rem 1rem; font-size: 0.775rem; border-bottom: 1px solid #1e293b; position: relative; z-index: 1050;">
-    <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap gap-2">
-      <div class="d-flex align-items-center gap-2">
-        <span class="badge bg-primary text-white" style="font-size: 0.68rem; letter-spacing: 0.03em;">PROJECT DEMO</span>
-        <span class="d-none d-sm-inline">Switch View:</span>
-        <div class="btn-group btn-group-sm">
-          <a href="index.html" class="demo-role-btn" style="background: transparent; border: 1px solid #334155; color: #cbd5e1; padding: 0.2rem 0.65rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600; text-decoration: none;">
-            <i class="bi bi-compass"></i> Guest (Scroll Journey)
-          </a>
-          <button type="button" class="demo-role-btn" onclick="directLogin('employee')" style="background: transparent; border: 1px solid #334155; color: #cbd5e1; padding: 0.2rem 0.65rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600;">
-            <i class="bi bi-person-badge"></i> Employee (Sarah)
-          </button>
-          <button type="button" class="demo-role-btn" onclick="directLogin('hr')" style="background: transparent; border: 1px solid #334155; color: #cbd5e1; padding: 0.2rem 0.65rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600;">
-            <i class="bi bi-shield-lock"></i> HR Admin (Alex)
-          </button>
-        </div>
-      </div>
-      <div class="d-none d-md-flex align-items-center gap-3 text-muted">
-        <span><i class="bi bi-shield-check text-primary"></i> Confidentiality Active</span>
-        <span><i class="bi bi-eye-slash text-success"></i> Privacy Mode Enabled</span>
-      </div>
-    </div>
-  </aside>
-
   <!-- ========================================================================
        LOGIN PAGE SCOPED WRAPPER (.login-page)
        ======================================================================== -->
@@ -379,19 +354,6 @@
               <span>Sign In to Portal</span> <i class="bi bi-arrow-right" aria-hidden="true"></i>
             </button>
           </form>
-
-          <!-- Fast-Fill Demo Roles Tray -->
-          <div class="quick-test-tray">
-            <div class="quick-test-tray-title"><i class="bi bi-lightning-charge-fill text-warning"></i> Fast-Fill Demo Roles</div>
-            <div class="d-flex justify-content-center gap-2 flex-wrap">
-              <button type="button" class="quick-btn-pill" onclick="quickFill('employee')">
-                <i class="bi bi-person-fill text-primary"></i> Sarah (Employee)
-              </button>
-              <button type="button" class="quick-btn-pill" onclick="quickFill('hr')">
-                <i class="bi bi-shield-fill text-danger"></i> Alex (HR Admin)
-              </button>
-            </div>
-          </div>
 
           <!-- HR Security Governance Information Callout -->
           <div class="security-callout-box">

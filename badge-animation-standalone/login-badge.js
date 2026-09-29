@@ -562,21 +562,6 @@
     emailInput.addEventListener('change', updateBadgeNameFromEmail);
   }
 
-  // Fast-Fill Buttons Sync: re-sync from email field on next tick (setTimeout 0)
-  const fastFillButtons = document.querySelectorAll('.quick-btn-pill');
-  fastFillButtons.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      setTimeout(updateBadgeNameFromEmail, 0);
-    });
-  });
-
-  // Delegated click fallback for fast-fill buttons
-  document.addEventListener('click', (e) => {
-    if (e.target && e.target.closest && e.target.closest('.quick-btn-pill')) {
-      setTimeout(updateBadgeNameFromEmail, 0);
-    }
-  });
-
   // ==========================================================================
   // PASSWORD FOCUS & FLIP STATE MANAGEMENT (PROTECTED FLIP)
   // Uses focusin / focusout on password group (input + toggle button)
