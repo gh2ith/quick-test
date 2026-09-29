@@ -213,12 +213,37 @@
   // POINTER INTERACTIONS (Tilt, Glare, Velocity Impulse, and Drag)
   // ==========================================================================
   function onPointerMove(e) {
-    if (prefersReducedMotion.matches || !finePointer.matches) return;
+    if (prefersReducedMotion.matches) return;
+    if (e.pointerType === 'touch') return; // Fine pointer / mouse / pen only
 
     const rect = badgePanel.getBoundingClientRect();
     const isInside = (e.clientX >= rect.left && e.clientX <= rect.right &&
                       e.clientY >= rect.top && e.clientY <= rect.bottom);
-    isPointerOverPanel = isInside;
+
+    const nowTime = e.timeStamp || performance.now();
+
+    // 1. Detect Entry into Panel (NO ENTRY KICK)
+    if (isInside && !isPointerOverPanel) {
+      isPointerOverPanel = true;
+      lastPointerX = e.clientX;
+      lastPointerY = e.clientY;
+      lastPointerTime = nowTime;
+      smoothedVx = 0;
+      velocity = 0; // Zero velocity on entry
+      isFirstSample = true; // Apply NO impulse from that first sample
+      return;
+    }
+
+    // 2. Detect Leave from Panel (EASE TILT TO 0, ZERO VELOCITY)
+    if (!isInside && isPointerOverPanel) {
+      isPointerOverPanel = false;
+      velocity = 0; // Zero velocity on leave
+      targetTiltX = 0; // Tilt target eases back to 0
+      targetTiltY = 0;
+      smoothedVx = 0;
+      startPhysicsLoop();
+      return;
+    }
 
     if (!isInside && !isDragging) {
       targetTiltX = 0;
@@ -226,12 +251,13 @@
       return;
     }
 
-    const nowTime = e.timeStamp || performance.now();
+    // 3. Velocity Computation
     const dtMs = Math.max(8, nowTime - lastPointerTime); // dt clamped to >= 8ms
     const dtSec = dtMs / 1000;
     const rawVx = (e.clientX - lastPointerX) / dtSec;
 
     lastPointerX = e.clientX;
+    lastPointerY = e.clientY;
     lastPointerTime = nowTime;
 
     if (isFirstSample) {
@@ -286,50 +312,52 @@
 
   // Pointer Enter & Leave Listeners (No entry kick; zero velocity and ease tilt on leave)
   badgePanel.addEventListener('pointerenter', (e) => {
+    if (e.pointerType === 'touch') return;
     isPointerOverPanel = true;
     lastPointerX = e.clientX;
+    lastPointerY = e.clientY;
     lastPointerTime = e.timeStamp || performance.now();
     smoothedVx = 0;
     velocity = 0; // Zero velocity on entry
     isFirstSample = true; // Apply NO impulse from that first sample
   });
 
-  badgePanel.addEventListener('pointerleave', () => {
+  badgePanel.addEventListener('pointerleave', (e) => {
+    if (e.pointerType === 'touch') return;
     isPointerOverPanel = false;
     velocity = 0; // Zero velocity on leave
     targetTiltX = 0; // Tilt target eases back to 0
     targetTiltY = 0;
+    smoothedVx = 0;
     startPhysicsLoop();
   });
 
   // Drag Listeners (Fine Pointer Only)
-  if (finePointer.matches) {
-    badgeAssembly.addEventListener('pointerdown', (e) => {
-      if (e.button !== 0 || prefersReducedMotion.matches) return; // Primary click only
-      isDragging = true;
-      try {
-        badgeAssembly.setPointerCapture(e.pointerId);
-      } catch (_) {}
-      startPhysicsLoop();
-    });
+  badgeAssembly.addEventListener('pointerdown', (e) => {
+    if (e.button !== 0 || prefersReducedMotion.matches || e.pointerType === 'touch') return; // Primary click only
+    isDragging = true;
+    try {
+      badgeAssembly.setPointerCapture(e.pointerId);
+    } catch (_) {}
+    startPhysicsLoop();
+  });
 
-    badgeAssembly.addEventListener('pointerup', (e) => {
-      if (!isDragging) return;
-      isDragging = false;
-      try {
-        badgeAssembly.releasePointerCapture(e.pointerId);
-      } catch (_) {}
-      // Release impulse from drag velocity (capped at ±30 deg/s)
-      const releaseImpulse = Math.max(-30, Math.min(30, smoothedVx * 0.035));
-      velocity = releaseImpulse;
-      startPhysicsLoop();
-    });
+  badgeAssembly.addEventListener('pointerup', (e) => {
+    if (!isDragging) return;
+    isDragging = false;
+    try {
+      badgeAssembly.releasePointerCapture(e.pointerId);
+    } catch (_) {}
+    // Release impulse from drag velocity (capped at ±30 deg/s)
+    const releaseImpulse = Math.max(-30, Math.min(30, smoothedVx * 0.035));
+    velocity = releaseImpulse;
+    startPhysicsLoop();
+  });
 
-    badgeAssembly.addEventListener('pointercancel', () => {
-      isDragging = false;
-      startPhysicsLoop();
-    });
-  }
+  badgeAssembly.addEventListener('pointercancel', () => {
+    isDragging = false;
+    startPhysicsLoop();
+  });
 
   window.addEventListener('pointermove', onPointerMove, { passive: true });
 
