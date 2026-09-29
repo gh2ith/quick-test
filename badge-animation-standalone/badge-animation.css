@@ -1,0 +1,893 @@
+/**
+ * ============================================================================
+ * PHYSICS EMPLOYEE ID BADGE — STANDALONE STYLESHEET
+ * ============================================================================
+ * This stylesheet contains all presentation and animation rules for:
+ * 1. Transform layering (Physics -> Tilt -> Idle Sway -> 3D Flip -> Faces)
+ * 2. SVG lanyard & metal swivel clip
+ * 3. Dynamic elliptical shadow & specular lighting sheen
+ * 4. Drop-in entrance & fast front content stagger
+ * 5. Dynamic name typing & initials pop keyframes
+ * 6. Back face 3D flip, barcode & animated padlock (shackle lift & amber ring pulse)
+ * 7. Error edge glow & diagonal loading sweep
+ * 8. Playground control panel & live telemetry display
+ * ============================================================================
+ */
+
+:root {
+  --primary-blue: #2563eb;
+  --primary-blue-dark: #1d4ed8;
+  --primary-blue-light: #60a5fa;
+  --navy-deep: #0f172a;
+  --navy-panel: #090d16;
+  --navy-surface: #1e293b;
+  --border-glass: rgba(255, 255, 255, 0.1);
+  --border-glass-strong: rgba(255, 255, 255, 0.2);
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-flip: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* ==========================================================================
+   1. GLOBAL & SANDBOX LAYOUT
+   ========================================================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--navy-panel);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  background-image: 
+    radial-gradient(circle at 20% 30%, rgba(37, 99, 235, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(30, 58, 138, 0.12) 0%, transparent 50%);
+}
+
+/* Sandbox Header */
+.sandbox-header {
+  padding: 1.25rem 2rem;
+  border-bottom: 1px solid var(--border-glass);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.sandbox-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.sandbox-logo {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+  font-size: 1.1rem;
+}
+
+.sandbox-title-wrap h1 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.sandbox-title-wrap p {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.sandbox-badge {
+  background: rgba(37, 99, 235, 0.2);
+  color: var(--primary-blue-light);
+  border: 1px solid rgba(37, 99, 235, 0.4);
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+/* Main Two-Column Playground Container */
+.sandbox-container {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  min-height: calc(100vh - 75px);
+}
+
+@media (max-width: 960px) {
+  .sandbox-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   2. BADGE VISUAL STAGE & BACKGROUND
+   ========================================================================== */
+.badge-stage-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 2rem;
+  overflow: hidden;
+  user-select: none;
+  background: radial-gradient(circle at 50% 30%, rgba(37, 99, 235, 0.08) 0%, transparent 70%);
+}
+
+/* Floating Decorative Cards (Float ±4px over 7s, parallax opposite mouse) */
+.deco-card {
+  position: absolute;
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-glass);
+  border-radius: 12px;
+  padding: 0.65rem 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: #e2e8f0;
+  z-index: 1;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.deco-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: rgba(37, 99, 235, 0.25);
+  color: #93c5fd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+}
+
+.deco-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.deco-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #f8fafc;
+}
+
+.deco-desc {
+  font-size: 0.625rem;
+  color: var(--text-muted);
+}
+
+@keyframes lbDecoFloat {
+  0%, 100% {
+    transform: translate(var(--p-x, 0px), calc(var(--p-y, 0px) - 4px));
+  }
+  50% {
+    transform: translate(var(--p-x, 0px), calc(var(--p-y, 0px) + 4px));
+  }
+}
+
+.deco-1 { top: 12%; left: 8%; animation: lbDecoFloat 7s ease-in-out infinite; animation-delay: 0s; }
+.deco-2 { top: 16%; right: 8%; animation: lbDecoFloat 7s ease-in-out infinite; animation-delay: -1.75s; }
+.deco-3 { bottom: 12%; left: 7%; animation: lbDecoFloat 7s ease-in-out infinite; animation-delay: -3.5s; }
+.deco-4 { bottom: 16%; right: 9%; animation: lbDecoFloat 7s ease-in-out infinite; animation-delay: -5.25s; }
+
+/* Stage Center Wrap */
+.badge-stage {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  height: 520px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 1rem;
+  z-index: 4;
+}
+
+/* ==========================================================================
+   3. SVG LANYARD BAND & METAL SWIVEL CLIP
+   ========================================================================== */
+.lanyard-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 140px;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 5;
+}
+
+/* Dynamic Soft Elliptical Shadow Behind/Under Badge */
+.badge-shadow {
+  position: absolute;
+  top: 450px;
+  width: 170px;
+  height: 24px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.25) 55%, transparent 75%);
+  pointer-events: none;
+  z-index: 2;
+  filter: blur(6px);
+  opacity: 0.7;
+  transform-origin: 50% 50%;
+  transition: opacity 180ms ease, filter 180ms ease;
+  will-change: transform, opacity;
+}
+
+.badge-assembly:hover:not(.is-dragging) ~ .badge-shadow {
+  opacity: 0.9;
+  filter: blur(8px);
+}
+
+.badge-assembly.is-dragging ~ .badge-shadow {
+  opacity: 0.95;
+  filter: blur(10px);
+}
+
+/* ==========================================================================
+   4. TRANSFORM LAYERING ARCHITECTURE
+   ==========================================================================
+   Layer 1: .badge-assembly  -> Physics swing (rotate), drop-in, will-change: transform
+   Layer 2: .badge-tilt      -> 3D cursor tilt (rotateX/rotateY), scale on hover/drag
+   Layer 3: .badge-idle-sway -> Pure CSS keyframe sway (±0.8deg, 6s, 0% CPU at rest)
+   Layer 4: .badge-card      -> 3D card flip on password focus (rotateY 180deg)
+   Layer 5: Front/Back faces -> backface-visibility: hidden
+   ========================================================================== */
+
+/* Layer 1: Physics Assembly Wrapper */
+.badge-assembly {
+  position: relative;
+  margin-top: 100px;
+  transform-origin: 50% 0px; /* Swings from top clip pivot */
+  will-change: transform;
+  perspective: 1200px;
+  cursor: grab;
+  touch-action: none;
+  z-index: 6;
+}
+
+.badge-assembly.is-dragging {
+  cursor: grabbing;
+}
+
+/* Drop-In Entrance: translateY -110% -> 2% -> -1% -> 0 */
+@keyframes lbBadgeDropIn {
+  0%   { transform: translateY(-110%); }
+  65%  { transform: translateY(2%); }
+  85%  { transform: translateY(-1%); }
+  100% { transform: translateY(0); }
+}
+
+.badge-assembly.is-dropping {
+  animation: lbBadgeDropIn 1000ms var(--ease-spring) forwards;
+}
+
+/* Layer 2: Tilt Wrapper */
+.badge-tilt {
+  transform-origin: 50% 50%;
+  transform-style: preserve-3d;
+  transition: transform 180ms ease;
+}
+
+.badge-assembly:hover:not(.is-dragging) .badge-tilt {
+  transform: scale(1.02);
+}
+
+.badge-assembly.is-dragging .badge-tilt {
+  transform: scale(1.03);
+}
+
+/* Layer 3: Idle Sway Wrapper (Continuous CSS keyframe sway) */
+@keyframes lbIdleSway {
+  0%, 100% { transform: rotate(-0.8deg); }
+  50%      { transform: rotate(0.8deg); }
+}
+
+.badge-idle-sway {
+  transform-origin: 50% 0px;
+  transform-style: preserve-3d;
+  animation: lbIdleSway 6s ease-in-out infinite;
+}
+
+.badge-assembly.is-dragging .badge-idle-sway {
+  animation-play-state: paused;
+}
+
+/* Layer 4: Flip Element (Existing #badgeCard behavior) */
+.badge-card {
+  position: relative;
+  width: 220px;
+  height: 330px;
+  border-radius: 18px;
+  transform-style: preserve-3d;
+  transition: transform 0.55s var(--ease-flip);
+  box-shadow: 
+    0 16px 36px -8px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.12),
+    inset 0 1px 1px rgba(255, 255, 255, 0.25);
+}
+
+.badge-card.is-flipped {
+  transform: rotateY(180deg);
+}
+
+/* Layer 5: Card Faces */
+.badge-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   5. LIGHTING, SHEEN & VISUAL DEPTH
+   ========================================================================== */
+/* Dynamic Specular Sheen (Fades in on pointer enter, positions via --gx/--gy) */
+.badge-sheen {
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at var(--gx, 50%) var(--gy, 50%),
+    rgba(255, 255, 255, 0.45) 0%,
+    rgba(255, 255, 255, 0.12) 35%,
+    transparent 65%
+  );
+  opacity: 0;
+  mix-blend-mode: overlay;
+  transition: opacity 240ms ease;
+  z-index: 10;
+}
+
+.badge-stage-panel.is-pointer-inside .badge-sheen {
+  opacity: 0.25;
+}
+
+/* Subtle Static 3D Glare Angle */
+.badge-glare {
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.22) 0%, transparent 45%, rgba(0, 0, 0, 0.35) 100%);
+  z-index: 9;
+}
+
+/* Red Edge Error Glow Overlay */
+.badge-error-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  border: 2px solid #ef4444;
+  box-shadow: inset 0 0 16px rgba(239, 68, 68, 0.45);
+  pointer-events: none;
+  opacity: 0;
+  z-index: 11;
+}
+
+@keyframes lbErrorEdgeGlow {
+  0%   { opacity: 0; }
+  35%  { opacity: 0.7; }
+  100% { opacity: 0; }
+}
+
+.badge-error-overlay.is-active {
+  animation: lbErrorEdgeGlow 600ms ease-out forwards;
+}
+
+/* Diagonal Loading Sweep */
+.badge-sweep {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.25) 50%,
+    transparent 60%
+  );
+  opacity: 0;
+  transform: translate(-80%, -80%);
+  z-index: 12;
+}
+
+.badge-card.is-pending .badge-sweep {
+  animation: lbDiagonalSweep 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes lbDiagonalSweep {
+  0%   { transform: translate(-80%, -80%); opacity: 0; }
+  25%  { opacity: 0.85; }
+  75%  { opacity: 0.85; }
+  100% { transform: translate(80%, 80%); opacity: 0; }
+}
+
+/* ==========================================================================
+   6. BADGE FRONT FACE STYLING & STAGGER REVEAL
+   ========================================================================== */
+.badge-front {
+  background: linear-gradient(165deg, #1e293b 0%, #0f172a 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 1.2rem 1.1rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Top Slot Punch-out */
+.badge-slot {
+  width: 44px;
+  height: 7px;
+  border-radius: 9999px;
+  background: #090d16;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.8);
+  margin-bottom: 0.4rem;
+}
+
+/* Brand Wordmark */
+.card-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+}
+
+/* Avatar Circle & Initials */
+.avatar-wrap {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  border: 3px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.avatar-initials {
+  font-size: 1.45rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+  display: inline-block;
+}
+
+/* Live Dynamic Name & Role */
+.name-line {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #f8fafc;
+  text-align: center;
+  max-width: 190px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.role-line {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: #94a3b8;
+  text-align: center;
+  margin-top: -0.3rem;
+}
+
+/* Decorative Security Chip & ID */
+.front-details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.4rem 0.6rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  font-size: 0.68rem;
+  color: #94a3b8;
+}
+
+.front-chip {
+  width: 22px;
+  height: 16px;
+  background: linear-gradient(135deg, #d97706, #fbbf24);
+  border-radius: 3px;
+  border: 1px solid #b45309;
+}
+
+/* Brand Accent Stripe */
+.front-stripe {
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #2563eb 0%, #60a5fa 100%);
+  border-radius: 9999px;
+  margin-top: 0.2rem;
+}
+
+/* Stagger Entrance on Drop-in Landing */
+.stagger-item {
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.2s var(--ease-spring), transform 0.2s var(--ease-spring);
+}
+
+.badge-card.is-landed .stagger-item {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stagger-1 { transition-delay: 0ms; }
+.stagger-2 { transition-delay: 25ms; }
+.stagger-3 { transition-delay: 50ms; }
+.stagger-4 { transition-delay: 75ms; }
+.stagger-5 { transition-delay: 100ms; }
+
+/* Name Typing & Initials Pop Micro-Animations */
+@keyframes lbNameTyping {
+  0%   { opacity: 0.4; transform: translateY(3px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes lbInitialsPop {
+  0%   { transform: scale(0.9); }
+  70%  { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
+
+.name-line.is-typing {
+  animation: lbNameTyping 160ms var(--ease-spring);
+}
+
+.avatar-initials.is-typing {
+  animation: lbInitialsPop 160ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ==========================================================================
+   7. BADGE BACK FACE & INTERACTIVE PADLOCK
+   ========================================================================== */
+.badge-back {
+  background: linear-gradient(165deg, #090d16 0%, #1e293b 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transform: rotateY(180deg);
+  padding: 1.2rem 1.1rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.back-tag {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #fbbf24;
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  padding: 0.2rem 0.55rem;
+  border-radius: 9999px;
+}
+
+/* Padlock Center Stage */
+.padlock-stage {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0.4rem 0;
+}
+
+.padlock-svg {
+  width: 70px;
+  height: 70px;
+  overflow: visible;
+  position: relative;
+  z-index: 2;
+}
+
+/* Padlock Shackle Lift Animation (translateY -3px, rotate -18deg) */
+#padlockShackle {
+  transform-origin: 22px 28px;
+  transition: transform 320ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.badge-card.is-unlocked #padlockShackle {
+  transform: translateY(-3px) rotate(-18deg);
+}
+
+/* Padlock Body Snap on Close */
+#padlockBody {
+  transform-origin: 35px 44px;
+}
+
+@keyframes lbBodySnap {
+  0%   { transform: scale(0.96); }
+  100% { transform: scale(1); }
+}
+
+.badge-card.snap-close #padlockBody {
+  animation: lbBodySnap 200ms ease-out;
+}
+
+/* Single Amber Ring Pulse on Unlock */
+.padlock-pulse-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 76px;
+  height: 76px;
+  margin-top: -38px;
+  margin-left: -38px;
+  border-radius: 50%;
+  border: 2px solid #f59e0b;
+  opacity: 0;
+  pointer-events: none;
+  transform-origin: 50% 50%;
+  z-index: 1;
+}
+
+@keyframes lbAmberPulse {
+  0%   { transform: scale(1); opacity: 0; }
+  25%  { opacity: 0.65; }
+  100% { transform: scale(1.35); opacity: 0; }
+}
+
+.badge-card.is-unlocked .padlock-pulse-ring {
+  animation: lbAmberPulse 500ms ease-out forwards;
+}
+
+.back-titles {
+  text-align: center;
+}
+
+.back-title {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #e2e8f0;
+  letter-spacing: 0.05em;
+}
+
+.back-desc {
+  font-size: 0.625rem;
+  color: var(--text-muted);
+  max-width: 170px;
+  line-height: 1.3;
+  margin-top: 0.2rem;
+}
+
+.barcode-wrap {
+  width: 100%;
+  padding-top: 0.4rem;
+  border-top: 1px dashed rgba(255, 255, 255, 0.12);
+  display: flex;
+  justify-content: center;
+}
+
+/* ==========================================================================
+   8. DEVELOPER PLAYGROUND CONTROL PANEL
+   ========================================================================== */
+.sandbox-controls {
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(16px);
+  border-left: 1px solid var(--border-glass);
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  overflow-y: auto;
+}
+
+.control-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.section-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--primary-blue-light);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.form-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #cbd5e1;
+}
+
+.form-hint {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+}
+
+.input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.sandbox-input {
+  width: 100%;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid var(--border-glass-strong);
+  border-radius: 8px;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.85rem;
+  color: #f8fafc;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.sandbox-input:focus {
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
+}
+
+.icon-toggle-btn {
+  position: absolute;
+  right: 8px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0.35rem;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  transition: color 150ms ease;
+}
+
+.icon-toggle-btn:hover {
+  color: #ffffff;
+}
+
+/* Action Buttons Grid */
+.button-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.sandbox-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-glass);
+  color: #f8fafc;
+  padding: 0.65rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  transition: background 180ms ease, border-color 180ms ease, transform 120ms ease;
+}
+
+.sandbox-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+.sandbox-btn:active {
+  transform: scale(0.98);
+}
+
+.sandbox-btn.btn-primary {
+  background: var(--primary-blue);
+  border-color: var(--primary-blue-dark);
+}
+
+.sandbox-btn.btn-primary:hover {
+  background: var(--primary-blue-light);
+}
+
+.sandbox-btn.btn-danger {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #fca5a5;
+}
+
+.sandbox-btn.btn-danger:hover {
+  background: rgba(239, 68, 68, 0.3);
+}
+
+/* Telemetry Box */
+.telemetry-card {
+  background: rgba(10, 15, 26, 0.8);
+  border: 1px solid var(--border-glass);
+  border-radius: 8px;
+  padding: 0.75rem;
+  font-family: monospace;
+  font-size: 0.72rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  color: #38bdf8;
+}
+
+.telemetry-row {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 0.25rem;
+}
+
+.telemetry-label {
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   9. ACCESSIBILITY & REDUCED MOTION
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .badge-idle-sway,
+  .deco-card,
+  .badge-assembly.is-dropping,
+  .badge-card.is-pending .badge-sweep {
+    animation: none !important;
+  }
+
+  .badge-card,
+  .badge-tilt,
+  .stagger-item,
+  #padlockShackle {
+    transition: opacity 150ms ease !important;
+    transform: none !important;
+  }
+
+  .stagger-item {
+    opacity: 1 !important;
+  }
+}

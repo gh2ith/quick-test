@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Physics Employee ID Badge — Standalone Animation</title>
+  
+  <!-- Modern Clean Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  
+  <!-- Bootstrap Icons CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.css" />
+  
+  <!-- Standalone Animation Stylesheet -->
+  <link rel="stylesheet" href="badge-animation.css" />
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header class="sandbox-header">
+    <div class="sandbox-brand">
+      <div class="sandbox-logo">
+        <i class="bi bi-shield-lock-fill"></i>
+      </div>
+      <div class="sandbox-title-wrap">
+        <h1>Physics Employee ID Badge</h1>
+        <p>Standalone Animation Engine & Interactive Training Sandbox</p>
+      </div>
+    </div>
+    <span class="sandbox-badge">Junior Training Edition • Zero Auth / Pure Animation</span>
+  </header>
+
+  <!-- Two-Column Playground -->
+  <main class="sandbox-container">
+
+    <!-- LEFT COLUMN: The Interactive Badge Stage -->
+    <section class="badge-stage-panel" id="badgeStagePanel" aria-label="Interactive Badge Stage">
+      
+      <!-- Faint Decorative Floating Cards (Parallax + Idle Float) -->
+      <div class="deco-card deco-1" aria-hidden="true">
+        <div class="deco-icon"><i class="bi bi-diagram-3"></i></div>
+        <div class="deco-text">
+          <span class="deco-title">Org Directory</span>
+          <span class="deco-desc">Workforce Structure</span>
+        </div>
+      </div>
+
+      <div class="deco-card deco-2" aria-hidden="true">
+        <div class="deco-icon"><i class="bi bi-shield-check"></i></div>
+        <div class="deco-text">
+          <span class="deco-title">Role Permissions</span>
+          <span class="deco-desc">Access Governed</span>
+        </div>
+      </div>
+
+      <div class="deco-card deco-3" aria-hidden="true">
+        <div class="deco-icon"><i class="bi bi-check2-circle"></i></div>
+        <div class="deco-text">
+          <span class="deco-title">Identity Provisioning</span>
+          <span class="deco-desc">Token Verified</span>
+        </div>
+      </div>
+
+      <div class="deco-card deco-4" aria-hidden="true">
+        <div class="deco-icon"><i class="bi bi-calendar2-check"></i></div>
+        <div class="deco-text">
+          <span class="deco-title">Shift Status</span>
+          <span class="deco-desc">Active Roster</span>
+        </div>
+      </div>
+
+      <!-- Stage Center -->
+      <div class="badge-stage">
+
+        <!-- Dynamic SVG Lanyard Band & Metal Swivel Clip -->
+        <svg class="lanyard-svg" viewBox="0 0 400 130" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <!-- Blue Ribbon Gradient -->
+            <linearGradient id="lanyardBandGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#1e3a8a" />
+              <stop offset="50%" stop-color="#2563eb" />
+              <stop offset="100%" stop-color="#1d4ed8" />
+            </linearGradient>
+
+            <!-- Metal Swivel Clip Gradient -->
+            <linearGradient id="metalClipGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#f8fafc" />
+              <stop offset="50%" stop-color="#cbd5e1" />
+              <stop offset="100%" stop-color="#94a3b8" />
+            </linearGradient>
+          </defs>
+
+          <!-- Left Strap with Center White Stitch Line -->
+          <path id="lanyardLeftStrap" d="M 152 0 Q 176 52 196 98" stroke="url(#lanyardBandGrad)" stroke-width="14" stroke-linecap="round" fill="none" />
+          <path d="M 152 0 Q 176 52 196 98" stroke="rgba(255, 255, 255, 0.4)" stroke-width="1.5" stroke-dasharray="3 3" fill="none" />
+
+          <!-- Right Strap with Center White Stitch Line -->
+          <path id="lanyardRightStrap" d="M 248 0 Q 224 52 204 98" stroke="url(#lanyardBandGrad)" stroke-width="14" stroke-linecap="round" fill="none" />
+          <path d="M 248 0 Q 224 52 204 98" stroke="rgba(255, 255, 255, 0.4)" stroke-width="1.5" stroke-dasharray="3 3" fill="none" />
+
+          <!-- Metal Swivel Clip Assembly -->
+          <g id="lanyardClip" transform="translate(200, 98)">
+            <!-- Swivel Ring -->
+            <ellipse cx="0" cy="0" rx="9" ry="6" fill="none" stroke="url(#metalClipGrad)" stroke-width="3" />
+            <!-- Metal Bracket -->
+            <rect x="-7" y="5" width="14" height="12" rx="2" fill="url(#metalClipGrad)" stroke="#64748b" stroke-width="0.8" />
+            <rect x="-4" y="10" width="8" height="2" rx="1" fill="#475569" />
+            <!-- Metal Hook / Catch Slot -->
+            <path d="M -5 17 L -5 27 C -5 30, 5 30, 5 27 L 5 17 Z" fill="url(#metalClipGrad)" stroke="#64748b" stroke-width="0.8" />
+            <circle cx="0" cy="23" r="2" fill="#334155" />
+          </g>
+        </svg>
+
+        <!-- Soft Elliptical Ground Shadow -->
+        <div class="badge-shadow" id="badgeShadow" aria-hidden="true"></div>
+
+        <!-- Layer 1: Physics Wrapper (Swings from Clip Pivot) -->
+        <div class="badge-assembly" id="badgeAssembly" aria-label="Draggable ID Badge">
+          
+          <!-- Layer 2: Tilt Wrapper (Glides with rotateX / rotateY) -->
+          <div class="badge-tilt" id="badgeTilt">
+
+            <!-- Layer 3: Idle Sway Wrapper (Continuous CSS keyframe sway) -->
+            <div class="badge-idle-sway">
+
+              <!-- Layer 4: 3D Flip Card (Flips 180deg to back face) -->
+              <div class="badge-card" id="badgeCard">
+
+                <!-- Specular Sheen Layer (Follows cursor) -->
+                <div class="badge-sheen" aria-hidden="true"></div>
+
+                <!-- Red Error Edge Overlay -->
+                <div class="badge-error-overlay" id="badgeErrorOverlay" aria-hidden="true"></div>
+
+                <!-- Subtle Static 3D Glare Layer -->
+                <div class="badge-glare" aria-hidden="true"></div>
+
+                <!-- ================= BADGE FRONT FACE ================= -->
+                <div class="badge-face badge-front">
+                  
+                  <!-- Diagonal Loading Sweep (Shown in pending state) -->
+                  <div class="badge-sweep" aria-hidden="true"></div>
+
+                  <!-- Metal Clip Slot Cutout -->
+                  <div class="badge-slot"></div>
+
+                  <!-- Brand Wordmark Header (Stagger 1) -->
+                  <div class="card-brand stagger-item stagger-1">
+                    <i class="bi bi-diagram-3-fill" style="color: #60a5fa;"></i>
+                    <span>Bridgeway<span style="color: #2563eb;">.hr</span></span>
+                  </div>
+
+                  <!-- Avatar Circle with Live Initials (Stagger 2) -->
+                  <div class="avatar-wrap stagger-item stagger-2">
+                    <span class="avatar-initials" id="badgeInitials">YN</span>
+                  </div>
+
+                  <!-- Live Dynamic Name & Role (Stagger 3 & 4) -->
+                  <div style="display: flex; flex-direction: column; align-items: center; gap: 0.2rem; width: 100%;">
+                    <div class="name-line stagger-item stagger-3" id="badgeName">Your name</div>
+                    <div class="role-line stagger-item stagger-4">Role assigned at sign-in</div>
+                  </div>
+
+                  <!-- Decorative Security Chip & ID Number (Stagger 5) -->
+                  <div class="front-details stagger-item stagger-5">
+                    <div class="front-chip"></div>
+                    <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; font-weight: 600;">#SEC-2026-ID</span>
+                    <i class="bi bi-shield-check" style="font-size: 0.95rem; color: #2563eb;"></i>
+                  </div>
+
+                  <!-- Brand Accent Stripe (Stagger 5) -->
+                  <div class="front-stripe stagger-item stagger-5"></div>
+                </div>
+
+                <!-- ================= BADGE BACK FACE ================= -->
+                <div class="badge-face badge-back">
+                  
+                  <!-- Top Slot Cutout -->
+                  <div class="badge-slot" style="background: #1e293b;"></div>
+
+                  <!-- Confidential Tag -->
+                  <div class="back-tag">
+                    <i class="bi bi-lock-fill"></i> Confidential
+                  </div>
+
+                  <!-- Center Padlock Graphic (Interactive Shackle) -->
+                  <div class="padlock-stage">
+                    <svg class="padlock-svg" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <defs>
+                        <linearGradient id="padlockBodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stop-color="#3b82f6" />
+                          <stop offset="100%" stop-color="#1e3a8a" />
+                        </linearGradient>
+                        <linearGradient id="shackleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stop-color="#e2e8f0" />
+                          <stop offset="50%" stop-color="#94a3b8" />
+                          <stop offset="100%" stop-color="#64748b" />
+                        </linearGradient>
+                      </defs>
+
+                      <!-- Padlock Shackle (Animates translateY -3px, rotate -18deg) -->
+                      <path id="padlockShackle" d="M 22 34 L 22 24 C 22 17, 48 17, 48 24 L 48 34" stroke="url(#shackleGrad)" stroke-width="5" stroke-linecap="round" fill="none" />
+
+                      <!-- Padlock Body -->
+                      <rect id="padlockBody" x="16" y="32" width="38" height="28" rx="7" fill="url(#padlockBodyGrad)" stroke="#60a5fa" stroke-width="1.2" />
+
+                      <!-- Keyhole -->
+                      <circle cx="35" cy="43" r="3" fill="#0f172a" />
+                      <path d="M 33.5 43 L 36.5 43 L 37.5 50 L 32.5 50 Z" fill="#0f172a" />
+                    </svg>
+
+                    <!-- Amber Pulse Ring on Unlock -->
+                    <div class="padlock-pulse-ring" aria-hidden="true"></div>
+                  </div>
+
+                  <!-- Back Face Titles -->
+                  <div class="back-titles">
+                    <div class="back-title">RESTRICTED ACCESS</div>
+                    <div class="back-desc">Identity credentials governed by internal security protocol.</div>
+                  </div>
+
+                  <!-- High-Tech Barcode SVG -->
+                  <div class="barcode-wrap">
+                    <svg viewBox="0 0 130 24" width="130" height="24" fill="#cbd5e1" xmlns="http://www.w3.org/2000/svg">
+                      <rect x="0" y="0" width="3" height="24" />
+                      <rect x="6" y="0" width="1.5" height="24" />
+                      <rect x="10" y="0" width="4" height="24" />
+                      <rect x="17" y="0" width="2" height="24" />
+                      <rect x="22" y="0" width="5" height="24" />
+                      <rect x="30" y="0" width="2" height="24" />
+                      <rect x="35" y="0" width="3.5" height="24" />
+                      <rect x="42" y="0" width="1.5" height="24" />
+                      <rect x="46" y="0" width="6" height="24" />
+                      <rect x="55" y="0" width="2" height="24" />
+                      <rect x="60" y="0" width="4" height="24" />
+                      <rect x="67" y="0" width="1.5" height="24" />
+                      <rect x="71" y="0" width="3.5" height="24" />
+                      <rect x="77" y="0" width="5" height="24" />
+                      <rect x="85" y="0" width="2" height="24" />
+                      <rect x="90" y="0" width="4" height="24" />
+                      <rect x="97" y="0" width="2.5" height="24" />
+                      <rect x="102" y="0" width="1.5" height="24" />
+                      <rect x="106" y="0" width="4.5" height="24" />
+                      <rect x="114" y="0" width="2" height="24" />
+                      <rect x="118" y="0" width="4" height="24" />
+                      <rect x="125" y="0" width="2" height="24" />
+                    </svg>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- RIGHT COLUMN: Sandbox Training Controller -->
+    <aside class="sandbox-controls">
+      
+      <!-- Section 1: Live Interactive Test Controls -->
+      <div class="control-section">
+        <span class="section-label"><i class="bi bi-sliders"></i> Interactive Form Simulation</span>
+
+        <!-- Test Name Input -->
+        <div class="form-group">
+          <label class="form-label" for="demoNameInput">Test Name Typing</label>
+          <input type="text" id="demoNameInput" class="sandbox-input" placeholder="Type a name (e.g. Sarah Jenkins)" value="" />
+          <span class="form-hint">Watch the avatar initials & name line trigger the 160ms pop animation.</span>
+        </div>
+
+        <!-- Test Password Input -->
+        <div class="form-group">
+          <label class="form-label" for="demoPasswordInput">Test Password Focus (Triggers 3D Flip)</label>
+          <div class="input-wrap">
+            <input type="password" id="demoPasswordInput" class="sandbox-input" placeholder="Click here to focus password..." />
+            <button type="button" class="icon-toggle-btn" id="demoEyeBtn" title="Toggle password visibility">
+              <i class="bi bi-eye" id="demoEyeIcon"></i>
+            </button>
+          </div>
+          <span class="form-hint">Focusing flips the badge 180°. Clicking the eye lifts the padlock shackle!</span>
+        </div>
+      </div>
+
+      <!-- Section 2: Animation Action Triggers -->
+      <div class="control-section">
+        <span class="section-label"><i class="bi bi-lightning-charge"></i> Micro-Animation Triggers</span>
+        
+        <div class="button-grid">
+          <button type="button" class="sandbox-btn btn-primary" id="btnReplayDrop">
+            <i class="bi bi-arrow-clockwise"></i> Replay Drop-In
+          </button>
+          <button type="button" class="sandbox-btn btn-danger" id="btnTriggerError">
+            <i class="bi bi-exclamation-triangle"></i> Error Kick
+          </button>
+          <button type="button" class="sandbox-btn" id="btnTogglePending">
+            <i class="bi bi-hourglass-split"></i> Loading Sweep
+          </button>
+          <button type="button" class="sandbox-btn" id="btnManualFlip">
+            <i class="bi bi-arrow-left-right"></i> Toggle 3D Flip
+          </button>
+        </div>
+      </div>
+
+      <!-- Section 3: Live Physics Telemetry -->
+      <div class="control-section">
+        <span class="section-label"><i class="bi bi-speedometer2"></i> Live Physics Telemetry</span>
+        <div class="telemetry-card">
+          <div class="telemetry-row">
+            <span class="telemetry-label">Badge Angle (deg):</span>
+            <span id="telAngle">0.00°</span>
+          </div>
+          <div class="telemetry-row">
+            <span class="telemetry-label">Angular Velocity (deg/s):</span>
+            <span id="telVelocity">0.00</span>
+          </div>
+          <div class="telemetry-row">
+            <span class="telemetry-label">Lanyard Lag Angle:</span>
+            <span id="telLag">0.00°</span>
+          </div>
+          <div class="telemetry-row">
+            <span class="telemetry-label">3D Tilt (Pitch / Roll):</span>
+            <span id="telTilt">0.00° / 0.00°</span>
+          </div>
+          <div class="telemetry-row">
+            <span class="telemetry-label">Dragging State:</span>
+            <span id="telDrag">false</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 4: Junior Developer Integration Cheat Sheet -->
+      <div class="control-section" style="background: rgba(30, 41, 59, 0.4); border: 1px solid var(--border-glass); border-radius: 8px; padding: 0.85rem;">
+        <span class="section-label" style="color: #60a5fa;"><i class="bi bi-code-slash"></i> How to use in your code:</span>
+        <pre style="font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: #cbd5e1; line-height: 1.45; overflow-x: auto; margin-top: 0.4rem;">
+// 1. Flip card on password focus:
+passwordInput.addEventListener('focus', () => BadgeAnimation.flip(true));
+passwordInput.addEventListener('blur',  () => BadgeAnimation.flip(false));
+
+// 2. Open padlock on show password:
+BadgeAnimation.setUnlocked(true);
+
+// 3. Update employee name dynamically:
+emailInput.addEventListener('input', (e) => {
+  BadgeAnimation.setName(e.target.value);
+});
+
+// 4. Trigger physics kick on login error:
+BadgeAnimation.triggerError();
+        </pre>
+      </div>
+
+    </aside>
+
+  </main>
+
+  <!-- Load Standalone Animation Engine -->
+  <script src="badge-animation.js"></script>
+
+  <!-- Sandbox Controller Script (Wires the test controls to BadgeAnimation) -->
+  <script>
+    (function () {
+      'use strict';
+
+      const demoNameInput = document.getElementById('demoNameInput');
+      const demoPasswordInput = document.getElementById('demoPasswordInput');
+      const demoEyeBtn = document.getElementById('demoEyeBtn');
+      const demoEyeIcon = document.getElementById('demoEyeIcon');
+      const btnReplayDrop = document.getElementById('btnReplayDrop');
+      const btnTriggerError = document.getElementById('btnTriggerError');
+      const btnTogglePending = document.getElementById('btnTogglePending');
+      const btnManualFlip = document.getElementById('btnManualFlip');
+
+      // Telemetry fields
+      const telAngle = document.getElementById('telAngle');
+      const telVelocity = document.getElementById('telVelocity');
+      const telLag = document.getElementById('telLag');
+      const telTilt = document.getElementById('telTilt');
+      const telDrag = document.getElementById('telDrag');
+
+      let isPasswordVisible = false;
+      let isCardManuallyFlipped = false;
+      let isPendingActive = false;
+
+      // 1. Wire Name Input
+      if (demoNameInput) {
+        demoNameInput.addEventListener('input', (e) => {
+          BadgeAnimation.setName(e.target.value);
+        });
+      }
+
+      // 2. Wire Password Focus / Blur Flip
+      if (demoPasswordInput) {
+        demoPasswordInput.addEventListener('focus', () => {
+          BadgeAnimation.flip(true);
+        });
+        demoPasswordInput.addEventListener('blur', () => {
+          // Keep flipped only if eye toggle button or manual toggle is active
+          if (document.activeElement !== demoEyeBtn && !isCardManuallyFlipped) {
+            BadgeAnimation.flip(false);
+          }
+        });
+      }
+
+      // 3. Wire Eye Toggle (Padlock Shackle Lift & Pulse)
+      if (demoEyeBtn) {
+        demoEyeBtn.addEventListener('click', () => {
+          isPasswordVisible = !isPasswordVisible;
+          demoPasswordInput.type = isPasswordVisible ? 'text' : 'password';
+          
+          if (demoEyeIcon) {
+            demoEyeIcon.className = isPasswordVisible ? 'bi bi-eye-slash' : 'bi bi-eye';
+          }
+
+          // Trigger padlock animation
+          BadgeAnimation.setUnlocked(isPasswordVisible);
+
+          // Ensure card is flipped to back so user sees the padlock
+          BadgeAnimation.flip(true);
+        });
+      }
+
+      // 4. Action Buttons
+      if (btnReplayDrop) {
+        btnReplayDrop.addEventListener('click', () => {
+          BadgeAnimation.replayDrop();
+        });
+      }
+
+      if (btnTriggerError) {
+        btnTriggerError.addEventListener('click', () => {
+          BadgeAnimation.triggerError();
+        });
+      }
+
+      if (btnTogglePending) {
+        btnTogglePending.addEventListener('click', () => {
+          isPendingActive = !isPendingActive;
+          btnTogglePending.classList.toggle('btn-primary', isPendingActive);
+          BadgeAnimation.setPending(isPendingActive);
+        });
+      }
+
+      if (btnManualFlip) {
+        btnManualFlip.addEventListener('click', () => {
+          isCardManuallyFlipped = !isCardManuallyFlipped;
+          BadgeAnimation.flip(isCardManuallyFlipped);
+        });
+      }
+
+      // 5. Wire Live Telemetry
+      BadgeAnimation.onTelemetry((data) => {
+        if (telAngle) telAngle.textContent = `${data.angle}°`;
+        if (telVelocity) telVelocity.textContent = `${data.velocity}°/s`;
+        if (telLag) telLag.textContent = `${data.lanyardAngle}°`;
+        if (telTilt) telTilt.textContent = `${data.tiltX}° / ${data.tiltY}°`;
+        if (telDrag) telDrag.textContent = String(data.isDragging);
+      });
+
+    })();
+  </script>
+</body>
+</html>
