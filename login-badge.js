@@ -39,31 +39,36 @@
   const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
 
   // 2. Physics Simulation State
-  let angle = 0;              // Current pendulum angle in degrees
-  let velocity = 0;           // Angular velocity in degrees/second
+  let angle = 0;              // Current pendulum angle in degrees (capped at ±10°)
+  let velocity = 0;           // Angular velocity in degrees/second (capped at ±30 deg/s)
   let tiltX = 0;              // 3D tilt X (pitch, ≤ 8°)
   let tiltY = 0;              // 3D tilt Y (roll, ≤ 8°)
   let targetTiltX = 0;
   let targetTiltY = 0;
 
-  // Simulation Constants
+  // Simulation Constants (k = 12, c = 2.0 so swing settles within ~3s)
   const springK = 12.0;       // Restoring spring constant
-  const dampingC = 1.0;       // Damping constant
+  const dampingC = 2.0;       // Damping constant
   const fixedDt = 1 / 60;     // Fixed timestep accumulator (seconds)
 
-  // Dragging State
+  // Dragging & Pointer State
   let isDragging = false;
   let isPointerOverPanel = false;
+  let isFirstSample = false;
   let lastPointerX = 0;
   let lastPointerY = 0;
   let lastPointerTime = performance.now();
-  let pointerVx = 0;
+  let smoothedVx = 0;         // Exponential moving average of velocity
 
   // Cached Geometries (Updated on resize/scroll via ResizeObserver)
   let cachedPivotX = 0;
   let cachedPivotY = 0;
   let cachedBadgeCenterX = 0;
   let cachedBadgeCenterY = 0;
+  let cachedPanelCenterX = 0;
+  let cachedPanelCenterY = 0;
+  let cachedPanelHalfWidth = 1;
+  let cachedPanelHalfHeight = 1;
 
   // Animation Loop Flag
   let rafId = null;
@@ -81,6 +86,11 @@
     cachedPivotY = assemblyRect.top;
     cachedBadgeCenterX = assemblyRect.left + assemblyRect.width / 2;
     cachedBadgeCenterY = assemblyRect.top + assemblyRect.height / 2;
+
+    cachedPanelCenterX = panelRect.left + panelRect.width / 2;
+    cachedPanelCenterY = panelRect.top + panelRect.height / 2;
+    cachedPanelHalfWidth = panelRect.width / 2 || 1;
+    cachedPanelHalfHeight = panelRect.height / 2 || 1;
   }
 
   if (window.ResizeObserver) {
@@ -135,13 +145,18 @@
 
     if (!isDragging) {
       // Damped harmonic pendulum equation: v += (-k*a - c*v) * dt; a += v * dt;
+      // k = 12, c = 2.0 so swing settles within ~3s
       const acceleration = -springK * angle - dampingC * velocity;
       velocity += acceleration * fixedDt;
       angle += velocity * fixedDt;
 
-      // Smooth tilt lerp
-      tiltX += (targetTiltX - tiltX) * 0.12;
-      tiltY += (targetTiltY - tiltY) * 0.12;
+      // Cap |v| at 30 deg/s, cap |angle| at ±10°
+      velocity = Math.max(-30, Math.min(30, velocity));
+      angle = Math.max(-10, Math.min(10, angle));
+
+      // Tilt lerped (factor ≈ 0.08) so it glides instead of jumping
+      tiltX += (targetTiltX - tiltX) * 0.08;
+      tiltY += (targetTiltY - tiltY) * 0.08;
     }
 
     // Apply 3D Transform to Badge Assembly
@@ -150,19 +165,20 @@
       updateLanyardVisual(angle);
     }
 
-    // Check Settled State: Stop RAF when idle to conserve resources
-    const isSettled = Math.abs(angle) < 0.05 &&
-                      Math.abs(velocity) < 0.05 &&
-                      Math.abs(targetTiltX - tiltX) < 0.05 &&
-                      Math.abs(targetTiltY - tiltY) < 0.05;
+    // Stop Condition: The rAF loop must stop once |angle| < 0.05° and |v| < 0.5 deg/s, and the pointer is idle
+    const isPhysicsSettled = Math.abs(angle) < 0.05 && Math.abs(velocity) < 0.5;
+    const isTiltSettled = Math.abs(targetTiltX - tiltX) < 0.05 && Math.abs(targetTiltY - tiltY) < 0.05;
+    const isPointerIdle = (performance.now() - lastPointerTime) > 80;
 
-    if (!isDragging && isSettled) {
+    if (!isDragging && isPhysicsSettled && isTiltSettled && (!isPointerOverPanel || isPointerIdle)) {
       angle = 0;
       velocity = 0;
-      tiltX = 0;
-      tiltY = 0;
+      tiltX = targetTiltX;
+      tiltY = targetTiltY;
       if (!prefersReducedMotion.matches) {
-        badgeAssembly.style.transform = 'rotate(0deg)';
+        badgeAssembly.style.transform = (tiltX === 0 && tiltY === 0)
+          ? 'rotate(0deg)'
+          : `rotate(0deg) rotateX(${(-tiltX).toFixed(2)}deg) rotateY(${tiltY.toFixed(2)}deg)`;
         updateLanyardVisual(0);
       }
       isLoopActive = false;
@@ -187,9 +203,9 @@
       updateLanyardVisual(0);
       return;
     }
-    // Initial drop impulse
-    angle = -18.0;
-    velocity = 22.0;
+    // Initial drop impulse (capped at ±10° range)
+    angle = -8.0;
+    velocity = 15.0;
     startPhysicsLoop();
   }
 
@@ -197,20 +213,41 @@
   // POINTER INTERACTIONS (Tilt, Glare, Velocity Impulse, and Drag)
   // ==========================================================================
   function onPointerMove(e) {
-    const now = performance.now();
-    const dtSeconds = (now - lastPointerTime) / 1000;
-    if (dtSeconds > 0.004) {
-      pointerVx = (e.clientX - lastPointerX) / dtSeconds;
-    }
-    lastPointerX = e.clientX;
-    lastPointerY = e.clientY;
-    lastPointerTime = now;
-
     if (prefersReducedMotion.matches || !finePointer.matches) return;
 
-    // Check if pointer is within the left badge panel
     const rect = badgePanel.getBoundingClientRect();
-    isPointerOverPanel = (e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom);
+    const isInside = (e.clientX >= rect.left && e.clientX <= rect.right &&
+                      e.clientY >= rect.top && e.clientY <= rect.bottom);
+    isPointerOverPanel = isInside;
+
+    if (!isInside && !isDragging) {
+      targetTiltX = 0;
+      targetTiltY = 0;
+      return;
+    }
+
+    const nowTime = e.timeStamp || performance.now();
+    const dtMs = Math.max(8, nowTime - lastPointerTime); // dt clamped to >= 8ms
+    const dtSec = dtMs / 1000;
+    const rawVx = (e.clientX - lastPointerX) / dtSec;
+
+    lastPointerX = e.clientX;
+    lastPointerTime = nowTime;
+
+    if (isFirstSample) {
+      isFirstSample = false;
+      smoothedVx = 0;
+      return; // Apply NO impulse from that first sample
+    }
+
+    // Smooth with an exponential moving average (0.2 new / 0.8 old)
+    smoothedVx = 0.2 * rawVx + 0.8 * smoothedVx;
+
+    // Clamp to ±800 px/s
+    const clampedVx = Math.max(-800, Math.min(800, smoothedVx));
+
+    // Dead zone: ignore |vx| < 40 px/s
+    const effectiveVx = Math.abs(clampedVx) >= 40 ? clampedVx : 0;
 
     if (isDragging) {
       // Calculate angle from pivot to pointer (clamped ±25°)
@@ -221,22 +258,22 @@
       velocity = 0;
       startPhysicsLoop();
     } else if (isPointerOverPanel) {
-      // 3D Lean/Tilt towards cursor (clamped ≤ 8°)
-      const deltaX = (e.clientX - cachedBadgeCenterX) / (rect.width / 2);
-      const deltaY = (e.clientY - cachedBadgeCenterY) / (rect.height / 2);
-      targetTiltY = Math.max(-8, Math.min(8, deltaX * 7.5));
-      targetTiltX = Math.max(-8, Math.min(8, deltaY * 7.5));
+      // Tilt (rotateX/rotateY ≤ 8°): cursor position relative to panel center, normalized to -1..1
+      const normX = Math.max(-1, Math.min(1, (e.clientX - cachedPanelCenterX) / cachedPanelHalfWidth));
+      const normY = Math.max(-1, Math.min(1, (e.clientY - cachedPanelCenterY) / cachedPanelHalfHeight));
 
-      // Pointer velocity impulse: v += clamp(pointerVx, ±1500) * 0.03, capped at 60 deg/s
-      if (Math.abs(pointerVx) > 120) {
-        const clampedVx = Math.max(-1500, Math.min(1500, pointerVx));
-        const impulse = clampedVx * 0.025;
-        velocity = Math.max(-60, Math.min(60, velocity + impulse));
+      targetTiltY = normX * 8.0;
+      targetTiltX = normY * 8.0;
+
+      // Impulse: v += vx * 0.015, cap |v| at 30 deg/s
+      if (effectiveVx !== 0) {
+        velocity += effectiveVx * 0.015;
+        velocity = Math.max(-30, Math.min(30, velocity));
       }
 
       // Glare highlight tracking
-      const glareX = Math.max(10, Math.min(90, 50 + deltaX * 28));
-      const glareY = Math.max(10, Math.min(90, 35 + deltaY * 25));
+      const glareX = Math.max(10, Math.min(90, 50 + normX * 30));
+      const glareY = Math.max(10, Math.min(90, 35 + normY * 25));
       badgeCard.style.setProperty('--glare-x', `${glareX}%`);
       badgeCard.style.setProperty('--glare-y', `${glareY}%`);
 
@@ -246,6 +283,24 @@
       targetTiltY = 0;
     }
   }
+
+  // Pointer Enter & Leave Listeners (No entry kick; zero velocity and ease tilt on leave)
+  badgePanel.addEventListener('pointerenter', (e) => {
+    isPointerOverPanel = true;
+    lastPointerX = e.clientX;
+    lastPointerTime = e.timeStamp || performance.now();
+    smoothedVx = 0;
+    velocity = 0; // Zero velocity on entry
+    isFirstSample = true; // Apply NO impulse from that first sample
+  });
+
+  badgePanel.addEventListener('pointerleave', () => {
+    isPointerOverPanel = false;
+    velocity = 0; // Zero velocity on leave
+    targetTiltX = 0; // Tilt target eases back to 0
+    targetTiltY = 0;
+    startPhysicsLoop();
+  });
 
   // Drag Listeners (Fine Pointer Only)
   if (finePointer.matches) {
@@ -264,8 +319,8 @@
       try {
         badgeAssembly.releasePointerCapture(e.pointerId);
       } catch (_) {}
-      // Release impulse from drag velocity
-      const releaseImpulse = Math.max(-55, Math.min(55, pointerVx * 0.035));
+      // Release impulse from drag velocity (capped at ±30 deg/s)
+      const releaseImpulse = Math.max(-30, Math.min(30, smoothedVx * 0.035));
       velocity = releaseImpulse;
       startPhysicsLoop();
     });
