@@ -38,11 +38,19 @@
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
 
+  // ==========================================================================
+  // DIRECTION RULES (Single Source of Truth)
+  // CSS rotate(+) is clockwise, which with pivot at top center swings the
+  // bottom of the badge LEFT.
+  // SWING_SIGN = -1 inverts impulse & displacement so swing follows cursor.
+  // ==========================================================================
+  const SWING_SIGN = -1;
+
   // 2. Physics Simulation State
   let angle = 0;              // Current pendulum angle in degrees (capped at ±10°)
   let velocity = 0;           // Angular velocity in degrees/second (capped at ±30 deg/s)
-  let tiltX = 0;              // 3D tilt X (pitch, ≤ 8°)
-  let tiltY = 0;              // 3D tilt Y (roll, ≤ 8°)
+  let tiltX = 0;              // 3D tilt X (pitch, rotateX = -ny * 8deg)
+  let tiltY = 0;              // 3D tilt Y (roll, rotateY = nx * 8deg)
   let targetTiltX = 0;
   let targetTiltY = 0;
 
@@ -114,15 +122,16 @@
     const leftAnchorX = anchorCenterX - 48;
     const rightAnchorX = anchorCenterX + 48;
 
-    // Swivel clip displacement based on current angle
+    // Displace and bend to the same side the badge bottom swings toward
+    const swingDeg = SWING_SIGN * currentAngle;
     const length = 98; // Length in SVG units
-    const rad = (currentAngle * Math.PI) / 180;
+    const rad = (swingDeg * Math.PI) / 180;
     const clipX = anchorCenterX + length * Math.sin(rad);
     const clipY = length * Math.cos(rad);
 
     // Left and right curving strap paths with natural drape
     const midY = clipY * 0.52;
-    const bendOffset = currentAngle * 0.35;
+    const bendOffset = swingDeg * 0.35;
 
     const leftD = `M ${leftAnchorX} ${anchorY} Q ${anchorCenterX - 24 + bendOffset} ${midY} ${clipX - 4} ${clipY}`;
     const rightD = `M ${rightAnchorX} ${anchorY} Q ${anchorCenterX + 24 + bendOffset} ${midY} ${clipX + 4} ${clipY}`;
@@ -131,7 +140,7 @@
     lanyardRightStrap.setAttribute('d', rightD);
 
     // Position swivel clip and ring
-    lanyardClip.setAttribute('transform', `translate(${clipX.toFixed(1)}, ${clipY.toFixed(1)}) rotate(${currentAngle.toFixed(1)})`);
+    lanyardClip.setAttribute('transform', `translate(${clipX.toFixed(1)}, ${clipY.toFixed(1)}) rotate(${swingDeg.toFixed(1)})`);
   }
 
   // ==========================================================================
@@ -159,9 +168,9 @@
       tiltY += (targetTiltY - tiltY) * 0.08;
     }
 
-    // Apply 3D Transform to Badge Assembly
+    // Apply 3D Transform to Badge Assembly (Tilt faces cursor: rotateX = -ny*8deg, rotateY = nx*8deg)
     if (!prefersReducedMotion.matches) {
-      badgeAssembly.style.transform = `rotate(${angle.toFixed(2)}deg) rotateX(${(-tiltX).toFixed(2)}deg) rotateY(${tiltY.toFixed(2)}deg)`;
+      badgeAssembly.style.transform = `rotate(${angle.toFixed(2)}deg) rotateX(${tiltX.toFixed(2)}deg) rotateY(${tiltY.toFixed(2)}deg)`;
       updateLanyardVisual(angle);
     }
 
@@ -178,7 +187,7 @@
       if (!prefersReducedMotion.matches) {
         badgeAssembly.style.transform = (tiltX === 0 && tiltY === 0)
           ? 'rotate(0deg)'
-          : `rotate(0deg) rotateX(${(-tiltX).toFixed(2)}deg) rotateY(${tiltY.toFixed(2)}deg)`;
+          : `rotate(0deg) rotateX(${tiltX.toFixed(2)}deg) rotateY(${tiltY.toFixed(2)}deg)`;
         updateLanyardVisual(0);
       }
       isLoopActive = false;
@@ -204,8 +213,8 @@
       return;
     }
     // Initial drop impulse (capped at ±10° range)
-    angle = -8.0;
-    velocity = 15.0;
+    angle = SWING_SIGN * 8.0;
+    velocity = SWING_SIGN * -15.0;
     startPhysicsLoop();
   }
 
@@ -277,23 +286,27 @@
 
     if (isDragging) {
       // Calculate angle from pivot to pointer (clamped ±25°)
+      // While dragging, bottom of badge follows pointer horizontally (drag right -> bottom moves right)
       const dx = e.clientX - cachedPivotX;
       const dy = Math.max(20, e.clientY - cachedPivotY);
       const rawAngle = Math.atan2(dx, dy) * (180 / Math.PI);
-      angle = Math.max(-25, Math.min(25, rawAngle));
+      angle = Math.max(-25, Math.min(25, SWING_SIGN * rawAngle));
       velocity = 0;
       startPhysicsLoop();
     } else if (isPointerOverPanel) {
-      // Tilt (rotateX/rotateY ≤ 8°): cursor position relative to panel center, normalized to -1..1
+      // Tilt faces the cursor: with nx, ny normalized to -1..1 relative to the panel center,
+      // use rotateY = nx * 8deg and rotateX = -ny * 8deg.
+      // Cursor right -> right edge recedes slightly; cursor above -> top edge recedes slightly.
       const normX = Math.max(-1, Math.min(1, (e.clientX - cachedPanelCenterX) / cachedPanelHalfWidth));
       const normY = Math.max(-1, Math.min(1, (e.clientY - cachedPanelCenterY) / cachedPanelHalfHeight));
 
       targetTiltY = normX * 8.0;
-      targetTiltX = normY * 8.0;
+      targetTiltX = -normY * 8.0;
 
-      // Impulse: v += vx * 0.015, cap |v| at 30 deg/s
+      // Impulse: v += SWING_SIGN * vx * 0.015, cap |v| at 30 deg/s
+      // Mouse moving right -> bottom swings right first, then returns
       if (effectiveVx !== 0) {
-        velocity += effectiveVx * 0.015;
+        velocity += SWING_SIGN * effectiveVx * 0.015;
         velocity = Math.max(-30, Math.min(30, velocity));
       }
 
@@ -348,8 +361,8 @@
     try {
       badgeAssembly.releasePointerCapture(e.pointerId);
     } catch (_) {}
-    // Release impulse from drag velocity (capped at ±30 deg/s)
-    const releaseImpulse = Math.max(-30, Math.min(30, smoothedVx * 0.035));
+    // Release impulse from drag velocity: swings back through center to the other side
+    const releaseImpulse = Math.max(-30, Math.min(30, SWING_SIGN * smoothedVx * 0.035));
     velocity = releaseImpulse;
     startPhysicsLoop();
   });
@@ -456,14 +469,14 @@
       badgeCard.classList.add('is-flipped');
       // Subtle physical sway impulse on flip
       if (!prefersReducedMotion.matches) {
-        velocity += 14.0;
+        velocity += SWING_SIGN * -14.0;
         startPhysicsLoop();
       }
     } else if (!shouldFlip && currentlyFlipped) {
       // Flip back to Front Face
       badgeCard.classList.remove('is-flipped');
       if (!prefersReducedMotion.matches) {
-        velocity -= 14.0;
+        velocity -= SWING_SIGN * -14.0;
         startPhysicsLoop();
       }
     }
@@ -518,7 +531,7 @@
     badgeAssembly.classList.add('has-error');
 
     // Add physical impulse
-    velocity = -28.0;
+    velocity = SWING_SIGN * 28.0;
     startPhysicsLoop();
 
     clearTimeout(errorShakeTimer);
