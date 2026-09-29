@@ -148,10 +148,20 @@
   color: #94a3b8;
 }
 
-.login-page .lb-deco-1 { top: 12%; left: 8%; }
-.login-page .lb-deco-2 { top: 16%; right: 8%; }
-.login-page .lb-deco-3 { bottom: 12%; left: 7%; }
-.login-page .lb-deco-4 { bottom: 16%; right: 9%; }
+/* Floating Decoration Cards (±4px over 7s, staggered phases) */
+@keyframes lbDecoFloat {
+  0%, 100% {
+    transform: translate(var(--p-x, 0px), calc(var(--p-y, 0px) - 4px));
+  }
+  50% {
+    transform: translate(var(--p-x, 0px), calc(var(--p-y, 0px) + 4px));
+  }
+}
+
+.login-page .lb-deco-1 { top: 12%; left: 8%; animation: lbDecoFloat 7s ease-in-out infinite; animation-delay: 0s; }
+.login-page .lb-deco-2 { top: 16%; right: 8%; animation: lbDecoFloat 7s ease-in-out infinite; animation-delay: -1.75s; }
+.login-page .lb-deco-3 { bottom: 12%; left: 7%; animation: lbDecoFloat 7s ease-in-out infinite; animation-delay: -3.5s; }
+.login-page .lb-deco-4 { bottom: 16%; right: 9%; animation: lbDecoFloat 7s ease-in-out infinite; animation-delay: -5.25s; }
 
 /* Stage Area Containing Lanyard & Badge */
 .login-page .lb-stage-area {
@@ -176,32 +186,82 @@
   z-index: 5;
 }
 
-/* Physics Badge Anchor & Assembly */
+/* ==========================================================================
+   TRANSFORM LAYERING:
+   1. Physics Wrapper (.lb-badge-assembly): pendulum swing, drop-in, will-change: transform
+   2. Tilt Wrapper (.lb-badge-tilt): 3D cursor tilt, scale 1.02/1.03
+   3. Idle Sway Wrapper (.lb-badge-idle-sway): slow CSS keyframe sway (±0.8deg, 6s)
+   4. Flip Element (.lb-badge-card): 3D card flip on password focus (rotateY 180deg)
+   5. Front & Back Faces
+   ========================================================================== */
+
+/* 1. Physics Wrapper */
 .login-page .lb-badge-assembly {
   position: relative;
   margin-top: 100px;
   transform-origin: 50% 0px; /* Swings from the metal clip pivot */
   will-change: transform;
-  perspective: 1000px;
+  perspective: 1200px;
   cursor: grab;
   touch-action: none;
 }
-.login-page .lb-badge-assembly:active {
+.login-page .lb-badge-assembly.is-dragging {
   cursor: grabbing;
 }
 
-/* 3D Flip Card Container */
+/* Drop-In Entrance: translateY -110% -> 2% -> -1% -> 0 */
+@keyframes lbBadgeDropIn {
+  0% { transform: translateY(-110%); }
+  65% { transform: translateY(2%); }
+  85% { transform: translateY(-1%); }
+  100% { transform: translateY(0); }
+}
+.login-page .lb-badge-assembly.is-dropping {
+  animation: lbBadgeDropIn 1000ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* 2. Tilt Wrapper (Glides with rotateX / rotateY, scale on hover/drag) */
+.login-page .lb-badge-tilt {
+  transform-origin: 50% 50%;
+  transform-style: preserve-3d;
+  transition: transform 180ms ease;
+}
+.login-page .lb-badge-assembly:hover:not(.is-dragging) .lb-badge-tilt {
+  transform: scale(1.02);
+}
+.login-page .lb-badge-assembly.is-dragging .lb-badge-tilt {
+  transform: scale(1.03);
+}
+
+/* 3. Idle Sway Wrapper (Continuous CSS keyframe sway ±0.8deg over 6s) */
+@keyframes lbIdleSway {
+  0%, 100% { transform: rotate(-0.8deg); }
+  50% { transform: rotate(0.8deg); }
+}
+.login-page .lb-badge-idle-sway {
+  transform-origin: 50% 0px;
+  transform-style: preserve-3d;
+  animation: lbIdleSway 6s ease-in-out infinite;
+}
+.login-page .lb-badge-assembly.is-dragging .lb-badge-idle-sway {
+  animation-play-state: paused;
+}
+
+/* 4. Flip Element (Existing #badgeCard with 3D Flip) */
 .login-page .lb-badge-card {
   width: 216px;
   height: 340px;
   position: relative;
   transform-style: preserve-3d;
-  transition: transform 0.55s var(--lb-ease);
+  transition: transform 0.55s var(--lb-ease), box-shadow 180ms ease;
   border-radius: 18px;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.15);
 }
+.login-page .lb-badge-assembly:hover:not(.is-dragging) .lb-badge-card {
+  box-shadow: 0 35px 65px -14px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.25);
+}
 
-/* Flipped State (When Password Field is Focused) */
+/* Flipped State (When Password Field is Focused) - PROTECTED */
 .login-page .lb-badge-card.is-flipped {
   transform: rotateY(180deg);
 }
@@ -218,16 +278,124 @@
   flex-direction: column;
 }
 
+/* Soft Elliptical Shadow Behind/Under Badge */
+.login-page .lb-badge-shadow {
+  position: absolute;
+  top: 450px;
+  left: 50%;
+  width: 180px;
+  height: 28px;
+  margin-left: -90px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(15, 23, 42, 0.45) 0%, rgba(15, 23, 42, 0) 70%);
+  pointer-events: none;
+  z-index: 2;
+  transform: translate(var(--sh-x, 0px), var(--sh-y, 0px)) scale(var(--sh-scale, 1));
+  filter: blur(var(--sh-blur, 8px));
+  opacity: 0.85;
+  transition: opacity 0.25s ease;
+}
+
+/* Specular Sheen Layer (Fades to 0.25 on pointer inside) */
+.login-page .lb-badge-sheen {
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  pointer-events: none;
+  background: radial-gradient(circle 200px at var(--gx, 50%) var(--gy, 50%), rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%);
+  mix-blend-mode: overlay;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  z-index: 7;
+}
+.login-page .lb-badge-panel.is-pointer-inside .lb-badge-sheen {
+  opacity: 0.25;
+}
+
+/* Red Edge Error Overlay (Fades 0 -> 0.7 -> 0 over 600ms, opacity only) */
+.login-page .lb-badge-error-overlay {
+  position: absolute;
+  inset: 0;
+  border: 2.5px solid var(--lb-danger);
+  border-radius: 18px;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 10;
+}
+.login-page .lb-badge-card.is-error-kick .lb-badge-error-overlay {
+  animation: lbErrorEdgeGlow 600ms ease-out forwards;
+}
+@keyframes lbErrorEdgeGlow {
+  0% { opacity: 0; }
+  30% { opacity: 0.7; }
+  100% { opacity: 0; }
+}
+
 /* Glare Layer (Moves with 3D Tilt) */
 .login-page .lb-badge-glare {
   position: absolute;
   inset: 0;
+  border-radius: 18px;
   pointer-events: none;
   background: radial-gradient(circle at var(--glare-x, 50%) var(--glare-y, 30%), rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 65%);
   mix-blend-mode: overlay;
   z-index: 8;
   opacity: 0.65;
   transition: opacity 0.2s ease;
+}
+
+/* Looping Diagonal Light Sweep (Pending Loading State) */
+.login-page .lb-badge-sweep {
+  position: absolute;
+  inset: -100%;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, 0.35) 50%, transparent 60%);
+  opacity: 0;
+  transform: translate(-100%, -100%);
+  z-index: 9;
+}
+.login-page .lb-badge-card.is-pending .lb-badge-sweep {
+  opacity: 1;
+  animation: lbDiagonalSweep 1.2s linear infinite;
+}
+@keyframes lbDiagonalSweep {
+  0% { transform: translate(-80%, -80%); opacity: 0; }
+  25% { opacity: 0.85; }
+  75% { opacity: 0.85; }
+  100% { transform: translate(80%, 80%); opacity: 0; }
+}
+
+/* Staggered Entrance for Front Content (Fade/slide 6px, 60ms stagger) */
+.login-page .lb-stagger-item {
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1), transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.login-page .lb-badge-card.is-landed .lb-stagger-item {
+  opacity: 1;
+  transform: translateY(0);
+}
+.login-page .lb-stagger-1 { transition-delay: 0ms; }
+.login-page .lb-stagger-2 { transition-delay: 60ms; }
+.login-page .lb-stagger-3 { transition-delay: 120ms; }
+.login-page .lb-stagger-4 { transition-delay: 180ms; }
+.login-page .lb-stagger-5 { transition-delay: 240ms; }
+
+/* Name Typing Animation (160ms: opacity 0.4->1, translateY 3px->0; initials scale 0.9->1) */
+@keyframes lbNameTyping {
+  0% { opacity: 0.4; transform: translateY(3px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes lbInitialsPop {
+  0% { transform: scale(0.9); }
+  70% { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
+.login-page .lb-name-line.is-typing {
+  animation: lbNameTyping 160ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.login-page .lb-avatar-initials.is-typing {
+  animation: lbInitialsPop 160ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 /* ==========================================================================
@@ -387,21 +555,42 @@
   height: 70px;
   overflow: visible;
 }
+/* Shackle: lifts (translateY -3px, rotate -18deg) over 320ms cubic-bezier(0.34,1.56,0.64,1) */
 .login-page .lb-shackle {
-  transition: transform 0.32s var(--lb-ease);
-  transform-origin: 35px 25px;
+  transition: transform 200ms ease;
+  transform-origin: 23px 29px;
 }
-.login-page .lb-padlock-glow {
-  opacity: 0;
-  transition: opacity 0.3s ease;
+.login-page .lb-badge-card.is-unlatched .lb-shackle {
+  transform: translateY(-3px) rotate(-18deg);
+  transition: transform 320ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* When Password is Show / Text: Shackle Lifts Open & Amber Glow illuminates */
-.login-page .lb-badge-card.is-unlatched .lb-shackle {
-  transform: translateY(-9px);
+/* Amber Ring Pulse on Show Password (scale 1->1.35, opacity 0->0.6->0, 500ms) */
+.login-page .lb-padlock-glow {
+  transform-origin: 35px 35px;
+  opacity: 0;
+  transform: scale(1);
 }
 .login-page .lb-badge-card.is-unlatched .lb-padlock-glow {
-  opacity: 0.85;
+  animation: lbAmberPulse 500ms ease-out forwards;
+}
+@keyframes lbAmberPulse {
+  0% { transform: scale(1); opacity: 0; }
+  50% { transform: scale(1.18); opacity: 0.6; }
+  100% { transform: scale(1.35); opacity: 0; }
+}
+
+/* Padlock Body Snap on Hide Password (scale 0.96->1 in 200ms) */
+.login-page .lb-padlock-body {
+  transform-origin: 35px 41px;
+  transition: transform 200ms ease;
+}
+.login-page .lb-badge-card:not(.is-unlatched) .lb-padlock-body.is-snapping {
+  animation: lbBodySnap 200ms ease-out;
+}
+@keyframes lbBodySnap {
+  0% { transform: scale(0.96); }
+  100% { transform: scale(1); }
 }
 
 /* Back Titles */
@@ -438,21 +627,6 @@
   font-size: 0.65rem;
   color: #64748b;
   letter-spacing: 0.1em;
-}
-
-/* Error Shake Animation (Applied on Form Error) */
-.login-page .lb-badge-assembly.has-error {
-  animation: lbBadgeErrorShake 0.4s var(--lb-ease);
-}
-.login-page .lb-badge-assembly.has-error .lb-badge-card {
-  box-shadow: 0 0 0 2px var(--lb-danger), 0 20px 40px rgba(220, 38, 38, 0.35);
-}
-@keyframes lbBadgeErrorShake {
-  0%, 100% { transform: translateX(0); }
-  20% { transform: translateX(-12px) rotate(-4deg); }
-  40% { transform: translateX(10px) rotate(3deg); }
-  60% { transform: translateX(-6px) rotate(-2deg); }
-  80% { transform: translateX(4px) rotate(1deg); }
 }
 
 /* Panel Footer */
@@ -553,12 +727,12 @@
   background: var(--lb-surface);
   border: 1.5px solid var(--lb-border);
   border-radius: 12px;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
   outline: none;
 }
 .login-page .form-control-custom:focus {
   border-color: var(--lb-primary);
-  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.14);
 }
 .login-page .form-control-custom:focus + .field-icon,
 .login-page .field-input-wrapper:focus-within .field-icon {
@@ -594,8 +768,12 @@
   outline: 2px solid var(--lb-primary);
   outline-offset: 1px;
 }
+/* Eye Toggle Icon Crossfade in 150ms */
+.login-page .password-toggle-btn i {
+  transition: opacity 150ms ease, transform 150ms ease;
+}
 
-/* Feedback Error Elements */
+/* Feedback Error Elements (Fade + 4px slide in 200ms) */
 .login-page .feedback-error {
   display: none;
   align-items: center;
@@ -605,9 +783,14 @@
   color: var(--lb-danger);
   margin-top: 0.4rem;
   padding-left: 0.25rem;
+  animation: lbErrorFadeSlide 200ms ease forwards;
+}
+@keyframes lbErrorFadeSlide {
+  0% { opacity: 0; transform: translateY(-4px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
-/* Submit Button */
+/* Submit Button: Hover lifts 1px & nudges arrow 3px, active is scale 0.985 */
 .login-page .btn-login-submit {
   width: 100%;
   height: 50px;
@@ -624,17 +807,27 @@
   gap: 0.5rem;
   cursor: pointer;
   box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
-  transition: all 0.2s var(--lb-ease);
+  transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
   margin-top: 0.5rem;
 }
 .login-page .btn-login-submit:hover:not(:disabled) {
   background: var(--lb-primary-dark);
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.4);
+}
+.login-page .btn-login-submit:hover:not(:disabled) i {
+  transform: translateX(3px);
+}
+.login-page .btn-login-submit i {
+  transition: transform 180ms ease;
+  display: inline-block;
 }
 .login-page .btn-login-submit:focus-visible {
   outline: 3px solid rgba(37, 99, 235, 0.4);
   outline-offset: 2px;
+}
+.login-page .btn-login-submit:active:not(:disabled) {
+  transform: scale(0.985);
 }
 .login-page .btn-login-submit:disabled {
   opacity: 0.75;
@@ -815,12 +1008,29 @@
     transition-duration: 0.001s !important;
   }
   .login-page .lb-badge-card {
-    transition: opacity 0.15s ease !important;
+    transition: opacity 150ms ease !important;
   }
   .login-page .lb-badge-card.is-flipped {
     transform: rotateY(180deg) !important;
   }
   .login-page .lb-shackle {
-    transition: transform 0.1s ease !important;
+    transition: transform 150ms ease !important;
+  }
+  .login-page .lb-stagger-item {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Touch / (hover: none): No tilt, drag, parallax or hover effects */
+@media (hover: none) {
+  .login-page .lb-badge-assembly:hover:not(.is-dragging) .lb-badge-tilt {
+    transform: none !important;
+  }
+  .login-page .lb-badge-assembly:hover:not(.is-dragging) .lb-badge-card {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.15) !important;
+  }
+  .login-page .lb-badge-shadow {
+    transform: none !important;
   }
 }

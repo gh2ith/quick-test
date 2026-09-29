@@ -15,22 +15,48 @@
 (function () {
   'use strict';
 
+  // ==========================================================================
+  // CONFIGURATION BLOCK (Single Source of Truth for Tunables)
+  // ==========================================================================
+  const CONFIG = {
+    idleSwayDeg: 0.8,
+    idleSwayPeriodS: 6,
+    tiltMaxDeg: 8,
+    tiltLerp: 0.08,
+    springK: 12,
+    springC: 2.0,
+    followK: 9,
+    followC: 1.6,
+    dragMaxDeg: 25,
+    dropMs: 1000,
+    parallaxPx: 6,
+    floatPx: 4,
+    floatPeriodS: 7,
+    swingSign: -1
+  };
+  const SWING_SIGN = CONFIG.swingSign;
+
   // 1. Element References
   const badgePanel = document.querySelector('.lb-badge-panel');
   const badgeAssembly = document.getElementById('badgeAssembly');
+  const badgeTilt = document.getElementById('badgeTilt');
   const badgeCard = document.getElementById('badgeCard');
+  const badgeShadow = document.getElementById('badgeShadow');
   const badgeName = document.getElementById('badgeName');
   const badgeInitials = document.getElementById('badgeInitials');
   const lanyardLeftStrap = document.getElementById('lanyardLeftStrap');
   const lanyardRightStrap = document.getElementById('lanyardRightStrap');
   const lanyardClip = document.getElementById('lanyardClip');
+  const padlockBody = document.getElementById('padlockBody');
 
   // Form Field References (Read-only UI binding)
+  const loginForm = document.getElementById('hrLoginForm');
   const emailInput = document.getElementById('loginEmail');
   const passwordInput = document.getElementById('loginPassword');
   const togglePasswordBtn = document.getElementById('togglePasswordBtn');
   const emailError = document.getElementById('emailError');
   const passwordError = document.getElementById('passwordError');
+  const loginSubmitBtn = document.getElementById('loginSubmitBtn');
 
   if (!badgePanel || !badgeAssembly || !badgeCard) return;
 
@@ -38,25 +64,20 @@
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
 
-  // ==========================================================================
-  // DIRECTION RULES (Single Source of Truth)
-  // CSS rotate(+) is clockwise, which with pivot at top center swings the
-  // bottom of the badge LEFT.
-  // SWING_SIGN = -1 inverts impulse & displacement so swing follows cursor.
-  // ==========================================================================
-  const SWING_SIGN = -1;
-
   // 2. Physics Simulation State
-  let angle = 0;              // Current pendulum angle in degrees (capped at ±10°)
-  let velocity = 0;           // Angular velocity in degrees/second (capped at ±30 deg/s)
-  let tiltX = 0;              // 3D tilt X (pitch, rotateX = -ny * 8deg)
-  let tiltY = 0;              // 3D tilt Y (roll, rotateY = nx * 8deg)
+  let angle = 0;              // Badge pendulum angle (deg, capped at ±10°)
+  let velocity = 0;           // Badge angular velocity (deg/s, capped at ±30 deg/s)
+  let lanyardAngle = 0;       // Lanyard follow-through angle (b)
+  let lanyardVelocity = 0;    // Lanyard follow-through velocity (w)
+  let tiltX = 0;              // 3D tilt pitch (-ny * tiltMaxDeg)
+  let tiltY = 0;              // 3D tilt roll (nx * tiltMaxDeg)
   let targetTiltX = 0;
   let targetTiltY = 0;
+  let parallaxX = 0;          // Background cards parallax X
+  let parallaxY = 0;          // Background cards parallax Y
+  let targetParallaxX = 0;
+  let targetParallaxY = 0;
 
-  // Simulation Constants (k = 12, c = 2.0 so swing settles within ~3s)
-  const springK = 12.0;       // Restoring spring constant
-  const dampingC = 2.0;       // Damping constant
   const fixedDt = 1 / 60;     // Fixed timestep accumulator (seconds)
 
   // Dragging & Pointer State
@@ -71,8 +92,6 @@
   // Cached Geometries (Updated on resize/scroll via ResizeObserver)
   let cachedPivotX = 0;
   let cachedPivotY = 0;
-  let cachedBadgeCenterX = 0;
-  let cachedBadgeCenterY = 0;
   let cachedPanelCenterX = 0;
   let cachedPanelCenterY = 0;
   let cachedPanelHalfWidth = 1;
@@ -92,8 +111,6 @@
 
     cachedPivotX = assemblyRect.left + assemblyRect.width / 2;
     cachedPivotY = assemblyRect.top;
-    cachedBadgeCenterX = assemblyRect.left + assemblyRect.width / 2;
-    cachedBadgeCenterY = assemblyRect.top + assemblyRect.height / 2;
 
     cachedPanelCenterX = panelRect.left + panelRect.width / 2;
     cachedPanelCenterY = panelRect.top + panelRect.height / 2;
@@ -111,9 +128,9 @@
   updateCachedMetrics();
 
   // ==========================================================================
-  // LANYARD SVG PATH GENERATOR
+  // LANYARD SVG PATH GENERATOR (Lags & follow-through with spring b)
   // ==========================================================================
-  function updateLanyardVisual(currentAngle) {
+  function updateLanyardVisual(currentLanyardAngle) {
     if (!lanyardLeftStrap || !lanyardRightStrap || !lanyardClip) return;
 
     // Anchor points at top center of panel (viewBox 0 0 400 130)
@@ -122,8 +139,8 @@
     const leftAnchorX = anchorCenterX - 48;
     const rightAnchorX = anchorCenterX + 48;
 
-    // Displace and bend to the same side the badge bottom swings toward
-    const swingDeg = SWING_SIGN * currentAngle;
+    // Displacement and bend follow the second spring (b)
+    const swingDeg = SWING_SIGN * currentLanyardAngle;
     const length = 98; // Length in SVG units
     const rad = (swingDeg * Math.PI) / 180;
     const clipX = anchorCenterX + length * Math.sin(rad);
@@ -144,7 +161,7 @@
   }
 
   // ==========================================================================
-  // PHYSICS SIMULATION LOOP (Fixed 1/60s Timestep, Damped Spring Pendulum)
+  // PHYSICS SIMULATION LOOP (Single rAF Loop for Physics, Lanyard, Tilt & Parallax)
   // ==========================================================================
   function tickPhysics() {
     if (document.hidden) {
@@ -153,41 +170,88 @@
     }
 
     if (!isDragging) {
-      // Damped harmonic pendulum equation: v += (-k*a - c*v) * dt; a += v * dt;
-      // k = 12, c = 2.0 so swing settles within ~3s
-      const acceleration = -springK * angle - dampingC * velocity;
+      // 1. Primary Damped Spring Pendulum for Badge
+      // v += (-k*a - c*v) * dt; a += v * dt;
+      const acceleration = -CONFIG.springK * angle - CONFIG.springC * velocity;
       velocity += acceleration * fixedDt;
       angle += velocity * fixedDt;
 
       // Cap |v| at 30 deg/s, cap |angle| at ±10°
       velocity = Math.max(-30, Math.min(30, velocity));
       angle = Math.max(-10, Math.min(10, angle));
-
-      // Tilt lerped (factor ≈ 0.08) so it glides instead of jumping
-      tiltX += (targetTiltX - tiltX) * 0.08;
-      tiltY += (targetTiltY - tiltY) * 0.08;
     }
 
-    // Apply 3D Transform to Badge Assembly (Tilt faces cursor: rotateX = -ny*8deg, rotateY = nx*8deg)
+    // 2. Lanyard Follow-Through Spring (b follows a, lags and overshoots)
+    // w += (-followK*(b - a) - followC*w) * dt; b += w * dt;
+    const followAccel = -CONFIG.followK * (lanyardAngle - angle) - CONFIG.followC * lanyardVelocity;
+    lanyardVelocity += followAccel * fixedDt;
+    lanyardAngle += lanyardVelocity * fixedDt;
+
+    // 3. Smooth Tilt Gliding (lerp factor = tiltLerp)
+    tiltX += (targetTiltX - tiltX) * CONFIG.tiltLerp;
+    tiltY += (targetTiltY - tiltY) * CONFIG.tiltLerp;
+
+    // 4. Background Cards Parallax Lerp
+    parallaxX += (targetParallaxX - parallaxX) * CONFIG.tiltLerp;
+    parallaxY += (targetParallaxY - parallaxY) * CONFIG.tiltLerp;
+
+    if (badgePanel) {
+      badgePanel.style.setProperty('--p-x', `${parallaxX.toFixed(2)}px`);
+      badgePanel.style.setProperty('--p-y', `${parallaxY.toFixed(2)}px`);
+    }
+
+    // 5. Update Soft Elliptical Shadow
+    if (badgeShadow) {
+      const normX = targetTiltY / CONFIG.tiltMaxDeg;
+      const normY = -targetTiltX / CONFIG.tiltMaxDeg;
+      const shadowX = -normX * 10;
+      const shadowY = -normY * 6;
+      const shadowBlur = 8 + (Math.abs(normX) + Math.abs(normY)) * 2;
+      const shadowScale = 1 + (Math.abs(normX) + Math.abs(normY)) * 0.05;
+      badgeShadow.style.transform = `translate(${shadowX.toFixed(1)}px, ${shadowY.toFixed(1)}px) scale(${shadowScale.toFixed(2)})`;
+      badgeShadow.style.filter = `blur(${shadowBlur.toFixed(1)}px)`;
+    }
+
+    // 6. Apply Layered Transforms
     if (!prefersReducedMotion.matches) {
-      badgeAssembly.style.transform = `rotate(${angle.toFixed(2)}deg) rotateX(${tiltX.toFixed(2)}deg) rotateY(${tiltY.toFixed(2)}deg)`;
-      updateLanyardVisual(angle);
+      // Physics wrapper gets rotation only
+      badgeAssembly.style.transform = `rotate(${angle.toFixed(2)}deg)`;
+
+      // Tilt wrapper gets 3D cursor tilt (rotateX = -ny*8deg, rotateY = nx*8deg)
+      if (badgeTilt) {
+        badgeTilt.style.transform = (tiltX === 0 && tiltY === 0)
+          ? ''
+          : `rotateX(${tiltX.toFixed(2)}deg) rotateY(${tiltY.toFixed(2)}deg)`;
+      }
+
+      // Lanyard renders from follow spring (b)
+      updateLanyardVisual(lanyardAngle);
     }
 
-    // Stop Condition: The rAF loop must stop once |angle| < 0.05° and |v| < 0.5 deg/s, and the pointer is idle
+    // 7. Stop Condition: loop halts once all springs, tilts and parallax settle at rest
     const isPhysicsSettled = Math.abs(angle) < 0.05 && Math.abs(velocity) < 0.5;
+    const isLanyardSettled = Math.abs(lanyardAngle - angle) < 0.05 && Math.abs(lanyardVelocity) < 0.5;
     const isTiltSettled = Math.abs(targetTiltX - tiltX) < 0.05 && Math.abs(targetTiltY - tiltY) < 0.05;
+    const isParallaxSettled = Math.abs(targetParallaxX - parallaxX) < 0.08 && Math.abs(targetParallaxY - parallaxY) < 0.08;
     const isPointerIdle = (performance.now() - lastPointerTime) > 80;
 
-    if (!isDragging && isPhysicsSettled && isTiltSettled && (!isPointerOverPanel || isPointerIdle)) {
+    if (!isDragging && isPhysicsSettled && isLanyardSettled && isTiltSettled && isParallaxSettled && (!isPointerOverPanel || isPointerIdle)) {
       angle = 0;
       velocity = 0;
+      lanyardAngle = 0;
+      lanyardVelocity = 0;
       tiltX = targetTiltX;
       tiltY = targetTiltY;
+      parallaxX = targetParallaxX;
+      parallaxY = targetParallaxY;
+
       if (!prefersReducedMotion.matches) {
-        badgeAssembly.style.transform = (tiltX === 0 && tiltY === 0)
-          ? 'rotate(0deg)'
-          : `rotate(0deg) rotateX(${tiltX.toFixed(2)}deg) rotateY(${tiltY.toFixed(2)}deg)`;
+        badgeAssembly.style.transform = 'rotate(0deg)';
+        if (badgeTilt) {
+          badgeTilt.style.transform = (tiltX === 0 && tiltY === 0)
+            ? ''
+            : `rotateX(${tiltX.toFixed(2)}deg) rotateY(${tiltY.toFixed(2)}deg)`;
+        }
         updateLanyardVisual(0);
       }
       isLoopActive = false;
@@ -205,25 +269,34 @@
   }
 
   // ==========================================================================
-  // LOAD DROP-IN ANIMATION (~900ms Damped Settle on Page Load)
+  // DROP-IN ENTRANCE (Once per load: overshoot translateY, landing impulse, stagger content)
   // ==========================================================================
   function triggerDropIn() {
     if (prefersReducedMotion.matches) {
       updateLanyardVisual(0);
+      badgeCard.classList.add('is-landed');
       return;
     }
-    // Initial drop impulse (capped at ±10° range)
-    angle = SWING_SIGN * 8.0;
-    velocity = SWING_SIGN * -15.0;
-    startPhysicsLoop();
+
+    // Trigger CSS keyframe drop-in (translateY: -110% -> 2% -> -1% -> 0)
+    badgeAssembly.classList.add('is-dropping');
+
+    setTimeout(() => {
+      badgeAssembly.classList.remove('is-dropping');
+      badgeCard.classList.add('is-landed');
+
+      // On landing: initial velocity of ~18 deg/s (respect SWING_SIGN)
+      velocity = SWING_SIGN * -18.0;
+      startPhysicsLoop();
+    }, CONFIG.dropMs);
   }
 
   // ==========================================================================
-  // POINTER INTERACTIONS (Tilt, Glare, Velocity Impulse, and Drag)
+  // POINTER INTERACTIONS (Tilt, Sheen, Glare, Velocity Impulse, Drag & Parallax)
   // ==========================================================================
   function onPointerMove(e) {
     if (prefersReducedMotion.matches) return;
-    if (e.pointerType === 'touch') return; // Fine pointer / mouse / pen only
+    if (e.pointerType === 'touch' || !finePointer.matches) return; // Fine pointer / mouse / pen only
 
     const rect = badgePanel.getBoundingClientRect();
     const isInside = (e.clientX >= rect.left && e.clientX <= rect.right &&
@@ -234,6 +307,7 @@
     // 1. Detect Entry into Panel (NO ENTRY KICK)
     if (isInside && !isPointerOverPanel) {
       isPointerOverPanel = true;
+      badgePanel.classList.add('is-pointer-inside');
       lastPointerX = e.clientX;
       lastPointerY = e.clientY;
       lastPointerTime = nowTime;
@@ -243,12 +317,15 @@
       return;
     }
 
-    // 2. Detect Leave from Panel (EASE TILT TO 0, ZERO VELOCITY)
+    // 2. Detect Leave from Panel (EASE TILT & PARALLAX TO 0, ZERO VELOCITY)
     if (!isInside && isPointerOverPanel) {
       isPointerOverPanel = false;
+      badgePanel.classList.remove('is-pointer-inside');
       velocity = 0; // Zero velocity on leave
       targetTiltX = 0; // Tilt target eases back to 0
       targetTiltY = 0;
+      targetParallaxX = 0; // Parallax targets ease to 0
+      targetParallaxY = 0;
       smoothedVx = 0;
       startPhysicsLoop();
       return;
@@ -257,10 +334,12 @@
     if (!isInside && !isDragging) {
       targetTiltX = 0;
       targetTiltY = 0;
+      targetParallaxX = 0;
+      targetParallaxY = 0;
       return;
     }
 
-    // 3. Velocity Computation
+    // 3. Velocity Computation (EMA smoothed, dead zone, clamped)
     const dtMs = Math.max(8, nowTime - lastPointerTime); // dt clamped to >= 8ms
     const dtSec = dtMs / 1000;
     const rawVx = (e.clientX - lastPointerX) / dtSec;
@@ -285,23 +364,26 @@
     const effectiveVx = Math.abs(clampedVx) >= 40 ? clampedVx : 0;
 
     if (isDragging) {
-      // Calculate angle from pivot to pointer (clamped ±25°)
+      // Calculate angle from pivot to pointer (clamped to ±CONFIG.dragMaxDeg)
       // While dragging, bottom of badge follows pointer horizontally (drag right -> bottom moves right)
       const dx = e.clientX - cachedPivotX;
       const dy = Math.max(20, e.clientY - cachedPivotY);
       const rawAngle = Math.atan2(dx, dy) * (180 / Math.PI);
-      angle = Math.max(-25, Math.min(25, SWING_SIGN * rawAngle));
+      angle = Math.max(-CONFIG.dragMaxDeg, Math.min(CONFIG.dragMaxDeg, SWING_SIGN * rawAngle));
       velocity = 0;
       startPhysicsLoop();
     } else if (isPointerOverPanel) {
-      // Tilt faces the cursor: with nx, ny normalized to -1..1 relative to the panel center,
-      // use rotateY = nx * 8deg and rotateX = -ny * 8deg.
-      // Cursor right -> right edge recedes slightly; cursor above -> top edge recedes slightly.
+      // Normalized coordinates nx, ny in [-1..1]
       const normX = Math.max(-1, Math.min(1, (e.clientX - cachedPanelCenterX) / cachedPanelHalfWidth));
       const normY = Math.max(-1, Math.min(1, (e.clientY - cachedPanelCenterY) / cachedPanelHalfHeight));
 
-      targetTiltY = normX * 8.0;
-      targetTiltX = -normY * 8.0;
+      // Tilt faces cursor: rotateY = nx * 8deg, rotateX = -ny * 8deg
+      targetTiltY = normX * CONFIG.tiltMaxDeg;
+      targetTiltX = -normY * CONFIG.tiltMaxDeg;
+
+      // Background Cards Parallax: shifts opposite cursor up to parallaxPx
+      targetParallaxX = -normX * CONFIG.parallaxPx;
+      targetParallaxY = -normY * CONFIG.parallaxPx;
 
       // Impulse: v += SWING_SIGN * vx * 0.015, cap |v| at 30 deg/s
       // Mouse moving right -> bottom swings right first, then returns
@@ -310,23 +392,28 @@
         velocity = Math.max(-30, Math.min(30, velocity));
       }
 
-      // Glare highlight tracking
-      const glareX = Math.max(10, Math.min(90, 50 + normX * 30));
-      const glareY = Math.max(10, Math.min(90, 35 + normY * 25));
-      badgeCard.style.setProperty('--glare-x', `${glareX}%`);
-      badgeCard.style.setProperty('--glare-y', `${glareY}%`);
+      // Specular Sheen & Glare Tracking (Positions via CSS variables --gx, --gy)
+      const sheenX = Math.max(10, Math.min(90, 50 + normX * 35));
+      const sheenY = Math.max(10, Math.min(90, 40 + normY * 30));
+      badgeCard.style.setProperty('--gx', `${sheenX}%`);
+      badgeCard.style.setProperty('--gy', `${sheenY}%`);
+      badgeCard.style.setProperty('--glare-x', `${sheenX}%`);
+      badgeCard.style.setProperty('--glare-y', `${sheenY}%`);
 
       startPhysicsLoop();
     } else {
       targetTiltX = 0;
       targetTiltY = 0;
+      targetParallaxX = 0;
+      targetParallaxY = 0;
     }
   }
 
   // Pointer Enter & Leave Listeners (No entry kick; zero velocity and ease tilt on leave)
   badgePanel.addEventListener('pointerenter', (e) => {
-    if (e.pointerType === 'touch') return;
+    if (e.pointerType === 'touch' || !finePointer.matches) return;
     isPointerOverPanel = true;
+    badgePanel.classList.add('is-pointer-inside');
     lastPointerX = e.clientX;
     lastPointerY = e.clientY;
     lastPointerTime = e.timeStamp || performance.now();
@@ -336,11 +423,14 @@
   });
 
   badgePanel.addEventListener('pointerleave', (e) => {
-    if (e.pointerType === 'touch') return;
+    if (e.pointerType === 'touch' || !finePointer.matches) return;
     isPointerOverPanel = false;
+    badgePanel.classList.remove('is-pointer-inside');
     velocity = 0; // Zero velocity on leave
     targetTiltX = 0; // Tilt target eases back to 0
     targetTiltY = 0;
+    targetParallaxX = 0;
+    targetParallaxY = 0;
     smoothedVx = 0;
     startPhysicsLoop();
   });
@@ -349,6 +439,7 @@
   badgeAssembly.addEventListener('pointerdown', (e) => {
     if (e.button !== 0 || prefersReducedMotion.matches || e.pointerType === 'touch') return; // Primary click only
     isDragging = true;
+    badgeAssembly.classList.add('is-dragging');
     try {
       badgeAssembly.setPointerCapture(e.pointerId);
     } catch (_) {}
@@ -358,75 +449,101 @@
   badgeAssembly.addEventListener('pointerup', (e) => {
     if (!isDragging) return;
     isDragging = false;
+    badgeAssembly.classList.remove('is-dragging');
     try {
       badgeAssembly.releasePointerCapture(e.pointerId);
     } catch (_) {}
-    // Release impulse from drag velocity: swings back through center to the other side
+    // Release impulse from drag velocity: swings back through center to other side
     const releaseImpulse = Math.max(-30, Math.min(30, SWING_SIGN * smoothedVx * 0.035));
     velocity = releaseImpulse;
     startPhysicsLoop();
   });
 
   badgeAssembly.addEventListener('pointercancel', () => {
-    isDragging = false;
-    startPhysicsLoop();
+    if (isDragging) {
+      isDragging = false;
+      badgeAssembly.classList.remove('is-dragging');
+      startPhysicsLoop();
+    }
   });
 
   window.addEventListener('pointermove', onPointerMove, { passive: true });
 
   // ==========================================================================
-  // LIVE EMAIL NAME PREVIEW
-  // Formats: "sara.khalid@x.com" → "Sara Khalid", max 22 chars, sets textContent
+  // LIVE EMAIL NAME PREVIEW & NAME TYPING ANIMATION (160ms, throttled to 120ms)
   // ==========================================================================
+  let lastDisplayedName = '';
+  let lastDisplayedInitials = '';
+  let lastNameAnimTime = 0;
+
+  function triggerNameTypingAnim() {
+    if (prefersReducedMotion.matches) return;
+    const now = performance.now();
+    if (now - lastNameAnimTime < 120) return; // Throttled to at most once per 120ms
+    lastNameAnimTime = now;
+
+    if (badgeName) {
+      badgeName.classList.remove('is-typing');
+      void badgeName.offsetWidth; // Force reflow
+      badgeName.classList.add('is-typing');
+    }
+    if (badgeInitials) {
+      badgeInitials.classList.remove('is-typing');
+      void badgeInitials.offsetWidth; // Force reflow
+      badgeInitials.classList.add('is-typing');
+    }
+  }
+
   function updateBadgeNameFromEmail() {
     if (!emailInput || !badgeName || !badgeInitials) return;
 
     const email = emailInput.value.trim();
     if (!email) {
-      badgeName.textContent = 'Your name';
-      badgeInitials.textContent = 'YN';
+      if (lastDisplayedName !== 'Your name' || lastDisplayedInitials !== 'YN') {
+        lastDisplayedName = 'Your name';
+        lastDisplayedInitials = 'YN';
+        badgeName.textContent = 'Your name';
+        badgeInitials.textContent = 'YN';
+        triggerNameTypingAnim();
+      }
       return;
     }
 
     const localPart = email.split('@')[0] || '';
-    if (!localPart) {
-      badgeName.textContent = 'Your name';
-      badgeInitials.textContent = 'YN';
-      return;
-    }
+    const cleanPart = localPart.replace(/[0-9]/g, '');
+    const tokens = cleanPart.split(/[._\-+]/).filter(Boolean);
 
-    // Split on . _ - +, drop digits, capitalize
-    const tokens = localPart
-      .split(/[._\-+]+/)
-      .map((t) => t.replace(/\d+/g, '').trim())
-      .filter((t) => t.length > 0);
-
-    if (tokens.length === 0) {
-      badgeName.textContent = 'Your name';
-      badgeInitials.textContent = 'YN';
-      return;
-    }
-
-    const capitalizedTokens = tokens.map((t) => t.charAt(0).toUpperCase() + t.slice(1).toLowerCase());
-    let formattedName = capitalizedTokens.join(' ');
-
-    // Max 22 characters with ellipsis
-    if (formattedName.length > 22) {
-      formattedName = formattedName.slice(0, 21).trim() + '…';
-    }
-
-    // Generate Initials
+    let formattedName = '';
     let initials = '';
-    if (capitalizedTokens.length >= 2) {
-      initials = capitalizedTokens[0][0] + capitalizedTokens[1][0];
-    } else if (capitalizedTokens[0].length >= 1) {
-      initials = capitalizedTokens[0].slice(0, 2).toUpperCase();
+
+    if (tokens.length >= 2) {
+      const first = tokens[0].charAt(0).toUpperCase() + tokens[0].slice(1).toLowerCase();
+      const last = tokens[1].charAt(0).toUpperCase() + tokens[1].slice(1).toLowerCase();
+      formattedName = `${first} ${last}`;
+      initials = `${first.charAt(0)}${last.charAt(0)}`.toUpperCase();
+    } else if (tokens.length === 1 && tokens[0].length > 0) {
+      const single = tokens[0].charAt(0).toUpperCase() + tokens[0].slice(1).toLowerCase();
+      formattedName = single;
+      initials = single.substring(0, 2).toUpperCase();
     } else {
-      initials = 'YN';
+      formattedName = 'Employee';
+      initials = 'EM';
     }
 
-    badgeName.textContent = formattedName || 'Your name';
-    badgeInitials.textContent = initials.toUpperCase() || 'YN';
+    if (formattedName.length > 22) {
+      formattedName = formattedName.substring(0, 21) + '…';
+    }
+
+    // Skip if text is unchanged
+    if (formattedName === lastDisplayedName && initials === lastDisplayedInitials) {
+      return;
+    }
+
+    lastDisplayedName = formattedName;
+    lastDisplayedInitials = initials;
+    badgeName.textContent = formattedName;
+    badgeInitials.textContent = initials;
+    triggerNameTypingAnim();
   }
 
   if (emailInput) {
@@ -450,7 +567,7 @@
   });
 
   // ==========================================================================
-  // PASSWORD FOCUS & FLIP STATE MANAGEMENT
+  // PASSWORD FOCUS & FLIP STATE MANAGEMENT (PROTECTED FLIP)
   // Uses focusin / focusout on password group (input + toggle button)
   // ==========================================================================
   function isPasswordGroupFocused() {
@@ -487,23 +604,36 @@
   });
 
   document.addEventListener('focusout', () => {
-    // Delay slightly to check if focus shifted within the password group (e.g. to toggle btn)
+    // Delay slightly to check if focus shifted within password group (e.g. to toggle btn)
     setTimeout(() => {
       syncBadgeFlipState();
     }, 40);
   });
 
   // ==========================================================================
-  // SHOW / HIDE PASSWORD PADLOCK UNLATCH DETECTION
-  // Detects type changes via MutationObserver without modifying auth code
+  // SHOW / HIDE PASSWORD PADLOCK UNLATCH DETECTION (Back face content only)
+  // Shackle lifts (translateY -3px, rotate -18deg) in 320ms, amber ring pulse 500ms
+  // On hide: closes in 200ms with tiny body snap
   // ==========================================================================
+  let isCurrentlyUnlatched = false;
+
   function syncPadlockState() {
     if (!passwordInput || !badgeCard) return;
     const isText = (passwordInput.type === 'text');
-    if (isText) {
+
+    if (isText && !isCurrentlyUnlatched) {
+      isCurrentlyUnlatched = true;
       badgeCard.classList.add('is-unlatched');
-    } else {
+      if (padlockBody) padlockBody.classList.remove('is-snapping');
+    } else if (!isText && isCurrentlyUnlatched) {
+      isCurrentlyUnlatched = false;
       badgeCard.classList.remove('is-unlatched');
+      // Trigger tiny body snap (scale 0.96 -> 1, 200ms)
+      if (padlockBody && !prefersReducedMotion.matches) {
+        padlockBody.classList.remove('is-snapping');
+        void padlockBody.offsetWidth; // Force reflow
+        padlockBody.classList.add('is-snapping');
+      }
     }
   }
 
@@ -519,25 +649,28 @@
   }
 
   // ==========================================================================
-  // ERROR SHAKE DETECTION
-  // Observes visibility of emailError and passwordError without touching auth logic
+  // ERROR REACTION (Physics kick ±26 deg/s alternating sign & red edge overlay)
   // ==========================================================================
-  let errorShakeTimer = null;
+  let errorKickSign = 1;
+  let errorGlowTimer = null;
+
   function triggerBadgeErrorShake() {
-    if (prefersReducedMotion.matches || !badgeAssembly) return;
-
-    badgeAssembly.classList.remove('has-error');
-    void badgeAssembly.offsetWidth; // Force reflow
-    badgeAssembly.classList.add('has-error');
-
-    // Add physical impulse
-    velocity = SWING_SIGN * 28.0;
+    // 1. Physics Kick (alternating sign on consecutive errors)
+    velocity = SWING_SIGN * errorKickSign * 26.0;
+    errorKickSign = -errorKickSign; // Alternate sign
     startPhysicsLoop();
 
-    clearTimeout(errorShakeTimer);
-    errorShakeTimer = setTimeout(() => {
-      badgeAssembly.classList.remove('has-error');
-    }, 420);
+    // 2. Red Edge Overlay (Fades 0 -> 0.7 -> 0 over 600ms, opacity only)
+    if (badgeCard) {
+      badgeCard.classList.remove('is-error-kick');
+      void badgeCard.offsetWidth; // Force reflow
+      badgeCard.classList.add('is-error-kick');
+
+      clearTimeout(errorGlowTimer);
+      errorGlowTimer = setTimeout(() => {
+        badgeCard.classList.remove('is-error-kick');
+      }, 620);
+    }
   }
 
   function setupErrorObserver(errorEl) {
@@ -552,6 +685,27 @@
   }
   setupErrorObserver(emailError);
   setupErrorObserver(passwordError);
+
+  // ==========================================================================
+  // PENDING LOADING STATE (Diagonal light sweep across front when button is disabled)
+  // ==========================================================================
+  function syncPendingState() {
+    if (!loginSubmitBtn || !badgeCard) return;
+    const isBusy = loginSubmitBtn.disabled ||
+                   loginSubmitBtn.getAttribute('aria-busy') === 'true' ||
+                   (loginForm && loginForm.classList.contains('is-submitting'));
+
+    if (isBusy) {
+      badgeCard.classList.add('is-pending');
+    } else {
+      badgeCard.classList.remove('is-pending');
+    }
+  }
+
+  if (loginSubmitBtn && window.MutationObserver) {
+    const btnObserver = new MutationObserver(syncPendingState);
+    btnObserver.observe(loginSubmitBtn, { attributes: true, attributeFilter: ['disabled', 'aria-busy', 'class'] });
+  }
 
   // ==========================================================================
   // LIFECYCLE, VISIBILITY & INITIALIZATION
@@ -573,6 +727,7 @@
     updateBadgeNameFromEmail();
     syncBadgeFlipState();
     syncPadlockState();
+    syncPendingState();
     triggerDropIn();
   });
 
@@ -582,6 +737,7 @@
       updateBadgeNameFromEmail();
       syncBadgeFlipState();
       syncPadlockState();
+      syncPendingState();
       triggerDropIn();
     });
   } else {
@@ -589,6 +745,7 @@
     updateBadgeNameFromEmail();
     syncBadgeFlipState();
     syncPadlockState();
+    syncPendingState();
     triggerDropIn();
   }
 
