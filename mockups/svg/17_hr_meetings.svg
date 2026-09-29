@@ -1,0 +1,199 @@
+<svg width="1440" height="1380" viewBox="0 0 1440 1380" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .font-sans { font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+      .card-shadow { filter: drop-shadow(0 10px 25px rgba(15, 23, 42, 0.05)) drop-shadow(0 1px 3px rgba(15, 23, 42, 0.04)); }
+      .hero-shadow { filter: drop-shadow(0 20px 40px rgba(15, 23, 42, 0.08)) drop-shadow(0 2px 5px rgba(15, 23, 42, 0.04)); }
+      .btn-shadow { filter: drop-shadow(0 4px 14px rgba(37, 99, 235, 0.28)); }
+    </style>
+    <linearGradient id="primary-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563EB" />
+      <stop offset="100%" stop-color="#1D4ED8" />
+    </linearGradient>
+    <linearGradient id="pill-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#EFF6FF" />
+      <stop offset="100%" stop-color="#DBEAFE" />
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="1440" height="1380" fill="#F8FAFC" />
+  <circle cx="150" cy="180" r="280" fill="#2563EB" opacity="0.03" />
+  <circle cx="1290" cy="240" r="320" fill="#6366F1" opacity="0.03" />
+  <!-- ==================== TASK 1: LOCKED NAVBAR (HR) ==================== -->
+  <g id="Navbar-Hr" transform="translate(150, 24)">
+    <rect width="1140" height="70" rx="18" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1" class="card-shadow" />
+    
+    <!-- Logo: Bridgeway HR -->
+    <g transform="translate(24, 17)">
+      <rect width="36" height="36" rx="9" fill="#2563EB" />
+      <path d="M10 18L15 23L26 12" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="46" y="25" class="font-sans" font-size="19" font-weight="800" fill="#0F172A">Bridgeway<tspan fill="#2563EB">HR</tspan></text>
+    </g>
+    <g transform="translate(240, 26)">
+      <text x="0" y="15" class="font-sans" font-size="14" font-weight="500" fill="#475569">Home</text>
+      <text x="75" y="15" class="font-sans" font-size="14" font-weight="500" fill="#475569">Employees</text>
+      <text x="185" y="15" class="font-sans" font-size="14" font-weight="700" fill="#2563EB">Services ▾</text>
+      <circle cx="207" cy="25" r="2.5" fill="#2563EB" />
+      <text x="295" y="15" class="font-sans" font-size="14" font-weight="500" fill="#475569">About</text>
+      <text x="375" y="15" class="font-sans" font-size="14" font-weight="500" fill="#475569">Contact Us</text>
+    </g>
+    <!-- HR Profile Pill: Alex Vance + Logout -->
+    <g transform="translate(875, 14)">
+      <rect width="245" height="42" rx="21" fill="#F8FAFC" stroke="#E2E8F0" />
+      <circle cx="21" cy="21" r="16" fill="#0F172A" />
+      <text x="21" y="25" class="font-sans" font-size="11" font-weight="700" fill="#FFFFFF" text-anchor="middle">AV</text>
+      <text x="44" y="18" class="font-sans" font-size="12" font-weight="700" fill="#0F172A">Alex Vance</text>
+      <rect x="44" y="23" width="56" height="14" rx="7" fill="#FEF2F2" />
+      <text x="72" y="33" class="font-sans" font-size="8" font-weight="700" fill="#DC2626" text-anchor="middle">HR ADMIN</text>
+      <g transform="translate(170, 7)">
+        <rect width="65" height="28" rx="8" fill="#FEE2E2" />
+        <text x="32" y="18" class="font-sans" font-size="10" font-weight="700" fill="#DC2626" text-anchor="middle">Logout</text>
+      </g>
+    </g>
+  </g>
+  <!-- Page Header -->
+  <g transform="translate(150, 120)">
+    <text x="0" y="30" class="font-sans" font-size="28" font-weight="800" fill="#0F172A">Virtual Meetings &amp; Jitsi Bridge Administration</text>
+    <text x="0" y="54" class="font-sans" font-size="14" font-weight="400" fill="#64748B">Schedule company-wide conferences or team syncs. Secure Jitsi Meet video rooms are generated automatically.</text>
+  </g>
+
+  <!-- Left: Create Meeting Form (Title, Date, Time, Attendees list / All employees) -->
+  <g transform="translate(150, 200)">
+    <rect width="450" height="520" rx="20" fill="#FFFFFF" stroke="#E2E8F0" class="card-shadow" />
+    <g transform="translate(32, 32)">
+      <text x="0" y="24" class="font-sans" font-size="18" font-weight="800" fill="#0F172A">Schedule New Meeting</text>
+      <text x="0" y="46" class="font-sans" font-size="12" fill="#64748B">Rooms auto-generate on Jitsi bridge (no manual URLs)</text>
+      
+      <!-- Field 1: Title -->
+      <g transform="translate(0, 70)">
+        <text x="0" y="14" class="font-sans" font-size="12" font-weight="700" fill="#334155">MEETING TITLE <tspan fill="#DC2626">*</tspan></text>
+        <rect y="22" width="386" height="40" rx="8" fill="#F8FAFC" stroke="#CBD5E1" />
+        <text x="14" y="47" class="font-sans" font-size="13" fill="#0F172A">Sprint Planning &amp; Review</text>
+      </g>
+
+      <!-- Field 2: Date & Time -->
+      <g transform="translate(0, 150)">
+        <text x="0" y="14" class="font-sans" font-size="12" font-weight="700" fill="#334155">DATE &amp; TIME <tspan fill="#DC2626">*</tspan></text>
+        <rect y="22" width="185" height="40" rx="8" fill="#F8FAFC" stroke="#CBD5E1" />
+        <text x="14" y="47" class="font-sans" font-size="12" fill="#0F172A">📅 Oct 5, 2026</text>
+        <rect x="200" y="22" width="186" height="40" rx="8" fill="#F8FAFC" stroke="#CBD5E1" />
+        <text x="214" y="47" class="font-sans" font-size="12" fill="#0F172A">⏰ 10:00 AM (30 min)</text>
+      </g>
+
+      <!-- Field 3: Attendees (Select list or All Employees) -->
+      <g transform="translate(0, 230)">
+        <text x="0" y="14" class="font-sans" font-size="12" font-weight="700" fill="#334155">ATTENDEES / AUDIENCE <tspan fill="#DC2626">*</tspan></text>
+        <rect y="22" width="386" height="40" rx="8" fill="#FFFFFF" stroke="#2563EB" />
+        <text x="14" y="47" class="font-sans" font-size="13" font-weight="600" fill="#0F172A">Technology Team (Sarah Jenkins, David Miller)</text>
+        <text x="360" y="47" class="font-sans" font-size="12" fill="#64748B">▾</text>
+      </g>
+
+      <!-- System Notice Box -->
+      <g transform="translate(0, 310)">
+        <rect width="386" height="60" rx="10" fill="#EFF6FF" stroke="#BFDBFE" />
+        <text x="14" y="26" class="font-sans" font-size="11" font-weight="700" fill="#1D4ED8">✨ Automated Jitsi Bridge Integration</text>
+        <text x="14" y="44" class="font-sans" font-size="11" fill="#1E40AF">Room link generated automatically upon creation.</text>
+      </g>
+
+      <!-- Submit Button -->
+      <g transform="translate(0, 395)">
+        <rect width="386" height="46" rx="10" fill="#2563EB" class="btn-shadow" />
+        <text x="193" y="28" class="font-sans" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">Schedule Meeting &amp; Notify Staff →</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Right: Meetings Table with Edit, Delete, and Join Button -->
+  <g transform="translate(630, 200)">
+    <rect width="660" height="520" rx="20" fill="#FFFFFF" stroke="#E2E8F0" class="card-shadow" />
+    <g transform="translate(30, 30)">
+      <text x="0" y="24" class="font-sans" font-size="18" font-weight="800" fill="#0F172A">Corporate Meetings Directory</text>
+      <text x="0" y="46" class="font-sans" font-size="12" fill="#64748B">Active &amp; scheduled conferences on the corporate network</text>
+      
+      <!-- Meeting 1: Sprint Planning & Review -->
+      <g transform="translate(0, 70)">
+        <rect width="600" height="130" rx="14" fill="#F8FAFC" stroke="#E2E8F0" />
+        <circle cx="36" cy="36" r="18" fill="#EFF6FF" />
+        <text x="36" y="42" class="font-sans" font-size="16" fill="#2563EB" text-anchor="middle">📹</text>
+        <text x="68" y="32" class="font-sans" font-size="15" font-weight="800" fill="#0F172A">Sprint Planning &amp; Review</text>
+        <text x="68" y="52" class="font-sans" font-size="12" fill="#64748B">Host: Alex Vance (HR Director) • Attendees: Technology Team</text>
+        <text x="68" y="74" class="font-sans" font-size="12" font-weight="600" fill="#2563EB">📅 Oct 5, 2026 • 10:00 AM - 11:30 AM (GMT+3)</text>
+        
+        <!-- Actions: Join, Edit, Delete -->
+        <g transform="translate(68, 90)">
+          <rect width="130" height="30" rx="8" fill="#2563EB" class="btn-shadow" />
+          <text x="65" y="19" class="font-sans" font-size="11" font-weight="700" fill="#FFFFFF" text-anchor="middle">Join Call (Jitsi) ↗</text>
+          
+          <rect x="140" width="70" height="30" rx="8" fill="#EFF6FF" stroke="#BFDBFE" />
+          <text x="175" y="19" class="font-sans" font-size="11" font-weight="700" fill="#2563EB" text-anchor="middle">Edit</text>
+          
+          <rect x="220" width="75" height="30" rx="8" fill="#FEE2E2" stroke="#FECACA" />
+          <text x="257" y="19" class="font-sans" font-size="11" font-weight="700" fill="#DC2626" text-anchor="middle">Delete</text>
+        </g>
+      </g>
+
+      <!-- Meeting 2: All-Hands Quarterly Briefing -->
+      <g transform="translate(0, 220)">
+        <rect width="600" height="130" rx="14" fill="#F8FAFC" stroke="#E2E8F0" />
+        <circle cx="36" cy="36" r="18" fill="#EFF6FF" />
+        <text x="36" y="42" class="font-sans" font-size="16" fill="#2563EB" text-anchor="middle">🌐</text>
+        <text x="68" y="32" class="font-sans" font-size="15" font-weight="800" fill="#0F172A">All-Hands Quarterly Briefing</text>
+        <text x="68" y="52" class="font-sans" font-size="12" fill="#64748B">Host: Alex Vance (HR Director) • Attendees: All Employees</text>
+        <text x="68" y="74" class="font-sans" font-size="12" font-weight="600" fill="#2563EB">📅 Oct 12, 2026 • 02:00 PM - 03:00 PM (GMT+3)</text>
+        
+        <g transform="translate(68, 90)">
+          <rect width="130" height="30" rx="8" fill="#2563EB" class="btn-shadow" />
+          <text x="65" y="19" class="font-sans" font-size="11" font-weight="700" fill="#FFFFFF" text-anchor="middle">Join Call (Jitsi) ↗</text>
+          
+          <rect x="140" width="70" height="30" rx="8" fill="#EFF6FF" stroke="#BFDBFE" />
+          <text x="175" y="19" class="font-sans" font-size="11" font-weight="700" fill="#2563EB" text-anchor="middle">Edit</text>
+          
+          <rect x="220" width="75" height="30" rx="8" fill="#FEE2E2" stroke="#FECACA" />
+          <text x="257" y="19" class="font-sans" font-size="11" font-weight="700" fill="#DC2626" text-anchor="middle">Delete</text>
+        </g>
+      </g>
+    </g>
+  </g>
+  <!-- ==================== GLOBAL FOOTER (HR) ==================== -->
+  <g id="Footer" transform="translate(150, 780)">
+    <rect width="1140" height="240" rx="24" fill="#0F172A" />
+    
+    <!-- Left Column: HQ Details & Map Box -->
+    <g transform="translate(40, 36)">
+      <text x="0" y="20" class="font-sans" font-size="20" font-weight="800" fill="#FFFFFF">Bridgeway<tspan fill="#3B82F6">HR</tspan></text>
+      <text x="0" y="52" class="font-sans" font-size="13" font-weight="400" fill="#94A3B8">King Hussein Business Park • Building 23</text>
+      <text x="0" y="72" class="font-sans" font-size="13" font-weight="400" fill="#94A3B8">Amman 11831, Jordan</text>
+      <text x="0" y="100" class="font-sans" font-size="13" font-weight="600" fill="#60A5FA">📞 +962 6 550 4400</text>
+      <text x="0" y="120" class="font-sans" font-size="13" font-weight="600" fill="#60A5FA">✉ hr-ops@bridgeway.corp</text>
+      
+      <!-- Mini Map Box -->
+      <g transform="translate(0, 142)">
+        <rect width="280" height="70" rx="10" fill="#1E293B" stroke="#334155" />
+        <text x="16" y="28" class="font-sans" font-size="12" font-weight="700" fill="#FFFFFF">📍 Amman Innovation HQ Map</text>
+        <text x="16" y="48" class="font-sans" font-size="11" font-weight="400" fill="#38BDF8">View on Google Maps ↗ (31.9753° N, 35.8344° E)</text>
+      </g>
+    </g>
+
+    <!-- Center Navigation Links -->
+    <g transform="translate(420, 36)">
+      <text x="0" y="20" class="font-sans" font-size="14" font-weight="700" fill="#FFFFFF">Quick Navigation</text>
+      <text x="0" y="52" class="font-sans" font-size="13" font-weight="500" fill="#94A3B8">Home</text>
+      <text x="0" y="77" class="font-sans" font-size="13" font-weight="500" fill="#94A3B8">About Bridgeway</text>
+      <text x="0" y="102" class="font-sans" font-size="13" font-weight="500" fill="#94A3B8">Contact &amp; Inquiries</text>
+      <text x="0" y="127" class="font-sans" font-size="13" font-weight="500" fill="#94A3B8">Company Policies</text>
+      <text x="0" y="152" class="font-sans" font-size="13" font-weight="500" fill="#94A3B8">Meetings Portal (Jitsi)</text>
+    </g>
+    <!-- Right Column: HR Administrative Console Info (NO FEEDBACK FORM) -->
+    <g transform="translate(680, 36)">
+      <rect width="420" height="150" rx="14" fill="#1E293B" stroke="#334155" />
+      <text x="24" y="32" class="font-sans" font-size="14" font-weight="700" fill="#FFFFFF">Administrative Control Center</text>
+      <text x="24" y="55" class="font-sans" font-size="12" font-weight="400" fill="#94A3B8">Logged in as: <tspan fill="#F8FAFC" font-weight="700">Alex Vance (HR Director)</tspan></text>
+      <text x="24" y="78" class="font-sans" font-size="12" font-weight="400" fill="#94A3B8">Workforce Directory • Leave Approvals Desk • Tasks &amp; Jitsi Meetings</text>
+      <rect x="24" y="98" width="160" height="28" rx="6" fill="#0F172A" stroke="#334155" />
+      <text x="104" y="116" class="font-sans" font-size="11" font-weight="600" fill="#10B981" text-anchor="middle">● System Engine Online</text>
+    </g>
+    <line x1="40" y1="195" x2="1100" y2="195" stroke="#1E293B" stroke-width="1" />
+    <text x="40" y="220" class="font-sans" font-size="12" font-weight="500" fill="#64748B">© 2026 Bridgeway HR Management System • Project Deliverable</text>
+    <text x="1100" y="220" class="font-sans" font-size="12" font-weight="500" fill="#64748B" text-anchor="end">Amman, Jordan</text>
+  </g>
+</svg>

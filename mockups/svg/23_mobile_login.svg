@@ -1,0 +1,76 @@
+<svg width="375" height="780" viewBox="0 0 375 780" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .font-sans { font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif; }
+      .card-shadow { filter: drop-shadow(0 6px 16px rgba(15, 23, 42, 0.06)); }
+      .btn-shadow { filter: drop-shadow(0 4px 12px rgba(37, 99, 235, 0.28)); }
+    </style>
+  </defs>
+  <!-- Background -->
+  <rect width="375" height="780" fill="#F8FAFC" />
+  
+  <!-- Mobile Navbar -->
+  <g transform="translate(16, 16)">
+    <rect width="343" height="56" rx="14" fill="#FFFFFF" stroke="#E2E8F0" class="card-shadow" />
+    <g transform="translate(16, 12)">
+      <rect width="32" height="32" rx="8" fill="#2563EB" />
+      <path d="M9 16L13 20L23 10" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="40" y="22" class="font-sans" font-size="16" font-weight="800" fill="#0F172A">Bridgeway<tspan fill="#2563EB">HR</tspan></text>
+    </g>
+    <g transform="translate(295, 18)">
+      <rect width="24" height="2" rx="1" fill="#0F172A" />
+      <rect y="7" width="24" height="2" rx="1" fill="#0F172A" />
+      <rect y="14" width="24" height="2" rx="1" fill="#0F172A" />
+    </g>
+  </g>
+
+  <!-- Mobile Login Card -->
+  <g transform="translate(16, 92)">
+    <rect width="343" height="490" rx="18" fill="#FFFFFF" stroke="#E2E8F0" class="card-shadow" />
+    <g transform="translate(24, 28)">
+      <text x="0" y="24" class="font-sans" font-size="20" font-weight="800" fill="#0F172A">Portal Authentication</text>
+      <text x="0" y="46" class="font-sans" font-size="12" fill="#64748B">Enter corporate credentials to access your session</text>
+
+      <!-- Auto-detect Role Banner -->
+      <g transform="translate(0, 60)">
+        <rect width="295" height="44" rx="8" fill="#EFF6FF" stroke="#BFDBFE" />
+        <text x="12" y="18" class="font-sans" font-size="10" font-weight="700" fill="#1D4ED8">⚡ AUTOMATIC ROLE DETECTION</text>
+        <text x="12" y="32" class="font-sans" font-size="10" fill="#1E40AF">Redirects to HR Admin or Employee workspace</text>
+      </g>
+
+      <!-- Work Email Field -->
+      <g transform="translate(0, 120)">
+        <text x="0" y="14" class="font-sans" font-size="11" font-weight="700" fill="#334155">WORK EMAIL ADDRESS <tspan fill="#DC2626">*</tspan></text>
+        <rect y="22" width="295" height="42" rx="8" fill="#FFFFFF" stroke="#CBD5E1" />
+        <text x="12" y="48" class="font-sans" font-size="13" fill="#0F172A">sarah.jenkins@bridgeway.corp</text>
+      </g>
+
+      <!-- Password Field -->
+      <g transform="translate(0, 195)">
+        <text x="0" y="14" class="font-sans" font-size="11" font-weight="700" fill="#334155">ACCOUNT PASSWORD <tspan fill="#DC2626">*</tspan></text>
+        <rect y="22" width="295" height="42" rx="8" fill="#FFFFFF" stroke="#CBD5E1" />
+        <text x="12" y="48" class="font-sans" font-size="13" fill="#64748B">••••••••••••</text>
+      </g>
+
+      <!-- Sign In Button -->
+      <g transform="translate(0, 275)">
+        <rect width="295" height="46" rx="10" fill="#2563EB" class="btn-shadow" />
+        <text x="147" y="28" class="font-sans" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">Sign In to Workspace →</text>
+      </g>
+
+      <!-- Provisioning Notice -->
+      <g transform="translate(0, 345)">
+        <rect width="295" height="65" rx="8" fill="#F8FAFC" stroke="#E2E8F0" />
+        <text x="12" y="22" class="font-sans" font-size="10" font-weight="700" fill="#475569">🔒 Secure Organizational Access</text>
+        <text x="12" y="38" class="font-sans" font-size="10" fill="#64748B">No public registration. Staff accounts are provisioned</text>
+        <text x="12" y="52" class="font-sans" font-size="10" fill="#64748B">exclusively by HR administration.</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Mobile Footer Notice -->
+  <g transform="translate(16, 600)">
+    <text x="171" y="20" class="font-sans" font-size="11" fill="#94A3B8" text-anchor="middle">Bridgeway HR • Amman Headquarters</text>
+    <text x="171" y="38" class="font-sans" font-size="11" fill="#94A3B8" text-anchor="middle">King Hussein Business Park • Building 23</text>
+  </g>
+</svg>

@@ -1,0 +1,143 @@
+<svg width="1440" height="1080" viewBox="0 0 1440 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .font-sans { font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+      .card-shadow { filter: drop-shadow(0 10px 25px rgba(15, 23, 42, 0.05)) drop-shadow(0 1px 3px rgba(15, 23, 42, 0.04)); }
+      .hero-shadow { filter: drop-shadow(0 20px 40px rgba(15, 23, 42, 0.08)) drop-shadow(0 2px 5px rgba(15, 23, 42, 0.04)); }
+      .btn-shadow { filter: drop-shadow(0 4px 14px rgba(37, 99, 235, 0.28)); }
+    </style>
+    <linearGradient id="primary-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563EB" />
+      <stop offset="100%" stop-color="#1D4ED8" />
+    </linearGradient>
+    <linearGradient id="pill-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#EFF6FF" />
+      <stop offset="100%" stop-color="#DBEAFE" />
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="1440" height="1080" fill="#F8FAFC" />
+  <circle cx="150" cy="180" r="280" fill="#2563EB" opacity="0.03" />
+  <circle cx="1290" cy="240" r="320" fill="#6366F1" opacity="0.03" />
+  <!-- Meeting Header Bar -->
+  <g id="MeetingRoomHeader" transform="translate(80, 24)">
+    <rect width="1280" height="65" rx="16" fill="#0F172A" class="hero-shadow" />
+    <!-- Brand / Room Details -->
+    <g transform="translate(24, 15)">
+      <rect width="36" height="36" rx="9" fill="#2563EB" />
+      <path d="M10 18L15 23L26 12" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="46" y="24" class="font-sans" font-size="17" font-weight="800" fill="#FFFFFF">Bridgeway<tspan fill="#38BDF8">Meet</tspan></text>
+      <text x="170" y="24" class="font-sans" font-size="14" font-weight="600" fill="#94A3B8">|  Sprint Planning &amp; Review (Jitsi Secure Bridge)</text>
+    </g>
+
+    <!-- Center Status Indicator -->
+    <g transform="translate(700, 20)">
+      <circle cx="8" cy="12" r="5" fill="#10B981" />
+      <text x="22" y="16" class="font-sans" font-size="12" font-weight="700" fill="#34D399">LIVE CALL • 00:24:18</text>
+      <text x="160" y="16" class="font-sans" font-size="12" fill="#94A3B8">🔒 E2E Encrypted</text>
+    </g>
+
+    <!-- Leave Button (Returns to Meetings) -->
+    <g transform="translate(1120, 14)">
+      <rect width="135" height="38" rx="10" fill="#DC2626" />
+      <text x="67" y="24" class="font-sans" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">Leave Call ✕</text>
+    </g>
+  </g>
+
+  <!-- Large Responsive Embedded Video Area (Full Width, Not Fixed 800x600) -->
+  <g transform="translate(80, 105)">
+    <rect width="1280" height="780" rx="20" fill="#020617" stroke="#1E293B" stroke-width="2" class="hero-shadow" />
+    
+    <!-- Main Speaker Presentation Feed -->
+    <g transform="translate(20, 20)">
+      <rect width="960" height="660" rx="16" fill="#0B132B" stroke="#1E293B" />
+      <!-- Graphic Presentation Slide in Jitsi feed -->
+      <g transform="translate(60, 60)">
+        <text x="0" y="40" class="font-sans" font-size="32" font-weight="800" fill="#FFFFFF">Bridgeway HR — Sprint 4 Architecture</text>
+        <text x="0" y="75" class="font-sans" font-size="18" fill="#38BDF8">Frontend Delivery &amp; LocalStorage State Synchronization</text>
+        
+        <!-- Presentation Diagram -->
+        <rect y="120" width="840" height="340" rx="14" fill="#1E293B" stroke="#334155" />
+        <rect x="40" y="160" width="220" height="120" rx="10" fill="#0F172A" stroke="#2563EB" />
+        <text x="150" y="210" class="font-sans" font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="middle">Auth &amp; Session Guard</text>
+        <text x="150" y="235" class="font-sans" font-size="11" fill="#94A3B8" text-anchor="middle">Role Router (HR / Employee)</text>
+
+        <path d="M260 220 L330 220" stroke="#38BDF8" stroke-width="3" stroke-dasharray="4 2" />
+
+        <rect x="330" y="160" width="220" height="120" rx="10" fill="#0F172A" stroke="#10B981" />
+        <text x="440" y="210" class="font-sans" font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="middle">Workforce Task Engine</text>
+        <text x="440" y="235" class="font-sans" font-size="11" fill="#94A3B8" text-anchor="middle">TSK-101 / Review Notes</text>
+
+        <path d="M550 220 L620 220" stroke="#38BDF8" stroke-width="3" stroke-dasharray="4 2" />
+
+        <rect x="620" y="160" width="180" height="120" rx="10" fill="#0F172A" stroke="#F59E0B" />
+        <text x="710" y="210" class="font-sans" font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="middle">Jitsi Bridge</text>
+        <text x="710" y="235" class="font-sans" font-size="11" fill="#94A3B8" text-anchor="middle">Auto-provisioned</text>
+      </g>
+      
+      <!-- Presenter Badge (Alex Vance) -->
+      <g transform="translate(30, 600)">
+        <rect width="210" height="34" rx="8" fill="#0F172A" opacity="0.85" />
+        <circle cx="20" cy="17" r="9" fill="#2563EB" />
+        <text x="20" y="21" class="font-sans" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">AV</text>
+        <text x="36" y="22" class="font-sans" font-size="12" font-weight="700" fill="#FFFFFF">Alex Vance (Presenting)</text>
+      </g>
+    </g>
+
+    <!-- Thumbnail Sidebar (Sarah Jenkins, David Miller, Michael Scott) -->
+    <g transform="translate(1000, 20)">
+      <!-- Thumbnail 1: Sarah Jenkins -->
+      <g transform="translate(0, 0)">
+        <rect width="260" height="210" rx="14" fill="#0F172A" stroke="#2563EB" stroke-width="2" />
+        <circle cx="130" cy="90" r="35" fill="#2563EB" />
+        <text x="130" y="98" class="font-sans" font-size="18" font-weight="800" fill="#FFFFFF" text-anchor="middle">SJ</text>
+        <!-- Overlay Name -->
+        <rect x="12" y="165" width="160" height="28" rx="6" fill="#020617" opacity="0.85" />
+        <text x="20" y="184" class="font-sans" font-size="11" font-weight="700" fill="#FFFFFF">Sarah Jenkins 🎙</text>
+      </g>
+
+      <!-- Thumbnail 2: David Miller -->
+      <g transform="translate(0, 225)">
+        <rect width="260" height="210" rx="14" fill="#0F172A" stroke="#334155" />
+        <circle cx="130" cy="90" r="35" fill="#4F46E5" />
+        <text x="130" y="98" class="font-sans" font-size="18" font-weight="800" fill="#FFFFFF" text-anchor="middle">DM</text>
+        <rect x="12" y="165" width="160" height="28" rx="6" fill="#020617" opacity="0.85" />
+        <text x="20" y="184" class="font-sans" font-size="11" font-weight="700" fill="#FFFFFF">David Miller (Muted)</text>
+      </g>
+
+      <!-- Thumbnail 3: Michael Scott -->
+      <g transform="translate(0, 450)">
+        <rect width="260" height="210" rx="14" fill="#0F172A" stroke="#334155" />
+        <circle cx="130" cy="90" r="35" fill="#059669" />
+        <text x="130" y="98" class="font-sans" font-size="18" font-weight="800" fill="#FFFFFF" text-anchor="middle">MS</text>
+        <rect x="12" y="165" width="160" height="28" rx="6" fill="#020617" opacity="0.85" />
+        <text x="20" y="184" class="font-sans" font-size="11" font-weight="700" fill="#FFFFFF">Michael Scott (Muted)</text>
+      </g>
+    </g>
+
+    <!-- Floating Jitsi Call Control Bar -->
+    <g transform="translate(420, 700)">
+      <rect width="440" height="60" rx="30" fill="#0F172A" stroke="#334155" class="hero-shadow" />
+      <!-- Mic -->
+      <circle cx="50" cy="30" r="20" fill="#1E293B" />
+      <text x="50" y="36" class="font-sans" font-size="16" fill="#FFFFFF" text-anchor="middle">🎙</text>
+      <!-- Cam -->
+      <circle cx="110" cy="30" r="20" fill="#1E293B" />
+      <text x="110" y="36" class="font-sans" font-size="16" fill="#FFFFFF" text-anchor="middle">📹</text>
+      <!-- Screen Share -->
+      <circle cx="170" cy="30" r="20" fill="#2563EB" />
+      <text x="170" y="36" class="font-sans" font-size="16" fill="#FFFFFF" text-anchor="middle">🖥</text>
+      <!-- Chat -->
+      <circle cx="230" cy="30" r="20" fill="#1E293B" />
+      <text x="230" y="36" class="font-sans" font-size="16" fill="#FFFFFF" text-anchor="middle">💬</text>
+      <!-- Raise Hand -->
+      <circle cx="290" cy="30" r="20" fill="#1E293B" />
+      <text x="290" y="36" class="font-sans" font-size="16" fill="#FFFFFF" text-anchor="middle">✋</text>
+      <!-- Red Hangup -->
+      <g transform="translate(340, 12)">
+        <rect width="80" height="36" rx="18" fill="#DC2626" />
+        <text x="40" y="23" class="font-sans" font-size="11" font-weight="700" fill="#FFFFFF" text-anchor="middle">Leave ✕</text>
+      </g>
+    </g>
+  </g>
+</svg>

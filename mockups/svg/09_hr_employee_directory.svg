@@ -1,0 +1,313 @@
+<svg width="1440" height="1680" viewBox="0 0 1440 1680" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .font-sans { font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+      .card-shadow { filter: drop-shadow(0 10px 25px rgba(15, 23, 42, 0.05)) drop-shadow(0 1px 3px rgba(15, 23, 42, 0.04)); }
+      .hero-shadow { filter: drop-shadow(0 20px 40px rgba(15, 23, 42, 0.08)) drop-shadow(0 2px 5px rgba(15, 23, 42, 0.04)); }
+      .btn-shadow { filter: drop-shadow(0 4px 14px rgba(37, 99, 235, 0.28)); }
+    </style>
+    <linearGradient id="primary-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563EB" />
+      <stop offset="100%" stop-color="#1D4ED8" />
+    </linearGradient>
+    <linearGradient id="pill-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#EFF6FF" />
+      <stop offset="100%" stop-color="#DBEAFE" />
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="1440" height="1680" fill="#F8FAFC" />
+  <circle cx="150" cy="180" r="280" fill="#2563EB" opacity="0.03" />
+  <circle cx="1290" cy="240" r="320" fill="#6366F1" opacity="0.03" />
+  <!-- ==================== TASK 1: LOCKED NAVBAR (HR) ==================== -->
+  <g id="Navbar-Hr" transform="translate(150, 24)">
+    <rect width="1140" height="70" rx="18" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1" class="card-shadow" />
+    
+    <!-- Logo: Bridgeway HR -->
+    <g transform="translate(24, 17)">
+      <rect width="36" height="36" rx="9" fill="#2563EB" />
+      <path d="M10 18L15 23L26 12" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="46" y="25" class="font-sans" font-size="19" font-weight="800" fill="#0F172A">Bridgeway<tspan fill="#2563EB">HR</tspan></text>
+    </g>
+    <g transform="translate(240, 26)">
+      <text x="0" y="15" class="font-sans" font-size="14" font-weight="500" fill="#475569">Home</text>
+      <text x="75" y="15" class="font-sans" font-size="14" font-weight="700" fill="#2563EB">Employees</text>
+      <circle cx="97" cy="25" r="2.5" fill="#2563EB" />
+      <text x="185" y="15" class="font-sans" font-size="14" font-weight="500" fill="#475569">Services ▾</text>
+      <text x="295" y="15" class="font-sans" font-size="14" font-weight="500" fill="#475569">About</text>
+      <text x="375" y="15" class="font-sans" font-size="14" font-weight="500" fill="#475569">Contact Us</text>
+    </g>
+    <!-- HR Profile Pill: Alex Vance + Logout -->
+    <g transform="translate(875, 14)">
+      <rect width="245" height="42" rx="21" fill="#F8FAFC" stroke="#E2E8F0" />
+      <circle cx="21" cy="21" r="16" fill="#0F172A" />
+      <text x="21" y="25" class="font-sans" font-size="11" font-weight="700" fill="#FFFFFF" text-anchor="middle">AV</text>
+      <text x="44" y="18" class="font-sans" font-size="12" font-weight="700" fill="#0F172A">Alex Vance</text>
+      <rect x="44" y="23" width="56" height="14" rx="7" fill="#FEF2F2" />
+      <text x="72" y="33" class="font-sans" font-size="8" font-weight="700" fill="#DC2626" text-anchor="middle">HR ADMIN</text>
+      <g transform="translate(170, 7)">
+        <rect width="65" height="28" rx="8" fill="#FEE2E2" />
+        <text x="32" y="18" class="font-sans" font-size="10" font-weight="700" fill="#DC2626" text-anchor="middle">Logout</text>
+      </g>
+    </g>
+  </g>
+  <!-- Page Header -->
+  <g transform="translate(150, 120)">
+    <text x="0" y="30" class="font-sans" font-size="28" font-weight="800" fill="#0F172A">Employee Directory &amp; Staff Administration</text>
+    <text x="0" y="54" class="font-sans" font-size="14" font-weight="400" fill="#64748B">Centralized workforce roster. Manage profiles, provision accounts, and administer roles.</text>
+    
+    <!-- Add Employee Button -->
+    <g transform="translate(950, 15)">
+      <rect width="190" height="44" rx="10" fill="#2563EB" class="btn-shadow" />
+      <text x="95" y="27" class="font-sans" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">+ Add New Employee</text>
+    </g>
+  </g>
+
+  <!-- Search & Filter Bar (Name, Email, Role/Position search + Dept filter) -->
+  <g transform="translate(150, 200)">
+    <rect width="1140" height="70" rx="16" fill="#FFFFFF" stroke="#E2E8F0" class="card-shadow" />
+    <g transform="translate(24, 16)">
+      <!-- Search Input -->
+      <rect width="640" height="38" rx="8" fill="#F8FAFC" stroke="#CBD5E1" />
+      <text x="16" y="24" class="font-sans" font-size="13" fill="#64748B">🔍 Search by Name, Work Email, or Role / Position...</text>
+      
+      <!-- Department Filter Dropdown -->
+      <g transform="translate(660, 0)">
+        <rect width="250" height="38" rx="8" fill="#FFFFFF" stroke="#CBD5E1" />
+        <text x="16" y="24" class="font-sans" font-size="13" fill="#0F172A">Filter Dept: All Departments ▾</text>
+      </g>
+      
+      <!-- Total Badge -->
+      <g transform="translate(930, 8)">
+        <text x="80" y="16" class="font-sans" font-size="12" font-weight="700" fill="#2563EB" text-anchor="end">4 Total Employees</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Employee Table (Clearly Visible Edit & Delete Buttons in Actions Column!) -->
+  <g transform="translate(150, 290)">
+    <rect width="1140" height="360" rx="20" fill="#FFFFFF" stroke="#E2E8F0" class="card-shadow" />
+    <g transform="translate(30, 25)">
+      <!-- Table Header -->
+      <rect width="1080" height="40" rx="8" fill="#F8FAFC" />
+      <text x="20" y="25" class="font-sans" font-size="12" font-weight="700" fill="#475569">EMPLOYEE NAME</text>
+      <text x="240" y="25" class="font-sans" font-size="12" font-weight="700" fill="#475569">ID</text>
+      <text x="330" y="25" class="font-sans" font-size="12" font-weight="700" fill="#475569">WORK EMAIL</text>
+      <text x="560" y="25" class="font-sans" font-size="12" font-weight="700" fill="#475569">DEPARTMENT</text>
+      <text x="710" y="25" class="font-sans" font-size="12" font-weight="700" fill="#475569">POSITION</text>
+      <text x="850" y="25" class="font-sans" font-size="12" font-weight="700" fill="#475569">STATUS</text>
+      <text x="960" y="25" class="font-sans" font-size="12" font-weight="700" fill="#475569">ACTIONS</text>
+
+      <!-- Row 1: Sarah Jenkins -->
+      <g transform="translate(0, 50)">
+        <rect width="1080" height="55" rx="8" fill="#FFFFFF" stroke="#E2E8F0" />
+        <circle cx="35" cy="27" r="15" fill="#2563EB" />
+        <text x="35" y="31" class="font-sans" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">SJ</text>
+        <text x="60" y="32" class="font-sans" font-size="13" font-weight="700" fill="#0F172A">Sarah Jenkins</text>
+        <text x="240" y="32" class="font-sans" font-size="13" fill="#64748B">#EMP-2041</text>
+        <text x="330" y="32" class="font-sans" font-size="13" fill="#0F172A">sarah.jenkins@bridgeway.corp</text>
+        <text x="560" y="32" class="font-sans" font-size="13" fill="#475569">Technology</text>
+        <text x="710" y="32" class="font-sans" font-size="13" fill="#475569">Frontend Engineer</text>
+        <rect x="840" y="16" width="70" height="22" rx="11" fill="#DCFCE7" />
+        <text x="875" y="31" class="font-sans" font-size="10" font-weight="700" fill="#059669" text-anchor="middle">Active</text>
+        
+        <!-- Actions: Clearly Visible Edit & Delete Buttons -->
+        <rect x="940" y="14" width="55" height="28" rx="6" fill="#EFF6FF" stroke="#BFDBFE" />
+        <text x="967" y="32" class="font-sans" font-size="11" font-weight="700" fill="#2563EB" text-anchor="middle">Edit</text>
+        <rect x="1005" y="14" width="60" height="28" rx="6" fill="#FEE2E2" stroke="#FECACA" />
+        <text x="1035" y="32" class="font-sans" font-size="11" font-weight="700" fill="#DC2626" text-anchor="middle">Delete</text>
+      </g>
+
+      <!-- Row 2: Alex Vance -->
+      <g transform="translate(0, 115)">
+        <rect width="1080" height="55" rx="8" fill="#FFFFFF" stroke="#E2E8F0" />
+        <circle cx="35" cy="27" r="15" fill="#0F172A" />
+        <text x="35" y="31" class="font-sans" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">AV</text>
+        <text x="60" y="32" class="font-sans" font-size="13" font-weight="700" fill="#0F172A">Alex Vance</text>
+        <text x="240" y="32" class="font-sans" font-size="13" fill="#64748B">#HR-1001</text>
+        <text x="330" y="32" class="font-sans" font-size="13" fill="#0F172A">alex.vance@bridgeway.corp</text>
+        <text x="560" y="32" class="font-sans" font-size="13" fill="#475569">Human Resources</text>
+        <text x="710" y="32" class="font-sans" font-size="13" fill="#475569">HR Director</text>
+        <rect x="840" y="16" width="70" height="22" rx="11" fill="#DCFCE7" />
+        <text x="875" y="31" class="font-sans" font-size="10" font-weight="700" fill="#059669" text-anchor="middle">Active</text>
+        
+        <rect x="940" y="14" width="55" height="28" rx="6" fill="#EFF6FF" stroke="#BFDBFE" />
+        <text x="967" y="32" class="font-sans" font-size="11" font-weight="700" fill="#2563EB" text-anchor="middle">Edit</text>
+        <rect x="1005" y="14" width="60" height="28" rx="6" fill="#FEE2E2" stroke="#FECACA" />
+        <text x="1035" y="32" class="font-sans" font-size="11" font-weight="700" fill="#DC2626" text-anchor="middle">Delete</text>
+      </g>
+
+      <!-- Row 3: Michael Scott -->
+      <g transform="translate(0, 180)">
+        <rect width="1080" height="55" rx="8" fill="#FFFFFF" stroke="#E2E8F0" />
+        <circle cx="35" cy="27" r="15" fill="#D97706" />
+        <text x="35" y="31" class="font-sans" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">MS</text>
+        <text x="60" y="32" class="font-sans" font-size="13" font-weight="700" fill="#0F172A">Michael Scott</text>
+        <text x="240" y="32" class="font-sans" font-size="13" fill="#64748B">#EMP-2015</text>
+        <text x="330" y="32" class="font-sans" font-size="13" fill="#0F172A">michael.scott@bridgeway.corp</text>
+        <text x="560" y="32" class="font-sans" font-size="13" fill="#475569">Sales</text>
+        <text x="710" y="32" class="font-sans" font-size="13" fill="#475569">Sales Representative</text>
+        <rect x="840" y="16" width="70" height="22" rx="11" fill="#DCFCE7" />
+        <text x="875" y="31" class="font-sans" font-size="10" font-weight="700" fill="#059669" text-anchor="middle">Active</text>
+        
+        <rect x="940" y="14" width="55" height="28" rx="6" fill="#EFF6FF" stroke="#BFDBFE" />
+        <text x="967" y="32" class="font-sans" font-size="11" font-weight="700" fill="#2563EB" text-anchor="middle">Edit</text>
+        <rect x="1005" y="14" width="60" height="28" rx="6" fill="#FEE2E2" stroke="#FECACA" />
+        <text x="1035" y="32" class="font-sans" font-size="11" font-weight="700" fill="#DC2626" text-anchor="middle">Delete</text>
+      </g>
+
+      <!-- Row 4: David Miller -->
+      <g transform="translate(0, 245)">
+        <rect width="1080" height="55" rx="8" fill="#FFFFFF" stroke="#E2E8F0" />
+        <circle cx="35" cy="27" r="15" fill="#4F46E5" />
+        <text x="35" y="31" class="font-sans" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">DM</text>
+        <text x="60" y="32" class="font-sans" font-size="13" font-weight="700" fill="#0F172A">David Miller</text>
+        <text x="240" y="32" class="font-sans" font-size="13" fill="#64748B">#EMP-2038</text>
+        <text x="330" y="32" class="font-sans" font-size="13" fill="#0F172A">david.miller@bridgeway.corp</text>
+        <text x="560" y="32" class="font-sans" font-size="13" fill="#475569">Design &amp; UX</text>
+        <text x="710" y="32" class="font-sans" font-size="13" fill="#475569">UI/UX Designer</text>
+        <rect x="840" y="16" width="70" height="22" rx="11" fill="#FEF3C7" />
+        <text x="875" y="31" class="font-sans" font-size="10" font-weight="700" fill="#D97706" text-anchor="middle">On Leave</text>
+        
+        <rect x="940" y="14" width="55" height="28" rx="6" fill="#EFF6FF" stroke="#BFDBFE" />
+        <text x="967" y="32" class="font-sans" font-size="11" font-weight="700" fill="#2563EB" text-anchor="middle">Edit</text>
+        <rect x="1005" y="14" width="60" height="28" rx="6" fill="#FEE2E2" stroke="#FECACA" />
+        <text x="1035" y="32" class="font-sans" font-size="11" font-weight="700" fill="#DC2626" text-anchor="middle">Delete</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Add Employee Modal Mockup (TASK 3 REQUIREMENT: Role, Status, Profile Picture fields added!) -->
+  <g transform="translate(370, 680)">
+    <rect width="700" height="520" rx="20" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2" class="hero-shadow" />
+    <g transform="translate(40, 30)">
+      <text x="0" y="20" class="font-sans" font-size="18" font-weight="800" fill="#0F172A">Provision New Employee Account (HR Only)</text>
+      <text x="0" y="40" class="font-sans" font-size="12" fill="#64748B">Account credentials will be stored in LocalStorage for secure role routing.</text>
+
+      <!-- Row 1: Role, Status, Profile Picture (TASK 3!) -->
+      <g transform="translate(0, 60)">
+        <g>
+          <text x="0" y="0" class="font-sans" font-size="11" font-weight="700" fill="#2563EB">Assigned Role</text>
+          <rect y="10" width="190" height="38" rx="6" fill="#FFFFFF" stroke="#CBD5E1" />
+          <text x="12" y="33" class="font-sans" font-size="12" fill="#0F172A">Employee (or HR) ▾</text>
+        </g>
+        <g transform="translate(210, 0)">
+          <text x="0" y="0" class="font-sans" font-size="11" font-weight="700" fill="#2563EB">Employment Status</text>
+          <rect y="10" width="190" height="38" rx="6" fill="#FFFFFF" stroke="#CBD5E1" />
+          <text x="12" y="33" class="font-sans" font-size="12" fill="#0F172A">Active (or On Leave) ▾</text>
+        </g>
+        <g transform="translate(420, 0)">
+          <text x="0" y="0" class="font-sans" font-size="11" font-weight="700" fill="#2563EB">Profile Picture</text>
+          <rect y="10" width="200" height="38" rx="6" fill="#F8FAFC" stroke="#CBD5E1" />
+          <text x="12" y="33" class="font-sans" font-size="12" fill="#64748B">📷 Upload Avatar...</text>
+        </g>
+      </g>
+
+      <!-- Row 2: Name & Email -->
+      <g transform="translate(0, 125)">
+        <g>
+          <text x="0" y="0" class="font-sans" font-size="11" font-weight="700" fill="#334155">Full Name</text>
+          <rect y="10" width="300" height="38" rx="6" fill="#FFFFFF" stroke="#CBD5E1" />
+          <text x="12" y="33" class="font-sans" font-size="12" fill="#0F172A">Tariq Mansour</text>
+        </g>
+        <g transform="translate(320, 0)">
+          <text x="0" y="0" class="font-sans" font-size="11" font-weight="700" fill="#334155">Work Email</text>
+          <rect y="10" width="300" height="38" rx="6" fill="#FFFFFF" stroke="#CBD5E1" />
+          <text x="12" y="33" class="font-sans" font-size="12" fill="#0F172A">tariq.mansour@bridgeway.corp</text>
+        </g>
+      </g>
+
+      <!-- Row 3: Department & Position -->
+      <g transform="translate(0, 190)">
+        <g>
+          <text x="0" y="0" class="font-sans" font-size="11" font-weight="700" fill="#334155">Department</text>
+          <rect y="10" width="300" height="38" rx="6" fill="#FFFFFF" stroke="#CBD5E1" />
+          <text x="12" y="33" class="font-sans" font-size="12" fill="#0F172A">Technology ▾</text>
+        </g>
+        <g transform="translate(320, 0)">
+          <text x="0" y="0" class="font-sans" font-size="11" font-weight="700" fill="#334155">Position / Title</text>
+          <rect y="10" width="300" height="38" rx="6" fill="#FFFFFF" stroke="#CBD5E1" />
+          <text x="12" y="33" class="font-sans" font-size="12" fill="#0F172A">Backend Engineer</text>
+        </g>
+      </g>
+
+      <!-- Row 4: Password & Confirm -->
+      <g transform="translate(0, 255)">
+        <g>
+          <text x="0" y="0" class="font-sans" font-size="11" font-weight="700" fill="#334155">Temporary Password</text>
+          <rect y="10" width="300" height="38" rx="6" fill="#FFFFFF" stroke="#CBD5E1" />
+          <text x="12" y="33" class="font-sans" font-size="12" fill="#0F172A">••••••••••••</text>
+        </g>
+        <g transform="translate(320, 0)">
+          <text x="0" y="0" class="font-sans" font-size="11" font-weight="700" fill="#334155">Confirm Password</text>
+          <rect y="10" width="300" height="38" rx="6" fill="#FFFFFF" stroke="#CBD5E1" />
+          <text x="12" y="33" class="font-sans" font-size="12" fill="#0F172A">••••••••••••</text>
+        </g>
+      </g>
+
+      <!-- Row 5: Phone & Joining Date -->
+      <g transform="translate(0, 320)">
+        <g>
+          <text x="0" y="0" class="font-sans" font-size="11" font-weight="700" fill="#334155">Phone Number</text>
+          <rect y="10" width="300" height="38" rx="6" fill="#FFFFFF" stroke="#CBD5E1" />
+          <text x="12" y="33" class="font-sans" font-size="12" fill="#0F172A">+962 79 555 4321</text>
+        </g>
+        <g transform="translate(320, 0)">
+          <text x="0" y="0" class="font-sans" font-size="11" font-weight="700" fill="#334155">Joining Date</text>
+          <rect y="10" width="300" height="38" rx="6" fill="#FFFFFF" stroke="#CBD5E1" />
+          <text x="12" y="33" class="font-sans" font-size="12" fill="#0F172A">2026-10-01</text>
+        </g>
+      </g>
+
+      <!-- Modal Action Buttons -->
+      <g transform="translate(0, 400)">
+        <rect width="180" height="42" rx="8" fill="#2563EB" class="btn-shadow" />
+        <text x="90" y="26" class="font-sans" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">Save Employee</text>
+        <rect x="195" width="120" height="42" rx="8" fill="#FFFFFF" stroke="#E2E8F0" />
+        <text x="255" y="26" class="font-sans" font-size="13" font-weight="600" fill="#64748B" text-anchor="middle">Cancel</text>
+      </g>
+    </g>
+  </g>
+  <!-- ==================== GLOBAL FOOTER (HR) ==================== -->
+  <g id="Footer" transform="translate(150, 1260)">
+    <rect width="1140" height="240" rx="24" fill="#0F172A" />
+    
+    <!-- Left Column: HQ Details & Map Box -->
+    <g transform="translate(40, 36)">
+      <text x="0" y="20" class="font-sans" font-size="20" font-weight="800" fill="#FFFFFF">Bridgeway<tspan fill="#3B82F6">HR</tspan></text>
+      <text x="0" y="52" class="font-sans" font-size="13" font-weight="400" fill="#94A3B8">King Hussein Business Park • Building 23</text>
+      <text x="0" y="72" class="font-sans" font-size="13" font-weight="400" fill="#94A3B8">Amman 11831, Jordan</text>
+      <text x="0" y="100" class="font-sans" font-size="13" font-weight="600" fill="#60A5FA">📞 +962 6 550 4400</text>
+      <text x="0" y="120" class="font-sans" font-size="13" font-weight="600" fill="#60A5FA">✉ hr-ops@bridgeway.corp</text>
+      
+      <!-- Mini Map Box -->
+      <g transform="translate(0, 142)">
+        <rect width="280" height="70" rx="10" fill="#1E293B" stroke="#334155" />
+        <text x="16" y="28" class="font-sans" font-size="12" font-weight="700" fill="#FFFFFF">📍 Amman Innovation HQ Map</text>
+        <text x="16" y="48" class="font-sans" font-size="11" font-weight="400" fill="#38BDF8">View on Google Maps ↗ (31.9753° N, 35.8344° E)</text>
+      </g>
+    </g>
+
+    <!-- Center Navigation Links -->
+    <g transform="translate(420, 36)">
+      <text x="0" y="20" class="font-sans" font-size="14" font-weight="700" fill="#FFFFFF">Quick Navigation</text>
+      <text x="0" y="52" class="font-sans" font-size="13" font-weight="500" fill="#94A3B8">Home</text>
+      <text x="0" y="77" class="font-sans" font-size="13" font-weight="500" fill="#94A3B8">About Bridgeway</text>
+      <text x="0" y="102" class="font-sans" font-size="13" font-weight="500" fill="#94A3B8">Contact &amp; Inquiries</text>
+      <text x="0" y="127" class="font-sans" font-size="13" font-weight="500" fill="#94A3B8">Company Policies</text>
+      <text x="0" y="152" class="font-sans" font-size="13" font-weight="500" fill="#94A3B8">Meetings Portal (Jitsi)</text>
+    </g>
+    <!-- Right Column: HR Administrative Console Info (NO FEEDBACK FORM) -->
+    <g transform="translate(680, 36)">
+      <rect width="420" height="150" rx="14" fill="#1E293B" stroke="#334155" />
+      <text x="24" y="32" class="font-sans" font-size="14" font-weight="700" fill="#FFFFFF">Administrative Control Center</text>
+      <text x="24" y="55" class="font-sans" font-size="12" font-weight="400" fill="#94A3B8">Logged in as: <tspan fill="#F8FAFC" font-weight="700">Alex Vance (HR Director)</tspan></text>
+      <text x="24" y="78" class="font-sans" font-size="12" font-weight="400" fill="#94A3B8">Workforce Directory • Leave Approvals Desk • Tasks &amp; Jitsi Meetings</text>
+      <rect x="24" y="98" width="160" height="28" rx="6" fill="#0F172A" stroke="#334155" />
+      <text x="104" y="116" class="font-sans" font-size="11" font-weight="600" fill="#10B981" text-anchor="middle">● System Engine Online</text>
+    </g>
+    <line x1="40" y1="195" x2="1100" y2="195" stroke="#1E293B" stroke-width="1" />
+    <text x="40" y="220" class="font-sans" font-size="12" font-weight="500" fill="#64748B">© 2026 Bridgeway HR Management System • Project Deliverable</text>
+    <text x="1100" y="220" class="font-sans" font-size="12" font-weight="500" fill="#64748B" text-anchor="end">Amman, Jordan</text>
+  </g>
+</svg>

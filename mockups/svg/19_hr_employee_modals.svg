@@ -1,0 +1,192 @@
+<svg width="1440" height="1320" viewBox="0 0 1440 1320" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .font-sans { font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+      .card-shadow { filter: drop-shadow(0 10px 25px rgba(15, 23, 42, 0.05)) drop-shadow(0 1px 3px rgba(15, 23, 42, 0.04)); }
+      .hero-shadow { filter: drop-shadow(0 20px 40px rgba(15, 23, 42, 0.08)) drop-shadow(0 2px 5px rgba(15, 23, 42, 0.04)); }
+      .btn-shadow { filter: drop-shadow(0 4px 14px rgba(37, 99, 235, 0.28)); }
+    </style>
+    <linearGradient id="primary-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563EB" />
+      <stop offset="100%" stop-color="#1D4ED8" />
+    </linearGradient>
+    <linearGradient id="pill-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#EFF6FF" />
+      <stop offset="100%" stop-color="#DBEAFE" />
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="1440" height="1320" fill="#F8FAFC" />
+  <circle cx="150" cy="180" r="280" fill="#2563EB" opacity="0.03" />
+  <circle cx="1290" cy="240" r="320" fill="#6366F1" opacity="0.03" />
+  <!-- ==================== TASK 1: LOCKED NAVBAR (HR) ==================== -->
+  <g id="Navbar-Hr" transform="translate(150, 24)">
+    <rect width="1140" height="70" rx="18" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1" class="card-shadow" />
+    
+    <!-- Logo: Bridgeway HR -->
+    <g transform="translate(24, 17)">
+      <rect width="36" height="36" rx="9" fill="#2563EB" />
+      <path d="M10 18L15 23L26 12" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="46" y="25" class="font-sans" font-size="19" font-weight="800" fill="#0F172A">Bridgeway<tspan fill="#2563EB">HR</tspan></text>
+    </g>
+    <g transform="translate(240, 26)">
+      <text x="0" y="15" class="font-sans" font-size="14" font-weight="500" fill="#475569">Home</text>
+      <text x="75" y="15" class="font-sans" font-size="14" font-weight="700" fill="#2563EB">Employees</text>
+      <circle cx="97" cy="25" r="2.5" fill="#2563EB" />
+      <text x="185" y="15" class="font-sans" font-size="14" font-weight="500" fill="#475569">Services ▾</text>
+      <text x="295" y="15" class="font-sans" font-size="14" font-weight="500" fill="#475569">About</text>
+      <text x="375" y="15" class="font-sans" font-size="14" font-weight="500" fill="#475569">Contact Us</text>
+    </g>
+    <!-- HR Profile Pill: Alex Vance + Logout -->
+    <g transform="translate(875, 14)">
+      <rect width="245" height="42" rx="21" fill="#F8FAFC" stroke="#E2E8F0" />
+      <circle cx="21" cy="21" r="16" fill="#0F172A" />
+      <text x="21" y="25" class="font-sans" font-size="11" font-weight="700" fill="#FFFFFF" text-anchor="middle">AV</text>
+      <text x="44" y="18" class="font-sans" font-size="12" font-weight="700" fill="#0F172A">Alex Vance</text>
+      <rect x="44" y="23" width="56" height="14" rx="7" fill="#FEF2F2" />
+      <text x="72" y="33" class="font-sans" font-size="8" font-weight="700" fill="#DC2626" text-anchor="middle">HR ADMIN</text>
+      <g transform="translate(170, 7)">
+        <rect width="65" height="28" rx="8" fill="#FEE2E2" />
+        <text x="32" y="18" class="font-sans" font-size="10" font-weight="700" fill="#DC2626" text-anchor="middle">Logout</text>
+      </g>
+    </g>
+  </g>
+  <!-- Page Header Background -->
+  <g transform="translate(150, 120)">
+    <text x="0" y="30" class="font-sans" font-size="28" font-weight="800" fill="#0F172A">Employee Directory Administration</text>
+    <text x="0" y="54" class="font-sans" font-size="14" font-weight="400" fill="#64748B">Administrative workforce management, account updates, and profile lifecycle operations.</text>
+  </g>
+
+  <!-- Dark Backdrop -->
+  <rect x="0" y="0" width="1440" height="1320" fill="#0F172A" opacity="0.6" />
+
+  <!-- Container for Two Dialogs: Left Edit Modal, Right Delete Confirmation Dialog -->
+  <g transform="translate(150, 150)">
+    <!-- Modal 1: Edit Employee Modal (All required fields including Role, Status, Profile Picture) -->
+    <g transform="translate(0, 0)">
+      <rect width="680" height="960" rx="20" fill="#FFFFFF" class="hero-shadow" />
+      
+      <!-- Modal Header -->
+      <g transform="translate(36, 30)">
+        <text x="0" y="24" class="font-sans" font-size="20" font-weight="800" fill="#0F172A">Edit Employee: Sarah Jenkins</text>
+        <text x="0" y="46" class="font-sans" font-size="13" fill="#64748B">System ID: #EMP-2041 • Modify account data and workforce permissions</text>
+        <text x="580" y="24" class="font-sans" font-size="20" fill="#94A3B8">✕</text>
+      </g>
+
+      <!-- Profile Picture & Status Row -->
+      <g transform="translate(36, 110)">
+        <circle cx="36" cy="36" r="32" fill="#2563EB" />
+        <text x="36" y="44" class="font-sans" font-size="20" font-weight="800" fill="#FFFFFF" text-anchor="middle">SJ</text>
+        <g transform="translate(90, 10)">
+          <rect width="170" height="34" rx="8" fill="#F1F5F9" stroke="#CBD5E1" />
+          <text x="85" y="22" class="font-sans" font-size="11" font-weight="700" fill="#334155" text-anchor="middle">📷 Upload New Picture</text>
+          <text x="0" y="48" class="font-sans" font-size="11" fill="#64748B">JPG, PNG up to 2MB. Stored locally.</text>
+        </g>
+      </g>
+
+      <!-- Form Grid -->
+      <g transform="translate(36, 200)">
+        <!-- Name & Email -->
+        <g transform="translate(0, 0)">
+          <text x="0" y="14" class="font-sans" font-size="11" font-weight="700" fill="#475569">FULL NAME <tspan fill="#DC2626">*</tspan></text>
+          <rect y="22" width="290" height="38" rx="8" fill="#F8FAFC" stroke="#CBD5E1" />
+          <text x="14" y="46" class="font-sans" font-size="13" font-weight="700" fill="#0F172A">Sarah Jenkins</text>
+
+          <text x="310" y="14" class="font-sans" font-size="11" font-weight="700" fill="#475569">WORK EMAIL <tspan fill="#DC2626">*</tspan></text>
+          <rect x="310" y="22" width="290" height="38" rx="8" fill="#F8FAFC" stroke="#CBD5E1" />
+          <text x="324" y="46" class="font-sans" font-size="13" fill="#0F172A">sarah.jenkins@bridgeway.corp</text>
+        </g>
+
+        <!-- Department & Position -->
+        <g transform="translate(0, 80)">
+          <text x="0" y="14" class="font-sans" font-size="11" font-weight="700" fill="#475569">DEPARTMENT <tspan fill="#DC2626">*</tspan></text>
+          <rect y="22" width="290" height="38" rx="8" fill="#FFFFFF" stroke="#CBD5E1" />
+          <text x="14" y="46" class="font-sans" font-size="13" fill="#0F172A">Technology ▾</text>
+
+          <text x="310" y="14" class="font-sans" font-size="11" font-weight="700" fill="#475569">POSITION / TITLE <tspan fill="#DC2626">*</tspan></text>
+          <rect x="310" y="22" width="290" height="38" rx="8" fill="#FFFFFF" stroke="#CBD5E1" />
+          <text x="324" y="46" class="font-sans" font-size="13" fill="#0F172A">Frontend Engineer</text>
+        </g>
+
+        <!-- Role & Status (TASK 3 REQUIREMENT: Employee/HR role + Active/On Leave) -->
+        <g transform="translate(0, 160)">
+          <text x="0" y="14" class="font-sans" font-size="11" font-weight="700" fill="#475569">SYSTEM ROLE <tspan fill="#DC2626">*</tspan></text>
+          <rect y="22" width="140" height="36" rx="8" fill="#EFF6FF" stroke="#2563EB" />
+          <text x="70" y="45" class="font-sans" font-size="12" font-weight="700" fill="#2563EB" text-anchor="middle">● Employee</text>
+          <rect x="150" y="22" width="140" height="36" rx="8" fill="#F8FAFC" stroke="#E2E8F0" />
+          <text x="220" y="45" class="font-sans" font-size="12" font-weight="600" fill="#64748B" text-anchor="middle">○ HR Admin</text>
+
+          <text x="310" y="14" class="font-sans" font-size="11" font-weight="700" fill="#475569">EMPLOYMENT STATUS <tspan fill="#DC2626">*</tspan></text>
+          <rect x="310" y="22" width="140" height="36" rx="8" fill="#DCFCE7" stroke="#16A34A" />
+          <text x="380" y="45" class="font-sans" font-size="12" font-weight="700" fill="#15803D" text-anchor="middle">● Active</text>
+          <rect x="460" y="22" width="140" height="36" rx="8" fill="#F8FAFC" stroke="#E2E8F0" />
+          <text x="530" y="45" class="font-sans" font-size="12" font-weight="600" fill="#64748B" text-anchor="middle">○ On Leave</text>
+        </g>
+
+        <!-- Temporary Password & Confirm Password -->
+        <g transform="translate(0, 245)">
+          <text x="0" y="14" class="font-sans" font-size="11" font-weight="700" fill="#475569">TEMPORARY / RESET PASSWORD</text>
+          <rect y="22" width="290" height="38" rx="8" fill="#FFFFFF" stroke="#CBD5E1" />
+          <text x="14" y="46" class="font-sans" font-size="13" fill="#64748B">••••••••••••</text>
+
+          <text x="310" y="14" class="font-sans" font-size="11" font-weight="700" fill="#475569">CONFIRM PASSWORD</text>
+          <rect x="310" y="22" width="290" height="38" rx="8" fill="#FFFFFF" stroke="#CBD5E1" />
+          <text x="324" y="46" class="font-sans" font-size="13" fill="#64748B">••••••••••••</text>
+        </g>
+
+        <!-- Phone & Joining Date -->
+        <g transform="translate(0, 330)">
+          <text x="0" y="14" class="font-sans" font-size="11" font-weight="700" fill="#475569">PHONE NUMBER</text>
+          <rect y="22" width="290" height="38" rx="8" fill="#FFFFFF" stroke="#CBD5E1" />
+          <text x="14" y="46" class="font-sans" font-size="13" fill="#0F172A">+962 79 123 4567</text>
+
+          <text x="310" y="14" class="font-sans" font-size="11" font-weight="700" fill="#475569">JOINING DATE</text>
+          <rect x="310" y="22" width="290" height="38" rx="8" fill="#F8FAFC" stroke="#CBD5E1" />
+          <text x="324" y="46" class="font-sans" font-size="13" fill="#0F172A">March 15, 2024</text>
+        </g>
+
+        <!-- Modal Action Buttons -->
+        <g transform="translate(0, 420)">
+          <rect width="180" height="44" rx="10" fill="#F1F5F9" stroke="#CBD5E1" />
+          <text x="90" y="27" class="font-sans" font-size="13" font-weight="700" fill="#475569" text-anchor="middle">Cancel</text>
+
+          <rect x="200" width="400" height="44" rx="10" fill="#2563EB" class="btn-shadow" />
+          <text x="400" y="27" class="font-sans" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">Save Changes to Directory →</text>
+        </g>
+      </g>
+    </g>
+
+    <!-- Modal 2: Delete Confirmation Dialog -->
+    <g transform="translate(720, 80)">
+      <rect width="420" height="360" rx="20" fill="#FFFFFF" class="hero-shadow" />
+      
+      <!-- Warning Icon -->
+      <g transform="translate(36, 36)">
+        <circle cx="30" cy="30" r="30" fill="#FEE2E2" />
+        <text x="30" y="38" class="font-sans" font-size="24" fill="#DC2626" text-anchor="middle">⚠️</text>
+        
+        <text x="75" y="28" class="font-sans" font-size="18" font-weight="800" fill="#0F172A">Delete Employee?</text>
+        <text x="75" y="48" class="font-sans" font-size="12" fill="#DC2626" font-weight="700">Permanent Action • Cannot Be Undone</text>
+      </g>
+
+      <!-- Message text -->
+      <g transform="translate(36, 120)">
+        <text x="0" y="20" class="font-sans" font-size="13" fill="#334155">Are you sure you want to permanently delete employee</text>
+        <text x="0" y="42" class="font-sans" font-size="14" font-weight="800" fill="#0F172A">Sarah Jenkins (#EMP-2041)?</text>
+        <text x="0" y="75" class="font-sans" font-size="12" fill="#64748B">This action will immediately:</text>
+        <text x="14" y="98" class="font-sans" font-size="12" fill="#64748B">• Revoke login access and invalidate active session tokens.</text>
+        <text x="14" y="118" class="font-sans" font-size="12" fill="#64748B">• Reassign pending tasks to Unassigned pool.</text>
+        <text x="14" y="138" class="font-sans" font-size="12" fill="#64748B">• Archive historical leave records in compliance archive.</text>
+      </g>
+
+      <!-- Dialog Buttons -->
+      <g transform="translate(36, 280)">
+        <rect width="140" height="42" rx="10" fill="#F1F5F9" stroke="#CBD5E1" />
+        <text x="70" y="26" class="font-sans" font-size="13" font-weight="700" fill="#475569" text-anchor="middle">Cancel</text>
+        
+        <rect x="155" width="195" height="42" rx="10" fill="#DC2626" class="hero-shadow" />
+        <text x="252" y="26" class="font-sans" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">Yes, Delete Employee</text>
+      </g>
+    </g>
+  </g>
+</svg>

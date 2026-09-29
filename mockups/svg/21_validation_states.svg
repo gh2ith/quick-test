@@ -1,0 +1,183 @@
+<svg width="1440" height="1380" viewBox="0 0 1440 1380" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .font-sans { font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+      .card-shadow { filter: drop-shadow(0 10px 25px rgba(15, 23, 42, 0.05)) drop-shadow(0 1px 3px rgba(15, 23, 42, 0.04)); }
+      .hero-shadow { filter: drop-shadow(0 20px 40px rgba(15, 23, 42, 0.08)) drop-shadow(0 2px 5px rgba(15, 23, 42, 0.04)); }
+      .btn-shadow { filter: drop-shadow(0 4px 14px rgba(37, 99, 235, 0.28)); }
+    </style>
+    <linearGradient id="primary-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563EB" />
+      <stop offset="100%" stop-color="#1D4ED8" />
+    </linearGradient>
+    <linearGradient id="pill-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#EFF6FF" />
+      <stop offset="100%" stop-color="#DBEAFE" />
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="1440" height="1380" fill="#F8FAFC" />
+  <circle cx="150" cy="180" r="280" fill="#2563EB" opacity="0.03" />
+  <circle cx="1290" cy="240" r="320" fill="#6366F1" opacity="0.03" />
+  <!-- ==================== TASK 1: LOCKED NAVBAR (GUEST) ==================== -->
+  <g id="Navbar-Guest" transform="translate(150, 24)">
+    <rect width="1140" height="70" rx="18" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1" class="card-shadow" />
+    
+    <!-- Logo: Bridgeway HR -->
+    <g transform="translate(24, 17)">
+      <rect width="36" height="36" rx="9" fill="#2563EB" />
+      <path d="M10 18L15 23L26 12" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="46" y="25" class="font-sans" font-size="19" font-weight="800" fill="#0F172A">Bridgeway<tspan fill="#2563EB">HR</tspan></text>
+    </g>
+    <g transform="translate(450, 26)">
+      <text x="0" y="15" class="font-sans" font-size="14" font-weight="700" fill="#2563EB">Home</text>
+      <circle cx="20" cy="25" r="2.5" fill="#2563EB" />
+      <text x="85" y="15" class="font-sans" font-size="14" font-weight="500" fill="#475569">About</text>
+      <text x="170" y="15" class="font-sans" font-size="14" font-weight="500" fill="#475569">Contact Us</text>
+    </g>
+    <g transform="translate(995, 15)">
+      <rect width="120" height="40" rx="10" fill="#2563EB" class="btn-shadow"/>
+      <text x="60" y="21" class="font-sans" font-size="13" font-weight="600" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">Login →</text>
+    </g>
+  </g>
+  <!-- Page Header -->
+  <g transform="translate(150, 120)">
+    <text x="0" y="30" class="font-sans" font-size="28" font-weight="800" fill="#0F172A">System Form Validation States &amp; Error Handling</text>
+    <text x="0" y="54" class="font-sans" font-size="14" font-weight="400" fill="#64748B">Interactive feedback specifications adhering strictly to Bootstrap 5 validation standards (.is-invalid, .invalid-feedback).</text>
+  </g>
+
+  <!-- Section 1: Login Form Validation States -->
+  <g transform="translate(150, 200)">
+    <rect width="1140" height="480" rx="20" fill="#FFFFFF" stroke="#E2E8F0" class="card-shadow" />
+    <g transform="translate(36, 32)">
+      <text x="0" y="24" class="font-sans" font-size="18" font-weight="800" fill="#0F172A">1. Login Authentication Validation States</text>
+      <text x="0" y="46" class="font-sans" font-size="12" fill="#64748B">Handles empty submissions, malformed email formats, and invalid credentials</text>
+
+      <!-- State A: Empty Required Fields -->
+      <g transform="translate(0, 70)">
+        <rect width="330" height="340" rx="14" fill="#F8FAFC" stroke="#E2E8F0" />
+        <rect x="20" y="16" width="140" height="22" rx="11" fill="#FEE2E2" />
+        <text x="90" y="31" class="font-sans" font-size="10" font-weight="700" fill="#DC2626" text-anchor="middle">State A: Empty Fields</text>
+        
+        <g transform="translate(20, 55)">
+          <text x="0" y="14" class="font-sans" font-size="11" font-weight="700" fill="#DC2626">WORK EMAIL</text>
+          <rect y="22" width="290" height="38" rx="8" fill="#FFF5F5" stroke="#DC2626" stroke-width="1.5" />
+          <text x="265" y="46" class="font-sans" font-size="13" fill="#DC2626">⚠️</text>
+          <text x="0" y="74" class="font-sans" font-size="11" font-weight="600" fill="#DC2626">Please provide your work email address.</text>
+        </g>
+
+        <g transform="translate(20, 150)">
+          <text x="0" y="14" class="font-sans" font-size="11" font-weight="700" fill="#DC2626">PASSWORD</text>
+          <rect y="22" width="290" height="38" rx="8" fill="#FFF5F5" stroke="#DC2626" stroke-width="1.5" />
+          <text x="265" y="46" class="font-sans" font-size="13" fill="#DC2626">⚠️</text>
+          <text x="0" y="74" class="font-sans" font-size="11" font-weight="600" fill="#DC2626">Password is required to authenticate.</text>
+        </g>
+        
+        <rect x="20" y="270" width="290" height="40" rx="8" fill="#94A3B8" />
+        <text x="165" y="295" class="font-sans" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">Sign In (Blocked)</text>
+      </g>
+
+      <!-- State B: Invalid Email Syntax -->
+      <g transform="translate(365, 70)">
+        <rect width="330" height="340" rx="14" fill="#F8FAFC" stroke="#E2E8F0" />
+        <rect x="20" y="16" width="150" height="22" rx="11" fill="#FEE2E2" />
+        <text x="95" y="31" class="font-sans" font-size="10" font-weight="700" fill="#DC2626" text-anchor="middle">State B: Invalid Email</text>
+        
+        <g transform="translate(20, 55)">
+          <text x="0" y="14" class="font-sans" font-size="11" font-weight="700" fill="#DC2626">WORK EMAIL</text>
+          <rect y="22" width="290" height="38" rx="8" fill="#FFF5F5" stroke="#DC2626" stroke-width="1.5" />
+          <text x="14" y="46" class="font-sans" font-size="13" fill="#0F172A">sarah.jenkins.corp</text>
+          <text x="265" y="46" class="font-sans" font-size="13" fill="#DC2626">⚠️</text>
+          <text x="0" y="74" class="font-sans" font-size="11" font-weight="600" fill="#DC2626">Must be a valid email (e.g. name@bridgeway.corp)</text>
+        </g>
+
+        <g transform="translate(20, 150)">
+          <text x="0" y="14" class="font-sans" font-size="11" font-weight="700" fill="#334155">PASSWORD</text>
+          <rect y="22" width="290" height="38" rx="8" fill="#FFFFFF" stroke="#CBD5E1" />
+          <text x="14" y="46" class="font-sans" font-size="13" fill="#64748B">••••••••••••</text>
+        </g>
+
+        <rect x="20" y="270" width="290" height="40" rx="8" fill="#94A3B8" />
+        <text x="165" y="295" class="font-sans" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">Sign In (Blocked)</text>
+      </g>
+
+      <!-- State C: Wrong Credentials -->
+      <g transform="translate(730, 70)">
+        <rect width="330" height="340" rx="14" fill="#F8FAFC" stroke="#E2E8F0" />
+        <rect x="20" y="16" width="170" height="22" rx="11" fill="#FEE2E2" />
+        <text x="105" y="31" class="font-sans" font-size="10" font-weight="700" fill="#DC2626" text-anchor="middle">State C: Wrong Credentials</text>
+        
+        <!-- Danger Alert Banner -->
+        <g transform="translate(20, 50)">
+          <rect width="290" height="52" rx="8" fill="#FEF2F2" stroke="#FCA5A5" />
+          <text x="12" y="22" class="font-sans" font-size="11" font-weight="700" fill="#991B1B">Authentication Failed</text>
+          <text x="12" y="40" class="font-sans" font-size="10" fill="#B91C1C">Invalid email or password combination.</text>
+        </g>
+
+        <g transform="translate(20, 115)">
+          <text x="0" y="14" class="font-sans" font-size="11" font-weight="700" fill="#334155">WORK EMAIL</text>
+          <rect y="22" width="290" height="38" rx="8" fill="#FFFFFF" stroke="#CBD5E1" />
+          <text x="14" y="46" class="font-sans" font-size="12" fill="#0F172A">sarah.jenkins@bridgeway.corp</text>
+        </g>
+
+        <g transform="translate(20, 190)">
+          <text x="0" y="14" class="font-sans" font-size="11" font-weight="700" fill="#334155">PASSWORD</text>
+          <rect y="22" width="290" height="38" rx="8" fill="#FFFFFF" stroke="#CBD5E1" />
+          <text x="14" y="46" class="font-sans" font-size="12" fill="#64748B">••••••••••••</text>
+        </g>
+
+        <rect x="20" y="270" width="290" height="40" rx="8" fill="#2563EB" />
+        <text x="165" y="295" class="font-sans" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">Retry Sign In →</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Section 2: Add Employee Modal Validation States (Duplicate Email & Password Mismatch) -->
+  <g transform="translate(150, 710)">
+    <rect width="1140" height="460" rx="20" fill="#FFFFFF" stroke="#E2E8F0" class="card-shadow" />
+    <g transform="translate(36, 32)">
+      <text x="0" y="24" class="font-sans" font-size="18" font-weight="800" fill="#0F172A">2. HR Add Employee Form Validation States</text>
+      <text x="0" y="46" class="font-sans" font-size="12" fill="#64748B">Enforces unique organizational emails, matching password confirmations, and mandatory profile fields</text>
+
+      <!-- Duplicate Email State -->
+      <g transform="translate(0, 70)">
+        <rect width="520" height="320" rx="14" fill="#F8FAFC" stroke="#E2E8F0" />
+        <rect x="20" y="16" width="180" height="22" rx="11" fill="#FEE2E2" />
+        <text x="110" y="31" class="font-sans" font-size="10" font-weight="700" fill="#DC2626" text-anchor="middle">State D: Duplicate Email Error</text>
+        
+        <g transform="translate(20, 60)">
+          <text x="0" y="14" class="font-sans" font-size="11" font-weight="700" fill="#DC2626">WORK EMAIL ADDRESS <tspan fill="#DC2626">*</tspan></text>
+          <rect y="22" width="480" height="40" rx="8" fill="#FFF5F5" stroke="#DC2626" stroke-width="1.5" />
+          <text x="14" y="47" class="font-sans" font-size="13" font-weight="600" fill="#0F172A">sarah.jenkins@bridgeway.corp</text>
+          <text x="450" y="47" class="font-sans" font-size="14" fill="#DC2626">⚠️</text>
+          
+          <!-- Explicit Error Text -->
+          <rect y="70" width="480" height="46" rx="8" fill="#FEF2F2" stroke="#FCA5A5" />
+          <text x="14" y="90" class="font-sans" font-size="11" font-weight="700" fill="#991B1B">Duplicate Email Detected</text>
+          <text x="14" y="106" class="font-sans" font-size="11" fill="#B91C1C">This email is already assigned to Sarah Jenkins (#EMP-2041).</text>
+        </g>
+      </g>
+
+      <!-- Password Mismatch State -->
+      <g transform="translate(560, 70)">
+        <rect width="520" height="320" rx="14" fill="#F8FAFC" stroke="#E2E8F0" />
+        <rect x="20" y="16" width="200" height="22" rx="11" fill="#FEE2E2" />
+        <text x="120" y="31" class="font-sans" font-size="10" font-weight="700" fill="#DC2626" text-anchor="middle">State E: Password Mismatch Error</text>
+        
+        <g transform="translate(20, 60)">
+          <text x="0" y="14" class="font-sans" font-size="11" font-weight="700" fill="#334155">TEMPORARY PASSWORD <tspan fill="#DC2626">*</tspan></text>
+          <rect y="22" width="480" height="40" rx="8" fill="#FFFFFF" stroke="#CBD5E1" />
+          <text x="14" y="47" class="font-sans" font-size="13" fill="#0F172A">SecurePass2026!</text>
+
+          <text x="0" y="84" class="font-sans" font-size="11" font-weight="700" fill="#DC2626">CONFIRM PASSWORD <tspan fill="#DC2626">*</tspan></text>
+          <rect y="92" width="480" height="40" rx="8" fill="#FFF5F5" stroke="#DC2626" stroke-width="1.5" />
+          <text x="14" y="117" class="font-sans" font-size="13" fill="#0F172A">SecurePass2025</text>
+          <text x="450" y="117" class="font-sans" font-size="14" fill="#DC2626">⚠️</text>
+          
+          <rect y="140" width="480" height="36" rx="8" fill="#FEF2F2" stroke="#FCA5A5" />
+          <text x="14" y="163" class="font-sans" font-size="11" font-weight="700" fill="#991B1B">Passwords do not match. Please re-enter matching passwords.</text>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

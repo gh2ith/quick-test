@@ -1,0 +1,111 @@
+<svg width="375" height="1260" viewBox="0 0 375 1260" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .font-sans { font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif; }
+      .card-shadow { filter: drop-shadow(0 6px 16px rgba(15, 23, 42, 0.06)); }
+      .btn-shadow { filter: drop-shadow(0 4px 12px rgba(37, 99, 235, 0.28)); }
+    </style>
+  </defs>
+  <rect width="375" height="1260" fill="#F8FAFC" />
+  
+  <!-- Mobile Employee Navbar -->
+  <g transform="translate(16, 16)">
+    <rect width="343" height="56" rx="14" fill="#FFFFFF" stroke="#E2E8F0" class="card-shadow" />
+    <g transform="translate(14, 12)">
+      <rect width="32" height="32" rx="8" fill="#2563EB" />
+      <path d="M9 16L13 20L23 10" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="38" y="22" class="font-sans" font-size="15" font-weight="800" fill="#0F172A">Bridgeway<tspan fill="#2563EB">HR</tspan></text>
+    </g>
+    <!-- Sarah Jenkins Avatar + Logout -->
+    <g transform="translate(230, 10)">
+      <circle cx="18" cy="18" r="16" fill="#2563EB" />
+      <text x="18" y="22" class="font-sans" font-size="11" font-weight="700" fill="#FFFFFF" text-anchor="middle">SJ</text>
+      <rect x="42" y="6" width="55" height="24" rx="6" fill="#FEE2E2" />
+      <text x="69" y="22" class="font-sans" font-size="9" font-weight="700" fill="#DC2626" text-anchor="middle">Logout</text>
+    </g>
+  </g>
+
+  <!-- Page Title & Filter Chips -->
+  <g transform="translate(16, 88)">
+    <text x="0" y="20" class="font-sans" font-size="18" font-weight="800" fill="#0F172A">My Assigned Tasks</text>
+    <text x="0" y="38" class="font-sans" font-size="11" fill="#64748B">Sarah Jenkins (#EMP-2041) • Frontend Engineer</text>
+    
+    <!-- Filter Chips Scroll -->
+    <g transform="translate(0, 50)">
+      <rect width="60" height="28" rx="14" fill="#2563EB" />
+      <text x="30" y="18" class="font-sans" font-size="11" font-weight="700" fill="#FFFFFF" text-anchor="middle">All (3)</text>
+      
+      <rect x="68" width="95" height="28" rx="14" fill="#FFFFFF" stroke="#CBD5E1" />
+      <text x="115" y="18" class="font-sans" font-size="11" font-weight="600" fill="#475569" text-anchor="middle">In Progress (1)</text>
+
+      <rect x="171" width="85" height="28" rx="14" fill="#FFFFFF" stroke="#CBD5E1" />
+      <text x="213" y="18" class="font-sans" font-size="11" font-weight="600" fill="#475569" text-anchor="middle">Pending (1)</text>
+    </g>
+  </g>
+
+  <!-- Task Card 1: TSK-101 with HR Review Notes -->
+  <g transform="translate(16, 185)">
+    <rect width="343" height="310" rx="16" fill="#FFFFFF" stroke="#E2E8F0" class="card-shadow" />
+    <g transform="translate(16, 18)">
+      <rect width="65" height="20" rx="6" fill="#EFF6FF" />
+      <text x="32" y="14" class="font-sans" font-size="10" font-weight="700" fill="#2563EB" text-anchor="middle">TSK-101</text>
+      
+      <rect x="235" width="75" height="20" rx="6" fill="#FEE2E2" />
+      <text x="272" y="14" class="font-sans" font-size="9" font-weight="700" fill="#DC2626" text-anchor="middle">High Priority</text>
+      
+      <text x="0" y="46" class="font-sans" font-size="15" font-weight="800" fill="#0F172A">Implement JWT Auth State</text>
+      <text x="0" y="66" class="font-sans" font-size="11" fill="#64748B">Due: Oct 15, 2026 • Status: In Progress</text>
+      <text x="0" y="86" class="font-sans" font-size="11" fill="#334155">Connect authentication router to localStorage state.</text>
+
+      <!-- HR Review Note Box (TASK 3 REQUIREMENT) -->
+      <g transform="translate(0, 105)">
+        <rect width="311" height="80" rx="10" fill="#FEF3C7" stroke="#FDE68A" />
+        <text x="12" y="20" class="font-sans" font-size="10" font-weight="700" fill="#92400E">💬 HR Review Note (Alex Vance):</text>
+        <text x="12" y="38" class="font-sans" font-size="10" fill="#78350F">"Please update token expiration handling to 15</text>
+        <text x="12" y="52" class="font-sans" font-size="10" fill="#78350F">minutes and re-test automated redirects."</text>
+        <text x="12" y="68" class="font-sans" font-size="9" font-weight="700" fill="#B45309">Status reset to In Progress</text>
+      </g>
+
+      <!-- Action Button -->
+      <rect y="205" width="311" height="40" rx="8" fill="#2563EB" class="btn-shadow" />
+      <text x="155" y="230" class="font-sans" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">Submit Solution Link / Text →</text>
+    </g>
+  </g>
+
+  <!-- Task Card 2: TSK-102 -->
+  <g transform="translate(16, 515)">
+    <rect width="343" height="190" rx="16" fill="#FFFFFF" stroke="#E2E8F0" class="card-shadow" />
+    <g transform="translate(16, 18)">
+      <rect width="65" height="20" rx="6" fill="#EFF6FF" />
+      <text x="32" y="14" class="font-sans" font-size="10" font-weight="700" fill="#2563EB" text-anchor="middle">TSK-102</text>
+      
+      <rect x="230" width="80" height="20" rx="6" fill="#FEF3C7" />
+      <text x="270" y="14" class="font-sans" font-size="9" font-weight="700" fill="#D97706" text-anchor="middle">Medium Priority</text>
+      
+      <text x="0" y="46" class="font-sans" font-size="15" font-weight="800" fill="#0F172A">Design System Token Sync</text>
+      <text x="0" y="66" class="font-sans" font-size="11" fill="#64748B">Due: Oct 18, 2026 • Status: Pending</text>
+      <text x="0" y="86" class="font-sans" font-size="11" fill="#334155">Harmonize executive blue palette with Bootstrap 5 tokens.</text>
+
+      <rect y="110" width="311" height="40" rx="8" fill="#F1F5F9" stroke="#E2E8F0" />
+      <text x="155" y="135" class="font-sans" font-size="12" font-weight="700" fill="#475569" text-anchor="middle">Start Task →</text>
+    </g>
+  </g>
+
+  <!-- Task Card 3: TSK-104 -->
+  <g transform="translate(16, 725)">
+    <rect width="343" height="170" rx="16" fill="#FFFFFF" stroke="#E2E8F0" class="card-shadow" />
+    <g transform="translate(16, 18)">
+      <rect width="65" height="20" rx="6" fill="#EFF6FF" />
+      <text x="32" y="14" class="font-sans" font-size="10" font-weight="700" fill="#2563EB" text-anchor="middle">TSK-104</text>
+      
+      <rect x="235" width="75" height="20" rx="6" fill="#DCFCE7" />
+      <text x="272" y="14" class="font-sans" font-size="9" font-weight="700" fill="#15803D" text-anchor="middle">Completed</text>
+      
+      <text x="0" y="46" class="font-sans" font-size="15" font-weight="800" fill="#0F172A">Figma Tokens Export</text>
+      <text x="0" y="66" class="font-sans" font-size="11" fill="#64748B">Due: Oct 02, 2026 • Approved by Alex Vance</text>
+      
+      <rect y="95" width="311" height="34" rx="8" fill="#F8FAFC" />
+      <text x="155" y="117" class="font-sans" font-size="11" font-weight="600" fill="#16A34A" text-anchor="middle">✓ Approved &amp; Closed</text>
+    </g>
+  </g>
+</svg>

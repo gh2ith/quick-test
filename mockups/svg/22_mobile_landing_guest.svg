@@ -1,0 +1,118 @@
+<svg width="375" height="1480" viewBox="0 0 375 1480" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .font-sans { font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif; }
+      .card-shadow { filter: drop-shadow(0 6px 16px rgba(15, 23, 42, 0.06)); }
+      .btn-shadow { filter: drop-shadow(0 4px 12px rgba(37, 99, 235, 0.28)); }
+    </style>
+  </defs>
+  <!-- Background -->
+  <rect width="375" height="1480" fill="#F8FAFC" />
+  
+  <!-- Mobile Navbar (375px) -->
+  <g transform="translate(16, 16)">
+    <rect width="343" height="56" rx="14" fill="#FFFFFF" stroke="#E2E8F0" class="card-shadow" />
+    <g transform="translate(16, 12)">
+      <rect width="32" height="32" rx="8" fill="#2563EB" />
+      <path d="M9 16L13 20L23 10" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="40" y="22" class="font-sans" font-size="16" font-weight="800" fill="#0F172A">Bridgeway<tspan fill="#2563EB">HR</tspan></text>
+    </g>
+    <!-- Hamburger Menu Icon -->
+    <g transform="translate(295, 18)">
+      <rect width="24" height="2" rx="1" fill="#0F172A" />
+      <rect y="7" width="24" height="2" rx="1" fill="#0F172A" />
+      <rect y="14" width="24" height="2" rx="1" fill="#0F172A" />
+    </g>
+  </g>
+
+  <!-- Mobile Hero Section -->
+  <g transform="translate(16, 92)">
+    <rect width="343" height="290" rx="18" fill="#FFFFFF" stroke="#E2E8F0" class="card-shadow" />
+    <g transform="translate(20, 24)">
+      <!-- Pill -->
+      <rect width="180" height="24" rx="12" fill="#EFF6FF" />
+      <text x="90" y="16" class="font-sans" font-size="10" font-weight="700" fill="#2563EB" text-anchor="middle">CORPORATE WORKFORCE</text>
+      
+      <text x="0" y="58" class="font-sans" font-size="22" font-weight="800" fill="#0F172A">Next-Gen Human Capital Operations</text>
+      <text x="0" y="90" class="font-sans" font-size="12" fill="#64748B">Centralized staff directory, leave governance, task oversight, and Jitsi video bridge.</text>
+      
+      <!-- CTA Button -->
+      <rect y="140" width="303" height="44" rx="10" fill="#2563EB" class="btn-shadow" />
+      <text x="151" y="167" class="font-sans" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">Explore System Login →</text>
+
+      <text x="151" y="210" class="font-sans" font-size="11" fill="#94A3B8" text-anchor="middle">Scroll down to explore system modules ↓</text>
+    </g>
+  </g>
+
+  <!-- Interactive Scroll Journey Path on Mobile -->
+  <g transform="translate(16, 405)">
+    <text x="171" y="20" class="font-sans" font-size="16" font-weight="800" fill="#0F172A" text-anchor="middle">System Architecture Journey</text>
+    <text x="171" y="38" class="font-sans" font-size="11" fill="#64748B" text-anchor="middle">4 Integrated Corporate Services</text>
+
+    <!-- Center Road Path -->
+    <path d="M171 60 L171 620" stroke="#CBD5E1" stroke-width="4" stroke-dasharray="6 6" />
+
+    <!-- Step 1: Workforce Directory -->
+    <g transform="translate(0, 70)">
+      <circle cx="171" cy="20" r="16" fill="#2563EB" />
+      <text x="171" y="25" class="font-sans" font-size="12" font-weight="800" fill="#FFFFFF" text-anchor="middle">1</text>
+      
+      <rect y="50" width="343" height="95" rx="12" fill="#FFFFFF" stroke="#E2E8F0" class="card-shadow" />
+      <text x="16" y="28" class="font-sans" font-size="13" font-weight="700" fill="#0F172A">01. Staff Directory &amp; Roles</text>
+      <text x="16" y="48" class="font-sans" font-size="11" fill="#64748B">Centralized staff profiles, position assignments, and HR account provisioning.</text>
+    </g>
+
+    <!-- Step 2: Leave Approvals -->
+    <g transform="translate(0, 205)">
+      <circle cx="171" cy="20" r="16" fill="#10B981" />
+      <text x="171" y="25" class="font-sans" font-size="12" font-weight="800" fill="#FFFFFF" text-anchor="middle">2</text>
+      
+      <rect y="50" width="343" height="95" rx="12" fill="#FFFFFF" stroke="#E2E8F0" class="card-shadow" />
+      <text x="16" y="28" class="font-sans" font-size="13" font-weight="700" fill="#0F172A">02. Leave Governance</text>
+      <text x="16" y="48" class="font-sans" font-size="11" fill="#64748B">Annual, Sick, Departure, and Unpaid requests with real-time HR approval desk.</text>
+    </g>
+
+    <!-- Step 3: Tasks Engine -->
+    <g transform="translate(0, 340)">
+      <circle cx="171" cy="20" r="16" fill="#F59E0B" />
+      <text x="171" y="25" class="font-sans" font-size="12" font-weight="800" fill="#FFFFFF" text-anchor="middle">3</text>
+      
+      <rect y="50" width="343" height="95" rx="12" fill="#FFFFFF" stroke="#E2E8F0" class="card-shadow" />
+      <text x="16" y="28" class="font-sans" font-size="13" font-weight="700" fill="#0F172A">03. Project Task Engine</text>
+      <text x="16" y="48" class="font-sans" font-size="11" fill="#64748B">Delegate technical tasks, track deadlines, submit links, and view HR review feedback.</text>
+    </g>
+
+    <!-- Step 4: Jitsi Meetings -->
+    <g transform="translate(0, 475)">
+      <circle cx="171" cy="20" r="16" fill="#6366F1" />
+      <text x="171" y="25" class="font-sans" font-size="12" font-weight="800" fill="#FFFFFF" text-anchor="middle">4</text>
+      
+      <rect y="50" width="343" height="95" rx="12" fill="#FFFFFF" stroke="#E2E8F0" class="card-shadow" />
+      <text x="16" y="28" class="font-sans" font-size="13" font-weight="700" fill="#0F172A">04. Virtual Jitsi Video Bridge</text>
+      <text x="16" y="48" class="font-sans" font-size="11" fill="#64748B">Instant browser video conferences without third-party downloads or external room IDs.</text>
+    </g>
+  </g>
+
+  <!-- Mobile Footer (Amman HQ + Quick Contact) -->
+  <g transform="translate(16, 1070)">
+    <rect width="343" height="380" rx="18" fill="#0F172A" />
+    <g transform="translate(20, 24)">
+      <text x="0" y="20" class="font-sans" font-size="18" font-weight="800" fill="#FFFFFF">Bridgeway<tspan fill="#3B82F6">HR</tspan></text>
+      <text x="0" y="44" class="font-sans" font-size="12" fill="#94A3B8">King Hussein Business Park • Building 23</text>
+      <text x="0" y="62" class="font-sans" font-size="12" fill="#94A3B8">Amman 11831, Jordan</text>
+      <text x="0" y="86" class="font-sans" font-size="12" font-weight="600" fill="#60A5FA">📞 +962 6 550 4400</text>
+      <text x="0" y="106" class="font-sans" font-size="12" font-weight="600" fill="#60A5FA">✉ hr-ops@bridgeway.corp</text>
+      
+      <!-- Compact Feedback Form -->
+      <g transform="translate(0, 130)">
+        <text x="0" y="14" class="font-sans" font-size="12" font-weight="700" fill="#FFFFFF">Send Feedback</text>
+        <rect y="22" width="303" height="32" rx="6" fill="#1E293B" stroke="#334155" />
+        <text x="10" y="42" class="font-sans" font-size="11" fill="#64748B">Subject</text>
+        <rect y="60" width="303" height="48" rx="6" fill="#1E293B" stroke="#334155" />
+        <text x="10" y="80" class="font-sans" font-size="11" fill="#64748B">Your message...</text>
+        <rect y="116" width="303" height="34" rx="6" fill="#2563EB" />
+        <text x="151" y="137" class="font-sans" font-size="11" font-weight="700" fill="#FFFFFF" text-anchor="middle">Submit Feedback</text>
+      </g>
+    </g>
+  </g>
+</svg>

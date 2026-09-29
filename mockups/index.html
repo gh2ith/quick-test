@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bridgeway HR — Interactive Prototype &amp; Figma Artboard Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+  
+  <style>
+    :root {
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --border: #334155;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Top Control Bar */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 1rem;
+      font-weight: 800;
+      color: #fff;
+    }
+    .brand-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      color: #fff;
+    }
+    .badge-pill {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.2rem 0.6rem;
+      border-radius: 9999px;
+      background: #eff6ff;
+      color: #2563eb;
+      border: 1px solid #bfdbfe;
+    }
+
+    .controls-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .select-dropdown {
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 0.45rem 0.85rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      outline: none;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 0.9rem;
+      border-radius: 8px;
+      font-size: 0.825rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+    .btn:hover {
+      background: #334155;
+      color: #fff;
+    }
+    .btn-primary {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+    .btn-persona {
+      background: rgba(37, 99, 235, 0.15);
+      border-color: rgba(37, 99, 235, 0.3);
+      color: #93c5fd;
+    }
+    .btn-persona.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+
+    /* Main Stage */
+    .stage {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1.5rem;
+      background: #090d16;
+      position: relative;
+    }
+    .stage-canvas-wrapper {
+      max-width: 1440px;
+      width: 100%;
+      background: #f8fafc;
+      border-radius: 16px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      overflow: hidden;
+      border: 1px solid #334155;
+      position: relative;
+      transition: transform 0.2s ease;
+    }
+    .stage-svg-frame {
+      width: 100%;
+      display: block;
+      height: auto;
+    }
+
+    /* Floating Quick Links Overlay */
+    .links-legend {
+      margin-top: 1rem;
+      max-width: 1440px;
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .legend-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #94a3b8;
+    }
+    .quick-flow-btn {
+      font-size: 0.775rem;
+      font-weight: 600;
+      padding: 0.3rem 0.65rem;
+      border-radius: 6px;
+      background: #0f172a;
+      border: 1px solid #334155;
+      color: #cbd5e1;
+      cursor: pointer;
+    }
+    .quick-flow-btn:hover {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #059669;
+      color: #fff;
+      padding: 0.75rem 1.25rem;
+      border-radius: 10px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      display: none;
+      align-items: center;
+      gap: 0.5rem;
+      z-index: 2000;
+      animation: fadeInUp 0.3s ease;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Topbar Controls -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-icon"><i class="bi bi-layers-fill"></i></div>
+      <span>Bridgeway<span style="color:#60a5fa">HR</span></span>
+      <span class="badge-pill">Figma Prototype Viewer</span>
+    </div>
+
+    <!-- Persona Switchers -->
+    <div class="controls-group">
+      <span style="font-size: 0.8rem; color: #94a3b8; margin-right: 0.25rem;">Active Flow:</span>
+      <button class="btn btn-persona active" id="btnPersonaGuest" onclick="loadPage('01_landing_guest.svg', 'Guest')"><i class="bi bi-person"></i> Guest</button>
+      <button class="btn btn-persona" id="btnPersonaEmp" onclick="loadPage('03_landing_employee.svg', 'Employee')"><i class="bi bi-person-badge"></i> Employee (Sarah)</button>
+      <button class="btn btn-persona" id="btnPersonaHR" onclick="loadPage('04_landing_hr.svg', 'HR Admin')"><i class="bi bi-shield-check"></i> HR Director (Alex)</button>
+    </div>
+
+    <!-- Page Switcher -->
+    <div class="controls-group">
+      <select class="select-dropdown" id="pageSelector" onchange="loadPage(this.value)">
+        <optgroup label="🌟 1. Landing Pages (Role-Adaptive)">
+          <option value="01_landing_guest.svg">01. Home Page (Guest State)</option>
+          <option value="03_landing_employee.svg">03. Home Page (Employee Logged In)</option>
+          <option value="04_landing_hr.svg">04. Home Page (HR Admin Logged In)</option>
+        </optgroup>
+        <optgroup label="🔐 2. Authentication &amp; Public">
+          <option value="02_login_page.svg">02. Login Page (HR-Restricted Registration)</option>
+          <option value="14_about_page.svg">14. About Us &amp; Team Showcase</option>
+        </optgroup>
+        <optgroup label="👤 3. Employee Self-Service">
+          <option value="05_employee_profile.svg">05. Employee Profile (View &amp; Edit)</option>
+          <option value="06_employee_leaves.svg">06. Leave Application &amp; Tracker</option>
+          <option value="07_employee_tasks.svg">07. My Tasks &amp; Submit Solution</option>
+          <option value="08_company_policies.svg">08. Company Policies (JSON Seed)</option>
+          <option value="13_zoom_meetings.svg">13. Scheduled Zoom Meetings</option>
+        </optgroup>
+        <optgroup label="👔 4. HR Administration">
+          <option value="09_hr_employee_directory.svg">09. Employee Directory &amp; Add Employee</option>
+          <option value="10_hr_leave_approvals.svg">10. HR Leave Review &amp; Approvals</option>
+          <option value="11_hr_task_management.svg">11. Task Assignment &amp; Solution Review</option>
+          <option value="12_hr_feedback_inbox.svg">12. Employee Feedback Inbox</option>
+        </optgroup>
+      </select>
+
+      <!-- Figma Actions -->
+      <button class="btn btn-primary" onclick="copyCurrentSVG()" title="Copy native SVG to clipboard to paste directly in Figma (Ctrl+V)"><i class="bi bi-clipboard-check"></i> Copy SVG for Figma</button>
+      <a class="btn" id="btnDownload" href="svg/01_landing_guest.svg" download><i class="bi bi-download"></i> Download .SVG</a>
+    </div>
+  </header>
+
+  <!-- Interactive Stage Area -->
+  <main class="stage">
+    <div class="stage-canvas-wrapper" id="canvasWrapper">
+      <img id="svgDisplay" src="svg/01_landing_guest.svg" class="stage-svg-frame" alt="Bridgeway HR Mockup Artboard" />
+    </div>
+
+    <!-- Interactive Jump Hotlinks Legend -->
+    <div class="links-legend">
+      <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+        <span class="legend-title"><i class="bi bi-signpost-split me-1"></i>Interactive Flow Jumps:</span>
+        <button class="quick-flow-btn" onclick="loadPage('01_landing_guest.svg')">🏠 Home (Guest)</button>
+        <button class="quick-flow-btn" onclick="loadPage('02_login_page.svg')">🔑 Sign In</button>
+        <button class="quick-flow-btn" onclick="loadPage('03_landing_employee.svg')">👩‍💻 Login → Employee Home</button>
+        <button class="quick-flow-btn" onclick="loadPage('04_landing_hr.svg')">👔 Login → HR Home</button>
+        <button class="quick-flow-btn" onclick="loadPage('05_employee_profile.svg')">👤 My Profile</button>
+        <button class="quick-flow-btn" onclick="loadPage('06_employee_leaves.svg')">📅 Apply Leave</button>
+        <button class="quick-flow-btn" onclick="loadPage('07_employee_tasks.svg')">📋 My Tasks</button>
+        <button class="quick-flow-btn" onclick="loadPage('09_hr_employee_directory.svg')">👥 HR Employees &amp; Register</button>
+        <button class="quick-flow-btn" onclick="loadPage('10_hr_leave_approvals.svg')">✅ HR Leave Desk</button>
+        <button class="quick-flow-btn" onclick="loadPage('11_hr_task_management.svg')">🔍 HR Task Review</button>
+        <button class="quick-flow-btn" onclick="loadPage('12_hr_feedback_inbox.svg')">✉️ HR Feedback Inbox</button>
+      </div>
+
+      <div style="font-size: 0.775rem; color: #94a3b8;">
+        <i class="bi bi-info-circle text-primary me-1"></i> Drag any file from <code>mockups/svg/</code> directly into Figma, or click <strong>Copy SVG</strong> and press <kbd>Ctrl+V</kbd>!
+      </div>
+    </div>
+  </main>
+
+  <!-- Notification Toast -->
+  <div class="toast" id="toastMessage">
+    <i class="bi bi-check-circle-fill"></i>
+    <span id="toastText">SVG copied to clipboard! You can now paste directly into Figma (Ctrl+V).</span>
+  </div>
+
+  <script>
+    let currentFileName = '01_landing_guest.svg';
+
+    function loadPage(fileName, persona) {
+      currentFileName = fileName;
+      document.getElementById('svgDisplay').src = 'svg/' + fileName;
+      document.getElementById('pageSelector').value = fileName;
+      document.getElementById('btnDownload').href = 'svg/' + fileName;
+
+      // Update Persona Buttons
+      document.querySelectorAll('.btn-persona').forEach(b => b.classList.remove('active'));
+      if (persona === 'Guest' || fileName === '01_landing_guest.svg') {
+        document.getElementById('btnPersonaGuest').classList.add('active');
+      } else if (persona === 'Employee' || fileName.includes('employee') || fileName.includes('03_')) {
+        document.getElementById('btnPersonaEmp').classList.add('active');
+      } else if (persona === 'HR Admin' || fileName.includes('hr') || fileName.includes('04_')) {
+        document.getElementById('btnPersonaHR').classList.add('active');
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    async function copyCurrentSVG() {
+      try {
+        const response = await fetch('svg/' + currentFileName);
+        const svgContent = await response.text();
+        await navigator.clipboard.writeText(svgContent);
+        showToast('SVG XML copied to clipboard! Now switch to Figma and press Ctrl + V to paste.');
+      } catch (err) {
+        showToast('Direct copy requires web server or file permission. Please drag the file from mockups/svg/' + currentFileName + ' into Figma.');
+      }
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toastMessage');
+      document.getElementById('toastText').innerText = msg;
+      toast.style.display = 'flex';
+      setTimeout(() => {
+        toast.style.display = 'none';
+      }, 4500);
+    }
+  </script>
+</body>
+</html>

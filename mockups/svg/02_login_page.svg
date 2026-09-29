@@ -1,0 +1,137 @@
+<svg width="1440" height="1000" viewBox="0 0 1440 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .font-sans { font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+      .card-shadow { filter: drop-shadow(0 10px 25px rgba(15, 23, 42, 0.05)) drop-shadow(0 1px 3px rgba(15, 23, 42, 0.04)); }
+      .hero-shadow { filter: drop-shadow(0 20px 40px rgba(15, 23, 42, 0.08)) drop-shadow(0 2px 5px rgba(15, 23, 42, 0.04)); }
+      .btn-shadow { filter: drop-shadow(0 4px 14px rgba(37, 99, 235, 0.28)); }
+    </style>
+    <linearGradient id="primary-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563EB" />
+      <stop offset="100%" stop-color="#1D4ED8" />
+    </linearGradient>
+    <linearGradient id="pill-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#EFF6FF" />
+      <stop offset="100%" stop-color="#DBEAFE" />
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="1440" height="1000" fill="#F8FAFC" />
+  <circle cx="150" cy="180" r="280" fill="#2563EB" opacity="0.03" />
+  <circle cx="1290" cy="240" r="320" fill="#6366F1" opacity="0.03" />
+  <!-- ==================== TASK 1: LOCKED NAVBAR (GUEST) ==================== -->
+  <g id="Navbar-Guest" transform="translate(150, 24)">
+    <rect width="1140" height="70" rx="18" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1" class="card-shadow" />
+    
+    <!-- Logo: Bridgeway HR -->
+    <g transform="translate(24, 17)">
+      <rect width="36" height="36" rx="9" fill="#2563EB" />
+      <path d="M10 18L15 23L26 12" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="46" y="25" class="font-sans" font-size="19" font-weight="800" fill="#0F172A">Bridgeway<tspan fill="#2563EB">HR</tspan></text>
+    </g>
+    <g transform="translate(450, 26)">
+      <text x="0" y="15" class="font-sans" font-size="14" font-weight="700" fill="#2563EB">Home</text>
+      <circle cx="20" cy="25" r="2.5" fill="#2563EB" />
+      <text x="85" y="15" class="font-sans" font-size="14" font-weight="500" fill="#475569">About</text>
+      <text x="170" y="15" class="font-sans" font-size="14" font-weight="500" fill="#475569">Contact Us</text>
+    </g>
+    <g transform="translate(995, 15)">
+      <rect width="120" height="40" rx="10" fill="#2563EB" class="btn-shadow"/>
+      <text x="60" y="21" class="font-sans" font-size="13" font-weight="600" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">Login →</text>
+    </g>
+  </g>
+  <!-- Centered Login Card -->
+  <g transform="translate(470, 130)">
+    <rect width="500" height="520" rx="20" fill="#FFFFFF" stroke="#E2E8F0" class="hero-shadow" />
+    
+    <g transform="translate(50, 40)">
+      <!-- Logo + Header -->
+      <rect width="40" height="40" rx="10" fill="#2563EB" />
+      <path d="M12 20L17 25L28 14" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="52" y="27" class="font-sans" font-size="22" font-weight="800" fill="#0F172A">Bridgeway<tspan fill="#2563EB">HR</tspan></text>
+      
+      <text x="0" y="70" class="font-sans" font-size="20" font-weight="800" fill="#0F172A">Sign In to Your Workspace</text>
+      <text x="0" y="92" class="font-sans" font-size="13" font-weight="400" fill="#64748B">Enter your official employee or administrator credentials</text>
+
+      <!-- Role-Routing Notice -->
+      <rect x="0" y="110" width="400" height="34" rx="8" fill="#EFF6FF" stroke="#BFDBFE" />
+      <text x="14" y="131" class="font-sans" font-size="11" font-weight="600" fill="#1D4ED8">ℹ System auto-detects user role upon login and redirects to console.</text>
+
+      <!-- Form Inputs -->
+      <!-- Email Field -->
+      <text x="0" y="172" class="font-sans" font-size="12" font-weight="700" fill="#334155">Work Email Address</text>
+      <rect x="0" y="182" width="400" height="44" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5" />
+      <text x="14" y="209" class="font-sans" font-size="13" fill="#0F172A">sarah.jenkins@bridgeway.corp</text>
+
+      <!-- Password Field -->
+      <text x="0" y="252" class="font-sans" font-size="12" font-weight="700" fill="#334155">Password</text>
+      <rect x="0" y="262" width="400" height="44" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5" />
+      <text x="14" y="291" class="font-sans" font-size="16" fill="#0F172A" letter-spacing="2">••••••••••••</text>
+
+      <!-- Sign In Button -->
+      <rect x="0" y="325" width="400" height="46" rx="10" fill="#2563EB" class="btn-shadow" />
+      <text x="200" y="353" class="font-sans" font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="middle">Sign In to Portal →</text>
+
+      <!-- HR Provisioning Security Badge -->
+      <g transform="translate(0, 395)">
+        <rect width="400" height="40" rx="8" fill="#F8FAFC" stroke="#E2E8F0" />
+        <text x="200" y="24" class="font-sans" font-size="11" font-weight="500" fill="#64748B" text-anchor="middle">
+          🔒 Accounts are provisioned by HR. Public registration is disabled.
+        </text>
+      </g>
+    </g>
+  </g>
+  <!-- ==================== GLOBAL FOOTER (GUEST) ==================== -->
+  <g id="Footer" transform="translate(150, 680)">
+    <rect width="1140" height="350" rx="24" fill="#0F172A" />
+    
+    <!-- Left Column: HQ Details & Map Box -->
+    <g transform="translate(40, 36)">
+      <text x="0" y="20" class="font-sans" font-size="20" font-weight="800" fill="#FFFFFF">Bridgeway<tspan fill="#3B82F6">HR</tspan></text>
+      <text x="0" y="52" class="font-sans" font-size="13" font-weight="400" fill="#94A3B8">King Hussein Business Park • Building 23</text>
+      <text x="0" y="72" class="font-sans" font-size="13" font-weight="400" fill="#94A3B8">Amman 11831, Jordan</text>
+      <text x="0" y="100" class="font-sans" font-size="13" font-weight="600" fill="#60A5FA">📞 +962 6 550 4400</text>
+      <text x="0" y="120" class="font-sans" font-size="13" font-weight="600" fill="#60A5FA">✉ hr-ops@bridgeway.corp</text>
+      
+      <!-- Mini Map Box -->
+      <g transform="translate(0, 142)">
+        <rect width="280" height="70" rx="10" fill="#1E293B" stroke="#334155" />
+        <text x="16" y="28" class="font-sans" font-size="12" font-weight="700" fill="#FFFFFF">📍 Amman Innovation HQ Map</text>
+        <text x="16" y="48" class="font-sans" font-size="11" font-weight="400" fill="#38BDF8">View on Google Maps ↗ (31.9753° N, 35.8344° E)</text>
+      </g>
+    </g>
+
+    <!-- Center Navigation Links -->
+    <g transform="translate(420, 36)">
+      <text x="0" y="20" class="font-sans" font-size="14" font-weight="700" fill="#FFFFFF">Quick Navigation</text>
+      <text x="0" y="52" class="font-sans" font-size="13" font-weight="500" fill="#94A3B8">Home</text>
+      <text x="0" y="77" class="font-sans" font-size="13" font-weight="500" fill="#94A3B8">About Bridgeway</text>
+      <text x="0" y="102" class="font-sans" font-size="13" font-weight="500" fill="#94A3B8">Contact &amp; Inquiries</text>
+      <text x="0" y="127" class="font-sans" font-size="13" font-weight="500" fill="#94A3B8">Company Policies</text>
+      <text x="0" y="152" class="font-sans" font-size="13" font-weight="500" fill="#94A3B8">Meetings Portal (Jitsi)</text>
+    </g>
+    <!-- Right Column: Contact / Feedback Form (Subject Field Included) -->
+    <g transform="translate(680, 26)">
+      <rect width="420" height="295" rx="16" fill="#1E293B" stroke="#334155" />
+      <text x="24" y="28" class="font-sans" font-size="14" font-weight="700" fill="#FFFFFF">Send Feedback to HR</text>
+      <text x="24" y="46" class="font-sans" font-size="11" font-weight="400" fill="#94A3B8">Direct inquiry conduit to People Operations</text>
+      
+      <rect x="24" y="60" width="180" height="34" rx="8" fill="#0F172A" stroke="#334155" />
+      <text x="36" y="81" class="font-sans" font-size="11" fill="#64748B">Your Name</text>
+      <rect x="216" y="60" width="180" height="34" rx="8" fill="#0F172A" stroke="#334155" />
+      <text x="228" y="81" class="font-sans" font-size="11" fill="#64748B">Work Email</text>
+      
+      <rect x="24" y="104" width="372" height="34" rx="8" fill="#0F172A" stroke="#334155" />
+      <text x="36" y="125" class="font-sans" font-size="11" fill="#64748B">Subject (e.g. Leave Inquiry, Technical Suggestion)</text>
+      
+      <rect x="24" y="148" width="372" height="74" rx="8" fill="#0F172A" stroke="#334155" />
+      <text x="36" y="170" class="font-sans" font-size="11" fill="#64748B">Write your confidential feedback here...</text>
+      
+      <rect x="24" y="234" width="372" height="36" rx="8" fill="#2563EB" />
+      <text x="210" y="257" class="font-sans" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">Submit Feedback to HR →</text>
+    </g>
+    <line x1="40" y1="305" x2="1100" y2="305" stroke="#1E293B" stroke-width="1" />
+    <text x="40" y="330" class="font-sans" font-size="12" font-weight="500" fill="#64748B">© 2026 Bridgeway HR Management System • Project Deliverable</text>
+    <text x="1100" y="330" class="font-sans" font-size="12" font-weight="500" fill="#64748B" text-anchor="end">Amman, Jordan</text>
+  </g>
+</svg>

@@ -1,0 +1,174 @@
+<svg width="1440" height="1280" viewBox="0 0 1440 1280" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .font-sans { font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+      .card-shadow { filter: drop-shadow(0 10px 25px rgba(15, 23, 42, 0.05)) drop-shadow(0 1px 3px rgba(15, 23, 42, 0.04)); }
+      .hero-shadow { filter: drop-shadow(0 20px 40px rgba(15, 23, 42, 0.08)) drop-shadow(0 2px 5px rgba(15, 23, 42, 0.04)); }
+      .btn-shadow { filter: drop-shadow(0 4px 14px rgba(37, 99, 235, 0.28)); }
+    </style>
+    <linearGradient id="primary-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563EB" />
+      <stop offset="100%" stop-color="#1D4ED8" />
+    </linearGradient>
+    <linearGradient id="pill-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#EFF6FF" />
+      <stop offset="100%" stop-color="#DBEAFE" />
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="1440" height="1280" fill="#F8FAFC" />
+  <circle cx="150" cy="180" r="280" fill="#2563EB" opacity="0.03" />
+  <circle cx="1290" cy="240" r="320" fill="#6366F1" opacity="0.03" />
+  <!-- ==================== TASK 1: LOCKED NAVBAR (HR) ==================== -->
+  <g id="Navbar-Hr" transform="translate(150, 24)">
+    <rect width="1140" height="70" rx="18" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1" class="card-shadow" />
+    
+    <!-- Logo: Bridgeway HR -->
+    <g transform="translate(24, 17)">
+      <rect width="36" height="36" rx="9" fill="#2563EB" />
+      <path d="M10 18L15 23L26 12" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="46" y="25" class="font-sans" font-size="19" font-weight="800" fill="#0F172A">Bridgeway<tspan fill="#2563EB">HR</tspan></text>
+    </g>
+    <g transform="translate(240, 26)">
+      <text x="0" y="15" class="font-sans" font-size="14" font-weight="500" fill="#475569">Home</text>
+      <text x="75" y="15" class="font-sans" font-size="14" font-weight="500" fill="#475569">Employees</text>
+      <text x="185" y="15" class="font-sans" font-size="14" font-weight="700" fill="#2563EB">Services ▾</text>
+      <circle cx="207" cy="25" r="2.5" fill="#2563EB" />
+      <text x="295" y="15" class="font-sans" font-size="14" font-weight="500" fill="#475569">About</text>
+      <text x="375" y="15" class="font-sans" font-size="14" font-weight="500" fill="#475569">Contact Us</text>
+    </g>
+    <!-- HR Profile Pill: Alex Vance + Logout -->
+    <g transform="translate(875, 14)">
+      <rect width="245" height="42" rx="21" fill="#F8FAFC" stroke="#E2E8F0" />
+      <circle cx="21" cy="21" r="16" fill="#0F172A" />
+      <text x="21" y="25" class="font-sans" font-size="11" font-weight="700" fill="#FFFFFF" text-anchor="middle">AV</text>
+      <text x="44" y="18" class="font-sans" font-size="12" font-weight="700" fill="#0F172A">Alex Vance</text>
+      <rect x="44" y="23" width="56" height="14" rx="7" fill="#FEF2F2" />
+      <text x="72" y="33" class="font-sans" font-size="8" font-weight="700" fill="#DC2626" text-anchor="middle">HR ADMIN</text>
+      <g transform="translate(170, 7)">
+        <rect width="65" height="28" rx="8" fill="#FEE2E2" />
+        <text x="32" y="18" class="font-sans" font-size="10" font-weight="700" fill="#DC2626" text-anchor="middle">Logout</text>
+      </g>
+    </g>
+  </g>
+  <!-- Page Header -->
+  <g transform="translate(150, 120)">
+    <text x="0" y="30" class="font-sans" font-size="28" font-weight="800" fill="#0F172A">Workforce Tasks &amp; Project Assignments</text>
+    <text x="0" y="54" class="font-sans" font-size="14" font-weight="400" fill="#64748B">Administer employee task assignments, review solutions, and assign deliverables.</text>
+  </g>
+
+  <!-- Background Task Cards Preview (Showing Action Buttons: Edit, Delete, View Task) -->
+  <g transform="translate(150, 200)">
+    <!-- Column 1: In Progress -->
+    <g transform="translate(0, 0)">
+      <rect width="360" height="480" rx="16" fill="#FFFFFF" stroke="#E2E8F0" class="card-shadow" />
+      <rect x="20" y="20" width="10" height="10" rx="5" fill="#3B82F6" />
+      <text x="40" y="30" class="font-sans" font-size="14" font-weight="700" fill="#0F172A">In Progress (2)</text>
+      
+      <!-- Card TSK-101 with Action Buttons -->
+      <g transform="translate(20, 55)">
+        <rect width="320" height="195" rx="12" fill="#F8FAFC" stroke="#E2E8F0" />
+        <rect x="14" y="14" width="70" height="20" rx="6" fill="#EFF6FF" />
+        <text x="49" y="28" class="font-sans" font-size="10" font-weight="700" fill="#2563EB" text-anchor="middle">TSK-101</text>
+        <rect x="236" y="14" width="70" height="20" rx="6" fill="#FEE2E2" />
+        <text x="271" y="28" class="font-sans" font-size="10" font-weight="700" fill="#DC2626" text-anchor="middle">High Priority</text>
+        
+        <text x="14" y="56" class="font-sans" font-size="13" font-weight="700" fill="#0F172A">Implement JWT Auth State</text>
+        <text x="14" y="76" class="font-sans" font-size="11" fill="#64748B">Assigned: Sarah Jenkins • Frontend</text>
+        
+        <!-- Visible Action Buttons -->
+        <g transform="translate(14, 150)">
+          <rect width="85" height="30" rx="6" fill="#EFF6FF" stroke="#BFDBFE" />
+          <text x="42" y="19" class="font-sans" font-size="11" font-weight="700" fill="#2563EB" text-anchor="middle">✏ Edit</text>
+          
+          <rect x="95" y="0" width="85" height="30" rx="6" fill="#FEE2E2" stroke="#FECACA" />
+          <text x="137" y="19" class="font-sans" font-size="11" font-weight="700" fill="#DC2626" text-anchor="middle">🗑 Delete</text>
+          
+          <rect x="190" y="0" width="100" height="30" rx="6" fill="#F1F5F9" stroke="#CBD5E1" />
+          <text x="240" y="19" class="font-sans" font-size="11" font-weight="700" fill="#475569" text-anchor="middle">👁 View Task</text>
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- Dark Backdrop for Modal -->
+  <rect x="0" y="0" width="1440" height="1280" fill="#0F172A" opacity="0.55" />
+
+  <!-- Task Modal: Create / Edit Task Form (Title, Description, Assigned To, Priority, Due Date, Status) -->
+  <g transform="translate(420, 140)">
+    <rect width="600" height="680" rx="20" fill="#FFFFFF" class="hero-shadow" />
+    
+    <!-- Modal Header -->
+    <g transform="translate(36, 32)">
+      <text x="0" y="24" class="font-sans" font-size="20" font-weight="800" fill="#0F172A">Create &amp; Assign Work Task</text>
+      <text x="0" y="46" class="font-sans" font-size="13" fill="#64748B">Define technical task requirements, set priority, and delegate to staff.</text>
+      <text x="500" y="24" class="font-sans" font-size="20" fill="#94A3B8" cursor="pointer">✕</text>
+    </g>
+    
+    <!-- Form Fields -->
+    <g transform="translate(36, 110)">
+      <!-- Title -->
+      <g transform="translate(0, 0)">
+        <text x="0" y="14" class="font-sans" font-size="12" font-weight="700" fill="#334155">TASK TITLE <tspan fill="#DC2626">*</tspan></text>
+        <rect y="22" width="528" height="40" rx="8" fill="#F8FAFC" stroke="#CBD5E1" />
+        <text x="14" y="47" class="font-sans" font-size="13" font-weight="600" fill="#0F172A">Implement JWT Auth State &amp; Refresh Logic</text>
+      </g>
+
+      <!-- Description -->
+      <g transform="translate(0, 80)">
+        <text x="0" y="14" class="font-sans" font-size="12" font-weight="700" fill="#334155">TASK DESCRIPTION <tspan fill="#DC2626">*</tspan></text>
+        <rect y="22" width="528" height="85" rx="8" fill="#F8FAFC" stroke="#CBD5E1" />
+        <text x="14" y="46" class="font-sans" font-size="12" fill="#334155">Connect authentication router to localStorage state. Implement token expiration</text>
+        <text x="14" y="66" class="font-sans" font-size="12" fill="#334155">handling and pass automated unit test suites for all role redirects.</text>
+      </g>
+
+      <!-- Assigned To (Select list of employee names) -->
+      <g transform="translate(0, 190)">
+        <text x="0" y="14" class="font-sans" font-size="12" font-weight="700" fill="#334155">ASSIGNED EMPLOYEE <tspan fill="#DC2626">*</tspan></text>
+        <rect y="22" width="528" height="42" rx="8" fill="#FFFFFF" stroke="#2563EB" stroke-width="1.5" />
+        <text x="14" y="48" class="font-sans" font-size="13" font-weight="700" fill="#0F172A">Sarah Jenkins (#EMP-2041) — Frontend Engineer</text>
+        <text x="495" y="48" class="font-sans" font-size="12" fill="#64748B">▾</text>
+      </g>
+
+      <!-- Priority & Due Date (Two-column) -->
+      <g transform="translate(0, 270)">
+        <!-- Priority (Low / Medium / High) -->
+        <g transform="translate(0, 0)">
+          <text x="0" y="14" class="font-sans" font-size="12" font-weight="700" fill="#334155">PRIORITY LEVEL <tspan fill="#DC2626">*</tspan></text>
+          <g transform="translate(0, 22)">
+            <rect width="80" height="36" rx="8" fill="#F1F5F9" stroke="#E2E8F0" />
+            <text x="40" y="22" class="font-sans" font-size="12" font-weight="600" fill="#64748B" text-anchor="middle">Low</text>
+            <rect x="90" width="80" height="36" rx="8" fill="#F1F5F9" stroke="#E2E8F0" />
+            <text x="130" y="22" class="font-sans" font-size="12" font-weight="600" fill="#64748B" text-anchor="middle">Medium</text>
+            <rect x="180" width="80" height="36" rx="8" fill="#FEE2E2" stroke="#DC2626" />
+            <text x="220" y="22" class="font-sans" font-size="12" font-weight="700" fill="#DC2626" text-anchor="middle">High</text>
+          </g>
+        </g>
+
+        <!-- Due Date -->
+        <g transform="translate(280, 0)">
+          <text x="0" y="14" class="font-sans" font-size="12" font-weight="700" fill="#334155">DUE DATE <tspan fill="#DC2626">*</tspan></text>
+          <rect y="22" width="248" height="36" rx="8" fill="#FFFFFF" stroke="#CBD5E1" />
+          <text x="14" y="45" class="font-sans" font-size="13" fill="#0F172A">📅 Oct 15, 2026</text>
+        </g>
+      </g>
+
+      <!-- Status (Pending / In Progress / Submitted / Completed) -->
+      <g transform="translate(0, 360)">
+        <text x="0" y="14" class="font-sans" font-size="12" font-weight="700" fill="#334155">INITIAL STATUS <tspan fill="#DC2626">*</tspan></text>
+        <rect y="22" width="528" height="40" rx="8" fill="#FFFFFF" stroke="#CBD5E1" />
+        <text x="14" y="47" class="font-sans" font-size="13" font-weight="600" fill="#0F172A">In Progress</text>
+        <text x="495" y="47" class="font-sans" font-size="12" fill="#64748B">▾</text>
+      </g>
+
+      <!-- Buttons -->
+      <g transform="translate(0, 460)">
+        <rect width="140" height="44" rx="10" fill="#F1F5F9" stroke="#E2E8F0" />
+        <text x="70" y="27" class="font-sans" font-size="13" font-weight="700" fill="#475569" text-anchor="middle">Cancel</text>
+        
+        <rect x="155" width="373" height="44" rx="10" fill="#2563EB" class="btn-shadow" />
+        <text x="341" y="27" class="font-sans" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">Save &amp; Assign Task →</text>
+      </g>
+    </g>
+  </g>
+</svg>

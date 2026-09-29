@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bridgeway HR — Complete Operating System for Modern Teams</title>
+  <meta name="description" content="Explore the modern operating system for workforce operations, agile tasks, and automated leave management." />
+
+  <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap 5.3.2 CSS & Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.css" rel="stylesheet" />
+
+  <!-- GSAP 3.12.5 & ScrollTrigger (Pinned CDN) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Dedicated Scoped Landing Journey Stylesheet -->
+  <link rel="stylesheet" href="landing-journey.css" />
+
+  <style>
+    /* ==========================================================================
+       GLOBAL BASE & AMBIENCE (Unchanged palette & tokens)
+       ========================================================================== */
+    :root {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface-muted: #f1f5f9;
+      --border: #e2e8f0;
+      --border-subtle: rgba(15, 23, 42, 0.08);
+
+      --text: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --primary-light: #eff6ff;
+      --primary-border: #bfdbfe;
+      --primary-glow: rgba(37, 99, 235, 0.35);
+
+      --success: #059669;
+      --success-light: #ecfdf5;
+      --warning: #d97706;
+      --warning-light: #fffbeb;
+      --danger: #dc2626;
+      --danger-light: #fef2f2;
+      --indigo: #4f46e5;
+      --indigo-light: #eef2ff;
+
+      --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.05);
+      --shadow-md: 0 4px 14px rgba(15, 23, 42, 0.08);
+      --shadow-lg: 0 20px 45px -10px rgba(15, 23, 42, 0.12);
+      --shadow-primary: 0 4px 16px rgba(37, 99, 235, 0.35);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      letter-spacing: -0.015em;
+    }
+
+    .bg-ambience {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+      background: 
+        radial-gradient(circle at 10% 15%, rgba(37, 99, 235, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 90% 20%, rgba(99, 102, 241, 0.04) 0%, transparent 45%),
+        radial-gradient(circle at 50% 85%, rgba(14, 165, 233, 0.04) 0%, transparent 50%),
+        #f8fafc;
+    }
+
+    /* Demo Switcher Widget */
+    .demo-bar {
+      background: #0f172a;
+      color: #94a3b8;
+      padding: 0.45rem 1rem;
+      font-size: 0.775rem;
+      border-bottom: 1px solid #1e293b;
+      position: relative;
+      z-index: 1050;
+    }
+    .demo-role-btn {
+      background: transparent;
+      border: 1px solid #334155;
+      color: #cbd5e1;
+      padding: 0.2rem 0.65rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .demo-role-btn:hover { background: #1e293b; color: #fff; }
+    .demo-role-btn.active { background: #2563eb; border-color: #2563eb; color: #fff; }
+
+    /* Top Floating Header */
+    .navbar-wrapper {
+      position: sticky;
+      top: 0.85rem;
+      z-index: 1000;
+      padding: 0 1rem;
+    }
+    .navbar-custom {
+      max-width: 1160px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 0.65rem 1.4rem;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.25s ease;
+    }
+    .brand-logo-box {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1.15rem;
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+    }
+    .brand-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+    .nav-link-custom {
+      font-size: 0.885rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      padding: 0.4rem 0.85rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: color 0.15s ease;
+      cursor: pointer;
+    }
+    .nav-link-custom:hover, .nav-link-custom.active { color: var(--primary); }
+
+    .btn-primary-custom {
+      background: var(--primary);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.875rem;
+      padding: 0.55rem 1.35rem;
+      border-radius: 12px;
+      border: none;
+      box-shadow: var(--shadow-primary);
+      transition: all 0.2s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      cursor: pointer;
+    }
+    .btn-primary-custom:hover {
+      background: var(--primary-dark);
+      color: #fff;
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+      transform: translateY(-1px);
+    }
+    .btn-secondary-custom {
+      background: #ffffff;
+      color: var(--text);
+      font-weight: 600;
+      font-size: 0.875rem;
+      padding: 0.55rem 1.35rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      transition: all 0.2s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      cursor: pointer;
+    }
+    .btn-secondary-custom:hover {
+      background: var(--surface-muted);
+      border-color: #cbd5e1;
+      color: var(--text);
+    }
+
+    .profile-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      background: var(--surface-muted);
+      border: 1px solid var(--border);
+      padding: 0.3rem 0.85rem 0.3rem 0.35rem;
+      border-radius: 9999px;
+    }
+    .profile-avatar-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .profile-avatar-circle.hr { background: #0f172a; }
+    .role-badge-pill {
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 0.15rem 0.45rem;
+      border-radius: 9999px;
+      letter-spacing: 0.04em;
+    }
+    .role-badge-pill.employee { background: #eff6ff; color: #2563eb; }
+    .role-badge-pill.hr { background: #fef2f2; color: #dc2626; }
+    .btn-signout {
+      background: #fee2e2;
+      color: #dc2626;
+      border: none;
+      font-size: 0.725rem;
+      font-weight: 700;
+      padding: 0.25rem 0.55rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    /* Authenticated Workspace Styles */
+    .auth-dashboard-container {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 2rem 1rem 5rem 1rem;
+    }
+    .stage-card-glass {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      border-radius: 26px;
+      padding: 2.25rem;
+      box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.12);
+    }
+    .bento-icon-box {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      margin-bottom: 0.6rem;
+    }
+
+    /* Toast Notification */
+    .toast-container-custom {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 2000;
+    }
+    .custom-toast {
+      background: #0f172a;
+      color: #fff;
+      padding: 0.75rem 1.25rem;
+      border-radius: 12px;
+      box-shadow: var(--shadow-lg);
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      border: 1px solid #334155;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient Backdrop -->
+  <div class="bg-ambience"></div>
+
+  <!-- Demo Controller Bar -->
+  <div class="demo-bar">
+    <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap gap-2">
+      <div class="d-flex align-items-center gap-2">
+        <span class="badge bg-primary text-white" style="font-size: 0.68rem; letter-spacing: 0.03em;">PROJECT DEMO</span>
+        <span class="d-none d-sm-inline">Switch View:</span>
+        <div class="btn-group btn-group-sm">
+          <button class="demo-role-btn active" id="btnRoleGuest" onclick="setRole('guest')">
+            <i class="bi bi-compass"></i> Guest (Scroll Journey)
+          </button>
+          <button class="demo-role-btn" id="btnRoleEmployee" onclick="setRole('employee')">
+            <i class="bi bi-person-badge"></i> Employee (Sarah)
+          </button>
+          <button class="demo-role-btn" id="btnRoleHR" onclick="setRole('hr')">
+            <i class="bi bi-shield-lock"></i> HR Admin (Alex)
+          </button>
+        </div>
+      </div>
+      <div class="d-none d-md-flex align-items-center gap-3 text-muted">
+        <span><i class="bi bi-database-check text-success"></i> LocalStorage Persistent</span>
+        <span><i class="bi bi-shield-check text-primary"></i> Zero Registration Mode</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top Floating Header -->
+  <header class="navbar-wrapper">
+    <nav class="navbar-custom d-flex align-items-center justify-content-between" aria-label="Main Navigation">
+      <a href="index.html" class="d-flex align-items-center gap-2 text-decoration-none">
+        <div class="brand-logo-box">
+          <i class="bi bi-diagram-3-fill"></i>
+        </div>
+        <div class="d-flex flex-column text-start">
+          <span class="brand-title">Bridgeway<span class="text-primary">.hr</span></span>
+        </div>
+      </a>
+
+      <!-- Navigation Links -->
+      <div class="d-none d-lg-flex align-items-center gap-1" id="mainNavLinks">
+        <!-- Injected dynamically via renderApp() -->
+      </div>
+
+      <!-- Right Header Area (Sign In or User Profile) -->
+      <div class="d-flex align-items-center gap-2" id="navAuthArea">
+        <!-- Injected dynamically via renderApp() -->
+      </div>
+    </nav>
+  </header>
+
+  <!-- ==========================================================================
+       GUEST SCROLL-CONTROLLED JOURNEY (9 Stops, Fixed Road, Camera Model)
+       - Scoped entirely under .journey
+       - Exactly ONE stop in focus at a time
+       - Clean mount and unmount lifecycle
+       ========================================================================== -->
+  <main id="guestJourneyCanvas" class="journey" aria-label="Interactive Platform Journey">
+
+    <!-- Screen Reader Announcement Region -->
+    <div id="journeyLiveAnnouncer" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+
+    <!-- 1. Tall Scroll Spacer (Drives master GSAP timeline) -->
+    <div class="journey-spacer" id="journeyScrollSpacer"></div>
+
+    <!-- 2. Pinned Full-Viewport Stage (100svh / dvh) -->
+    <div class="journey-stage" id="journeyStage">
+
+      <!-- Ambient Depth & Parallax Layer -->
+      <div class="journey-bg-layer" id="journeyBgLayer"></div>
+
+      <!-- World Wrapper (Camera Model: translates & tilts to keep traveler in focus) -->
+      <div class="journey-world" id="journeyWorld">
+        <svg id="dynamicJourneySvg" class="journey-svg-canvas" viewBox="0 0 2000 1200" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <!-- Road Underglow Ribbon -->
+          <path id="roadUnderglow" class="road-underglow" d="" />
+          <!-- Road Asphalt Ribbon -->
+          <path id="roadRibbon" class="road-ribbon" d="" />
+          <!-- Road Inner Edge -->
+          <path id="roadInnerBorder" class="road-inner-border" d="" />
+          <!-- Animated Center Dashed Line -->
+          <path id="roadCenterLine" class="road-centerline" d="" />
+          <!-- Active Electric Blue Progress Trail -->
+          <path id="roadProgressTrail" class="road-trail" d="" />
+
+          <!-- 9 Milestone Nodes on the Road -->
+          <g id="roadNodesGroup"></g>
+
+          <!-- Visual Traveler (Chevron / Glowing Orb) -->
+          <g id="travelerElement" class="traveler-wrap" transform="translate(250, 950)">
+            <circle class="traveler-pulse" cx="0" cy="0" r="14" />
+            <circle cx="0" cy="0" r="15" fill="rgba(37, 99, 235, 0.25)" />
+            <circle class="traveler-core" cx="0" cy="0" r="11" />
+            <polygon id="travelerHeadingPointer" class="traveler-heading" points="0,-7 5,5 -5,5" />
+          </g>
+        </svg>
+      </div>
+
+      <!-- 3. Content Viewport (ONE SECTION AT A TIME) -->
+      <div class="journey-content-viewport" id="journeyContentViewport">
+
+        <!-- STOP 1: START / HOME INTRODUCTION -->
+        <section class="journey-stop is-active" id="stop-0" aria-label="Stop 1: Platform Introduction">
+          <div class="stop-kicker"><span class="stop-kicker-dot"></span> STOP 01 / 09 • HOME PLATFORM</div>
+          <h1 class="stop-headline">Bridgeway HR Management System</h1>
+          <p class="stop-supporting">Unified workforce directory, sprint task delegation, leave approvals, and company governance in one modern platform.</p>
+          <div class="stop-chips-row">
+            <span class="stop-chip"><i class="bi bi-grid-1x2-fill"></i> 6 Core HR Modules</span>
+            <span class="stop-chip"><i class="bi bi-people-fill"></i> Employee &amp; HR Roles</span>
+            <span class="stop-chip"><i class="bi bi-database-check"></i> LocalStorage &amp; JSON</span>
+            <span class="stop-chip"><i class="bi bi-shield-lock-fill"></i> HR-Provisioned Accounts</span>
+          </div>
+          <div class="stop-cta-row">
+            <button onclick="window.jumpToJourneyStop(1)" class="btn-j-primary">
+              <span>Begin the journey</span> <i class="bi bi-arrow-right"></i>
+            </button>
+            <button onclick="openLoginPrompt()" class="btn-j-secondary">
+              <i class="bi bi-box-arrow-in-right"></i> Sign In
+            </button>
+          </div>
+          <div class="scroll-begin-hint" id="scrollBeginHint">
+            <i class="bi bi-mouse"></i> Scroll down to travel along the road
+          </div>
+        </section>
+
+        <!-- STOP 2: ABOUT & PROJECT TEAM -->
+        <section class="journey-stop" id="stop-1" aria-label="Stop 2: About Platform & Team" inert aria-hidden="true">
+          <div class="stop-kicker"><span class="stop-kicker-dot"></span> STOP 02 / 09 • ABOUT &amp; TEAM</div>
+          <h2 class="stop-headline">Engineered by University Project Team</h2>
+          <p class="stop-supporting">Developed with semantic HTML5, Bootstrap 5, and JavaScript to deliver an agile, zero-friction workplace operations hub.</p>
+          <div class="stop-chips-row">
+            <span class="stop-chip"><i class="bi bi-person-badge"></i> Team Member 1 (Lead)</span>
+            <span class="stop-chip"><i class="bi bi-code-slash"></i> Team Member 2 (Frontend)</span>
+            <span class="stop-chip"><i class="bi bi-palette"></i> Team Member 3 (UI/UX)</span>
+            <span class="stop-chip"><i class="bi bi-check-circle"></i> Team Member 4 (Testing)</span>
+          </div>
+          <div class="stop-cta-row">
+            <button onclick="window.jumpToJourneyStop(2)" class="btn-j-primary">
+              <span>Explore HR Services</span> <i class="bi bi-arrow-right"></i>
+            </button>
+          </div>
+        </section>
+
+        <!-- STOP 3: HR SERVICES OVERVIEW -->
+        <section class="journey-stop" id="stop-2" aria-label="Stop 3: HR Services Suite" inert aria-hidden="true">
+          <div class="stop-kicker"><span class="stop-kicker-dot"></span> STOP 03 / 09 • SERVICES</div>
+          <h2 class="stop-headline">Six Integrated Workplace Service Modules</h2>
+          <p class="stop-supporting">Comprehensive digital services engineered to streamline staff administration, assignments, and communication.</p>
+          <div class="stop-chips-row">
+            <span class="stop-chip"><i class="bi bi-people-fill"></i> 1. Employees Directory</span>
+            <span class="stop-chip"><i class="bi bi-kanban-fill"></i> 2. Task Management</span>
+            <span class="stop-chip"><i class="bi bi-calendar2-check-fill"></i> 3. Leave Applications</span>
+            <span class="stop-chip"><i class="bi bi-journal-bookmark-fill"></i> 4. Company Policies</span>
+            <span class="stop-chip"><i class="bi bi-chat-dots-fill"></i> 5. Feedback System</span>
+            <span class="stop-chip"><i class="bi bi-camera-video-fill"></i> 6. Jitsi Meetings</span>
+          </div>
+          <div class="stop-cta-row">
+            <button onclick="window.jumpToJourneyStop(3)" class="btn-j-primary">
+              <span>Employee Workspace Tour</span> <i class="bi bi-arrow-right"></i>
+            </button>
+          </div>
+        </section>
+
+        <!-- STOP 4: EMPLOYEE WORKSPACE & PERMISSIONS -->
+        <section class="journey-stop" id="stop-3" aria-label="Stop 4: Employee Workspace" inert aria-hidden="true">
+          <div class="stop-kicker"><span class="stop-kicker-dot"></span> STOP 04 / 09 • EMPLOYEE WORKSPACE</div>
+          <h2 class="stop-headline">Dedicated Self-Service Portal for Employees</h2>
+          <p class="stop-supporting">Staff members log in to view their personal profile, complete sprint tasks, and submit leave requests directly.</p>
+          <div class="stop-chips-row">
+            <span class="stop-chip"><i class="bi bi-person-vcard"></i> Personal Profile (Phone/Photo Edit)</span>
+            <span class="stop-chip"><i class="bi bi-check2-square"></i> Solve &amp; Submit Tasks</span>
+            <span class="stop-chip"><i class="bi bi-calendar-plus"></i> Leave &amp; Departure Requests</span>
+            <span class="stop-chip"><i class="bi bi-chat-left-text"></i> Submit Direct Feedback</span>
+            <span class="stop-chip"><i class="bi bi-camera-video"></i> Join Jitsi Team Calls</span>
+          </div>
+          <div class="stop-cta-row">
+            <button onclick="window.jumpToJourneyStop(4)" class="btn-j-primary">
+              <span>Task Management Workflow</span> <i class="bi bi-arrow-right"></i>
+            </button>
+          </div>
+        </section>
+
+        <!-- STOP 5: TASK MANAGEMENT WORKFLOW -->
+        <section class="journey-stop" id="stop-4" aria-label="Stop 5: Task Management Workflow" inert aria-hidden="true">
+          <div class="stop-kicker"><span class="stop-kicker-dot"></span> STOP 05 / 09 • TASK WORKFLOW</div>
+          <h2 class="stop-headline">Task Assignment, Solution Submission and Review</h2>
+          <p class="stop-supporting">HR creates and delegates tasks with priorities; employees submit solutions for review and change requests.</p>
+          <div class="stepper-track">
+            <div class="stepper-step is-lit"><div class="stepper-dot">1</div><span>Create (HR)</span></div>
+            <div class="stepper-step"><div class="stepper-dot">2</div><span>Assign</span></div>
+            <div class="stepper-step"><div class="stepper-dot">3</div><span>In Progress</span></div>
+            <div class="stepper-step"><div class="stepper-dot">4</div><span>Submit Solution</span></div>
+            <div class="stepper-step"><div class="stepper-dot">5</div><span>HR Review</span></div>
+            <div class="stepper-step"><div class="stepper-dot">6</div><span>Completed</span></div>
+          </div>
+          <div class="stop-chips-row">
+            <span class="stop-chip"><i class="bi bi-flag-fill"></i> Priority: Low / Medium / High</span>
+            <span class="stop-chip"><i class="bi bi-link-45deg"></i> Solution Link &amp; Summary</span>
+            <span class="stop-chip"><i class="bi bi-arrow-repeat"></i> Request Changes with HR Notes</span>
+            <span class="stop-chip"><i class="bi bi-calendar-event"></i> Due Date Tracking</span>
+          </div>
+          <div class="stop-cta-row">
+            <button onclick="window.jumpToJourneyStop(5)" class="btn-j-primary">
+              <span>Leave Request Workflow</span> <i class="bi bi-arrow-right"></i>
+            </button>
+          </div>
+        </section>
+
+        <!-- STOP 6: LEAVE & DEPARTURE APPLICATIONS -->
+        <section class="journey-stop" id="stop-5" aria-label="Stop 6: Leave & Departure Workflow" inert aria-hidden="true">
+          <div class="stop-kicker"><span class="stop-kicker-dot"></span> STOP 06 / 09 • LEAVE &amp; DEPARTURE</div>
+          <h2 class="stop-headline">Formal Leave Requests and HR Approvals</h2>
+          <p class="stop-supporting">Employees submit absence requests with type, dates, and reasons; HR reviews and approves or rejects with status sync.</p>
+          <div class="stepper-track">
+            <div class="stepper-step is-lit"><div class="stepper-dot">1</div><span>Apply</span></div>
+            <div class="stepper-step"><div class="stepper-dot">2</div><span>Reason</span></div>
+            <div class="stepper-step"><div class="stepper-dot">3</div><span>Pending</span></div>
+            <div class="stepper-step"><div class="stepper-dot">4</div><span>HR Decision</span></div>
+          </div>
+          <div class="stop-chips-row">
+            <span class="stop-chip"><i class="bi bi-sun-fill"></i> Annual Leave</span>
+            <span class="stop-chip"><i class="bi bi-heart-pulse-fill"></i> Sick Leave</span>
+            <span class="stop-chip"><i class="bi bi-clock-history"></i> Early Departure</span>
+            <span class="stop-chip"><i class="bi bi-calendar-x"></i> Unpaid Leave</span>
+            <span class="stop-chip"><i class="bi bi-funnel-fill"></i> HR Employee Filter</span>
+          </div>
+          <div class="stop-cta-row">
+            <button onclick="window.jumpToJourneyStop(6)" class="btn-j-primary">
+              <span>Company Policies Rulebook</span> <i class="bi bi-arrow-right"></i>
+            </button>
+          </div>
+        </section>
+
+        <!-- STOP 7: COMPANY POLICIES -->
+        <section class="journey-stop" id="stop-6" aria-label="Stop 7: Company Policies" inert aria-hidden="true">
+          <div class="stop-kicker"><span class="stop-kicker-dot"></span> STOP 07 / 09 • COMPANY POLICIES</div>
+          <h2 class="stop-headline">Read-Only Compliance Rules Loaded from JSON</h2>
+          <p class="stop-supporting">Transparent company rulebook loaded from static JSON data, standardizing workplace ethics and operational guidelines.</p>
+          <div class="stop-chips-row">
+            <span class="stop-chip"><i class="bi bi-shield-check"></i> Code of Conduct</span>
+            <span class="stop-chip"><i class="bi bi-clock"></i> Working Hours</span>
+            <span class="stop-chip"><i class="bi bi-laptop"></i> Remote Work Policy</span>
+            <span class="stop-chip"><i class="bi bi-calendar-check"></i> Leave Policy</span>
+            <span class="stop-chip"><i class="bi bi-lock-fill"></i> Data Security</span>
+          </div>
+          <div class="stop-cta-row">
+            <button onclick="window.jumpToJourneyStop(7)" class="btn-j-primary">
+              <span>Contact &amp; Feedback System</span> <i class="bi bi-arrow-right"></i>
+            </button>
+          </div>
+        </section>
+
+        <!-- STOP 8: CONTACT US & FEEDBACK SYSTEM -->
+        <section class="journey-stop" id="stop-7" aria-label="Stop 8: Contact Us & Feedback" inert aria-hidden="true">
+          <div class="stop-kicker"><span class="stop-kicker-dot"></span> STOP 08 / 09 • CONTACT &amp; FEEDBACK</div>
+          <h2 class="stop-headline">Contact Information, Amman Map &amp; HR Feedback</h2>
+          <p class="stop-supporting">Reach Bridgeway People Operations or submit inquiries with Subject and Message, stored directly in LocalStorage for HR review.</p>
+          <div class="stop-chips-row">
+            <a href="tel:+96265504400" class="stop-chip text-decoration-none"><i class="bi bi-telephone-fill"></i> +962 6 550 4400</a>
+            <a href="mailto:hr-ops@bridgeway.corp" class="stop-chip text-decoration-none"><i class="bi bi-envelope-fill"></i> hr-ops@bridgeway.corp</a>
+            <span class="stop-chip"><i class="bi bi-geo-alt-fill"></i> Amman HQ, Bldg 23</span>
+            <span class="stop-chip"><i class="bi bi-map"></i> Google Maps Pin</span>
+            <span class="stop-chip"><i class="bi bi-inbox-fill"></i> HR Feedback Inbox Sync</span>
+          </div>
+          <div class="stop-cta-row">
+            <button onclick="window.jumpToJourneyStop(8)" class="btn-j-primary">
+              <span>Proceed to Portal Gate</span> <i class="bi bi-arrow-right"></i>
+            </button>
+          </div>
+        </section>
+
+        <!-- STOP 9: PORTAL LOGIN GATE -->
+        <section class="journey-stop" id="stop-8" aria-label="Stop 9: Portal Login Gate" inert aria-hidden="true">
+          <div class="stop-kicker"><span class="stop-kicker-dot"></span> STOP 09 / 09 • LOGIN GATE</div>
+          <h2 class="stop-headline">Role-Based Authentication &amp; Access Gate</h2>
+          <p class="stop-supporting">Enter credentials validated by JavaScript. System redirects to Employee or HR console. Strictly no public registration.</p>
+          <div class="stop-chips-row">
+            <span class="stop-chip"><i class="bi bi-person-fill"></i> Employee: Sarah Jenkins</span>
+            <span class="stop-chip"><i class="bi bi-shield-lock-fill"></i> HR Director: Alex Vance</span>
+            <span class="stop-chip"><i class="bi bi-check-circle-fill"></i> JS Credential Validation</span>
+            <span class="stop-chip"><i class="bi bi-slash-circle"></i> Zero Public Registration</span>
+          </div>
+          <div class="stop-cta-row">
+            <button onclick="openLoginPrompt()" class="btn-j-primary fs-6 px-4 py-2">
+              <i class="bi bi-box-arrow-in-right"></i> Log In to HR System →
+            </button>
+            <button onclick="window.jumpToJourneyStop(0)" class="btn-j-secondary fs-6 px-4 py-2">
+              <i class="bi bi-arrow-counterclockwise"></i> Back to Start
+            </button>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- 4. UI Chrome: Desktop Side Navigation -->
+      <nav class="journey-desktop-nav" aria-label="Journey Milestones">
+        <button class="desktop-nav-chip is-active" id="navChip-0" onclick="window.jumpToJourneyStop(0)" aria-current="step">
+          <span class="chip-num">01</span> Start
+        </button>
+        <button class="desktop-nav-chip" id="navChip-1" onclick="window.jumpToJourneyStop(1)">
+          <span class="chip-num">02</span> About
+        </button>
+        <button class="desktop-nav-chip" id="navChip-2" onclick="window.jumpToJourneyStop(2)">
+          <span class="chip-num">03</span> Services
+        </button>
+        <button class="desktop-nav-chip" id="navChip-3" onclick="window.jumpToJourneyStop(3)">
+          <span class="chip-num">04</span> Experience
+        </button>
+        <button class="desktop-nav-chip" id="navChip-4" onclick="window.jumpToJourneyStop(4)">
+          <span class="chip-num">05</span> Tasks
+        </button>
+        <button class="desktop-nav-chip" id="navChip-5" onclick="window.jumpToJourneyStop(5)">
+          <span class="chip-num">06</span> Leave
+        </button>
+        <button class="desktop-nav-chip" id="navChip-6" onclick="window.jumpToJourneyStop(6)">
+          <span class="chip-num">07</span> Policies
+        </button>
+        <button class="desktop-nav-chip" id="navChip-7" onclick="window.jumpToJourneyStop(7)">
+          <span class="chip-num">08</span> Contact
+        </button>
+        <button class="desktop-nav-chip" id="navChip-8" onclick="window.jumpToJourneyStop(8)">
+          <span class="chip-num">09</span> Login
+        </button>
+      </nav>
+
+      <!-- 5. UI Chrome: Mobile Top Progress HUD -->
+      <div class="journey-mobile-hud">
+        <div class="mobile-hud-badge" id="mobileStopCounter">01 / 09</div>
+        <div class="mobile-hud-track">
+          <div class="mobile-hud-fill" id="mobileProgressFill"></div>
+        </div>
+      </div>
+
+      <!-- 6. UI Chrome: Next Stop Hint -->
+      <div class="journey-next-hint" id="journeyNextHint">
+        <i class="bi bi-chevron-down"></i> Next: <strong>About</strong>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ==========================================================================
+       VIEW 2: AUTHENTICATED WORKSPACE (EMPLOYEE OR HR ADMIN — UNCHANGED)
+       Strict Scope: The journey is NEVER mounted or shown when logged in!
+       ========================================================================== -->
+  <div id="authDashboardWrapper" class="auth-dashboard-container" style="display: none;">
+    
+    <!-- Authenticated Hero Card -->
+    <div class="stage-card-glass mb-4" id="authHeroCard">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+        <div>
+          <div class="d-inline-flex align-items-center gap-2 mb-2">
+            <span class="role-badge-pill employee" id="authRoleBadge">ACTIVE SESSION</span>
+            <span class="text-muted small" id="authSessionMeta">Department Workspace</span>
+          </div>
+          <h2 class="fw-bold mb-1" id="authGreeting">Welcome back!</h2>
+          <p class="text-secondary mb-0" id="authSubheading">Here is your daily operational summary.</p>
+        </div>
+        <div class="d-flex align-items-center gap-2" id="authQuickActions">
+          <!-- Populated via JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Authenticated Modules Grid -->
+    <div class="mb-4">
+      <div class="d-flex align-items-center justify-content-between mb-3">
+        <div>
+          <h4 class="fw-bold m-0" id="authGridTitle">Your Operational Modules</h4>
+          <div class="text-muted small" id="authGridSub">Direct tools for your assigned responsibilities</div>
+        </div>
+      </div>
+      <div class="row g-4" id="authModulesGrid">
+        <!-- Populated dynamically via JS -->
+      </div>
+    </div>
+
+    <!-- Authenticated Simple Footer -->
+    <div class="p-4 bg-white rounded-4 border text-center text-muted small">
+      © 2026 Bridgeway HR Management System • Logged in as <span id="authFooterUser" class="fw-bold text-dark"></span>
+    </div>
+
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container-custom">
+    <div class="custom-toast" id="systemToast" style="display: none;">
+      <i class="bi bi-check-circle-fill text-success fs-5"></i>
+      <span id="systemToastMsg">Action completed successfully.</span>
+    </div>
+  </div>
+
+  <!-- Dedicated Landing Journey Engine -->
+  <script src="landing-journey.js"></script>
+
+  <!-- ==========================================================================
+       WORKSPACE CONTROLLER & AUTHENTICATED STATE MANAGEMENT (UNCHANGED)
+       ========================================================================== -->
+  <script>
+    // State management: 'guest' | 'employee' | 'hr'
+    let currentRole = localStorage.getItem('bridgeway_current_role') || 'guest';
+
+    // Mock User Profiles
+    const userProfiles = {
+      employee: {
+        name: 'Sarah Jenkins',
+        initials: 'SJ',
+        roleLabel: 'EMPLOYEE',
+        roleClass: 'employee',
+        email: 'sarah.jenkins@bridgeway.corp',
+        department: 'Product & Design Team',
+        id: '#EMP-2041',
+        title: 'Frontend Web Engineer'
+      },
+      hr: {
+        name: 'Alex Vance',
+        initials: 'HR',
+        roleLabel: 'HR ADMIN',
+        roleClass: 'hr',
+        email: 'alex.vance@bridgeway.corp',
+        department: 'People Operations',
+        id: '#HR-1001',
+        title: 'Director of HR & Administration'
+      }
+    };
+
+    // Authenticated Services Modules
+    const authModules = {
+      employee: [
+        { title: 'My Profile', icon: 'bi-person-vcard', bg: 'bg-primary-subtle text-primary', desc: 'Inspect academic records, position details, and edit permitted contact information.', btn: 'View Profile →', action: () => showToast('Opening Employee Profile...') },
+        { title: 'Leave Application', icon: 'bi-calendar-plus', bg: 'bg-success-subtle text-success', desc: 'Submit absence requests for Annual, Sick, Early Departure, or Unpaid leave with real-time status.', btn: 'Apply for Leave →', action: () => showToast('Opening Leave Application Form...') },
+        { title: 'My Assigned Tasks', icon: 'bi-check2-square', bg: 'bg-warning-subtle text-warning', desc: 'Review 3 active sprint tasks, inspect requirements, and submit code deliverables.', btn: 'Open Tasks (3) →', action: () => showToast('Opening My Tasks Board...') },
+        { title: 'Company Policies', icon: 'bi-book-half', bg: 'bg-info-subtle text-info', desc: 'Read official handbook, code of conduct, remote policy, and health benefits.', btn: 'Read Policies →', action: () => showToast('Opening Policies Directory...') },
+        { title: 'Team Meetings (Jitsi)', icon: 'bi-camera-video-fill', bg: 'bg-primary-subtle text-primary', desc: 'Join scheduled video calls: Weekly Retrospective starting today at 3:00 PM.', btn: 'Join Meeting →', action: () => showToast('Launching Jitsi Video Room...') },
+        { title: 'Direct HR Feedback', icon: 'bi-chat-left-dots', bg: 'bg-danger-subtle text-danger', desc: 'Submit confidential thoughts or inquiries directly to the HR director.', btn: 'Send Feedback →', action: () => showToast('Opening Feedback Dialog...') }
+      ],
+      hr: [
+        { title: 'Employee Directory & Provisioning', icon: 'bi-person-gear', bg: 'bg-primary-subtle text-primary', desc: 'Manage employee accounts, filter departments, and exclusively register new employee credentials.', btn: 'Manage Staff →', action: () => showToast('Opening Directory & Add Employee Modal...') },
+        { title: 'Leave Review & Approvals', icon: 'bi-calendar-check', bg: 'bg-success-subtle text-success', desc: 'One-click approve or reject 4 pending employee leave applications with instant sync.', btn: 'Review Leaves (4) →', action: () => showToast('Opening Leave Approval Desk...') },
+        { title: 'Task Delegation & Review', icon: 'bi-kanban-fill', bg: 'bg-warning-subtle text-warning', desc: 'Assign engineering tasks, monitor Kanban status, and review submitted deliverables.', btn: 'Task Board →', action: () => showToast('Opening Task Delegation Board...') },
+        { title: 'Company Policies Handbook', icon: 'bi-journal-bookmark-fill', bg: 'bg-info-subtle text-info', desc: 'Read-only static JSON company rulebook: inspect code of conduct, remote policy, and work hours.', btn: 'View Policies →', action: () => showToast('Opening Policies Directory...') },
+        { title: 'Meetings Manager (Jitsi)', icon: 'bi-camera-video', bg: 'bg-primary-subtle text-primary', desc: 'Schedule company briefings, department syncs, and configure Jitsi video conference rooms.', btn: 'Manage Meetings →', action: () => showToast('Opening Meetings Manager...') },
+        { title: 'Employee Feedback Inbox', icon: 'bi-inbox-fill', bg: 'bg-danger-subtle text-danger', desc: 'Inspect and reply to inquiries submitted through the website footer contact form.', btn: 'View Inbox (2 New) →', action: () => showToast('Opening Feedback Inbox...') }
+      ]
+    };
+
+    // ========================================================================
+    // APP RENDERER: GUEST JOURNEY VS AUTHENTICATED DASHBOARDS
+    // ========================================================================
+    function renderApp() {
+      // 1. Controller Bar Buttons
+      document.querySelectorAll('.demo-role-btn').forEach(btn => btn.classList.remove('active'));
+      if (currentRole === 'guest') document.getElementById('btnRoleGuest').classList.add('active');
+      if (currentRole === 'employee') document.getElementById('btnRoleEmployee').classList.add('active');
+      if (currentRole === 'hr') document.getElementById('btnRoleHR').classList.add('active');
+
+      // 2. Navigation Links
+      const navLinks = document.getElementById('mainNavLinks');
+      if (currentRole === 'guest') {
+        navLinks.innerHTML = `
+          <a onclick="window.jumpToJourneyStop(0)" class="nav-link-custom">Home</a>
+          <a onclick="window.jumpToJourneyStop(1)" class="nav-link-custom">About</a>
+          <a onclick="window.jumpToJourneyStop(2)" class="nav-link-custom">Services</a>
+          <a onclick="window.jumpToJourneyStop(7)" class="nav-link-custom">Contact Us</a>
+        `;
+      } else if (currentRole === 'employee') {
+        navLinks.innerHTML = `
+          <a href="javascript:void(0)" class="nav-link-custom active">Dashboard</a>
+          <a href="javascript:void(0)" onclick="showToast('Loading My Tasks...')" class="nav-link-custom">My Tasks (3)</a>
+          <a href="javascript:void(0)" onclick="showToast('Loading Leave Applications...')" class="nav-link-custom">Leaves</a>
+          <a href="javascript:void(0)" onclick="showToast('Loading Policies...')" class="nav-link-custom">Policies</a>
+          <a href="javascript:void(0)" onclick="showToast('Launching Jitsi Room...')" class="nav-link-custom">Meetings</a>
+        `;
+      } else if (currentRole === 'hr') {
+        navLinks.innerHTML = `
+          <a href="javascript:void(0)" class="nav-link-custom active">Console</a>
+          <a href="javascript:void(0)" onclick="showToast('Opening Directory...')" class="nav-link-custom">Employees</a>
+          <a href="javascript:void(0)" onclick="showToast('Opening Approvals...')" class="nav-link-custom">Leave Approvals (4)</a>
+          <a href="javascript:void(0)" onclick="showToast('Opening Meetings Manager...')" class="nav-link-custom">Meetings</a>
+          <a href="javascript:void(0)" onclick="showToast('Opening Feedback Inbox...')" class="nav-link-custom">Feedback (2)</a>
+        `;
+      }
+
+      // 3. Navbar Auth Area
+      const authArea = document.getElementById('navAuthArea');
+      if (currentRole === 'guest') {
+        authArea.innerHTML = `
+          <button class="btn-primary-custom" onclick="openLoginPrompt()">
+            <i class="bi bi-box-arrow-in-right"></i> Sign In →
+          </button>
+        `;
+      } else {
+        const u = userProfiles[currentRole];
+        authArea.innerHTML = `
+          <div class="profile-pill">
+            <div class="profile-avatar-circle ${u.roleClass}">${u.initials}</div>
+            <div class="d-none d-sm-block text-start">
+              <div class="fw-bold" style="font-size: 0.8rem; line-height: 1.1;">${u.name}</div>
+              <span class="role-badge-pill ${u.roleClass}">${u.roleLabel}</span>
+            </div>
+            <button class="btn-signout ms-1" onclick="setRole('guest')" title="Sign out to guest path tour">Sign Out</button>
+          </div>
+        `;
+      }
+
+      // 4. View Isolation & Lifecycle: Mount Guest Journey vs Authenticated Console
+      const guestCanvas = document.getElementById('guestJourneyCanvas');
+      const authWrapper = document.getElementById('authDashboardWrapper');
+
+      if (currentRole === 'guest') {
+        if (window.unmountJourney) window.unmountJourney();
+        guestCanvas.style.display = 'block';
+        authWrapper.style.display = 'none';
+        if (window.mountJourney) window.mountJourney();
+      } else {
+        // Authenticated users get clean, uncluttered dashboard — JOURNEY FULLY DESTROYED!
+        if (window.unmountJourney) window.unmountJourney();
+        guestCanvas.style.display = 'none';
+        authWrapper.style.display = 'block';
+
+        const u = userProfiles[currentRole];
+        document.getElementById('authRoleBadge').className = `role-badge-pill ${u.roleClass}`;
+        document.getElementById('authRoleBadge').innerText = u.roleLabel;
+        document.getElementById('authSessionMeta').innerText = `${u.title} • ${u.department}`;
+        document.getElementById('authGreeting').innerText = `Welcome back, ${u.name}!`;
+        document.getElementById('authSubheading').innerText = currentRole === 'employee' 
+          ? 'Here is your active engineering assignments and leave status.' 
+          : 'Administrative control center: review pending actions and manage workforce.';
+        document.getElementById('authFooterUser').innerText = `${u.name} (${u.email})`;
+
+        // Quick Actions
+        const qa = document.getElementById('authQuickActions');
+        if (currentRole === 'employee') {
+          qa.innerHTML = `
+            <button onclick="showToast('Viewing your 3 assigned tasks...')" class="btn-primary-custom">
+              <i class="bi bi-check2-circle"></i> My Tasks (3)
+            </button>
+            <button onclick="showToast('Opening leave request dialog...')" class="btn-secondary-custom">
+              <i class="bi bi-plus-lg"></i> Apply for Leave
+            </button>
+          `;
+        } else {
+          qa.innerHTML = `
+            <button onclick="showToast('Opening Add New Employee modal...')" class="btn-primary-custom">
+              <i class="bi bi-person-plus-fill"></i> + Add Employee
+            </button>
+            <button onclick="showToast('Reviewing 4 pending leaves...')" class="btn-secondary-custom">
+              Review Leaves (4)
+            </button>
+          `;
+        }
+
+        // Modules Grid
+        const grid = document.getElementById('authModulesGrid');
+        const items = authModules[currentRole];
+        grid.innerHTML = items.map(m => `
+          <div class="col-md-6 col-lg-4">
+            <div class="stage-card-glass h-100 d-flex flex-column justify-content-between p-4">
+              <div>
+                <div class="bento-icon-box ${m.bg}"><i class="bi ${m.icon}"></i></div>
+                <h5 class="fw-bold mb-2">${m.title}</h5>
+                <p class="text-secondary small mb-3">${m.desc}</p>
+              </div>
+              <div>
+                <button onclick="(${m.action.toString()})()" class="btn-primary-custom w-100 justify-content-center py-2" style="font-size: 0.8rem;">
+                  ${m.btn}
+                </button>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+
+    // Role switcher
+    function setRole(role) {
+      if (currentRole === 'guest' && role !== 'guest' && window.unmountJourney) {
+        window.unmountJourney();
+      }
+      currentRole = role;
+      localStorage.setItem('bridgeway_current_role', role);
+      renderApp();
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      showToast(`Switched active view to: ${role === 'guest' ? 'Guest (Scroll Journey)' : role === 'employee' ? 'Employee (Sarah Jenkins)' : 'HR Admin (Alex Vance)'}`);
+    }
+
+    // Login prompt helper (exact existing handler)
+    function openLoginPrompt() {
+      const choice = confirm("Demonstration Mode: Which role would you like to enter?\n\n[OK] = Sarah Jenkins (Employee Console)\n[Cancel] = Alex Vance (HR Director Console)");
+      if (choice) {
+        setRole('employee');
+      } else {
+        setRole('hr');
+      }
+    }
+
+    // Toast notification
+    function showToast(message) {
+      const toast = document.getElementById('systemToast');
+      document.getElementById('systemToastMsg').innerText = message;
+      toast.style.display = 'flex';
+      setTimeout(() => { toast.style.display = 'none'; }, 3500);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderApp();
+    });
+  </script>
+</body>
+</html>

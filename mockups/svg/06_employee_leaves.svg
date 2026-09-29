@@ -1,0 +1,198 @@
+<svg width="1440" height="1350" viewBox="0 0 1440 1350" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .font-sans { font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+      .card-shadow { filter: drop-shadow(0 10px 25px rgba(15, 23, 42, 0.05)) drop-shadow(0 1px 3px rgba(15, 23, 42, 0.04)); }
+      .hero-shadow { filter: drop-shadow(0 20px 40px rgba(15, 23, 42, 0.08)) drop-shadow(0 2px 5px rgba(15, 23, 42, 0.04)); }
+      .btn-shadow { filter: drop-shadow(0 4px 14px rgba(37, 99, 235, 0.28)); }
+    </style>
+    <linearGradient id="primary-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563EB" />
+      <stop offset="100%" stop-color="#1D4ED8" />
+    </linearGradient>
+    <linearGradient id="pill-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#EFF6FF" />
+      <stop offset="100%" stop-color="#DBEAFE" />
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="1440" height="1350" fill="#F8FAFC" />
+  <circle cx="150" cy="180" r="280" fill="#2563EB" opacity="0.03" />
+  <circle cx="1290" cy="240" r="320" fill="#6366F1" opacity="0.03" />
+  <!-- ==================== TASK 1: LOCKED NAVBAR (EMPLOYEE) ==================== -->
+  <g id="Navbar-Employee" transform="translate(150, 24)">
+    <rect width="1140" height="70" rx="18" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1" class="card-shadow" />
+    
+    <!-- Logo: Bridgeway HR -->
+    <g transform="translate(24, 17)">
+      <rect width="36" height="36" rx="9" fill="#2563EB" />
+      <path d="M10 18L15 23L26 12" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="46" y="25" class="font-sans" font-size="19" font-weight="800" fill="#0F172A">Bridgeway<tspan fill="#2563EB">HR</tspan></text>
+    </g>
+    <g transform="translate(250, 26)">
+      <text x="0" y="15" class="font-sans" font-size="14" font-weight="500" fill="#475569">Home</text>
+      <text x="75" y="15" class="font-sans" font-size="14" font-weight="500" fill="#475569">Profile</text>
+      <text x="155" y="15" class="font-sans" font-size="14" font-weight="700" fill="#2563EB">Services ▾</text>
+      <circle cx="177" cy="25" r="2.5" fill="#2563EB" />
+      <text x="265" y="15" class="font-sans" font-size="14" font-weight="500" fill="#475569">About</text>
+      <text x="345" y="15" class="font-sans" font-size="14" font-weight="500" fill="#475569">Contact Us</text>
+    </g>
+    <!-- Employee Profile Pill: Sarah Jenkins + Logout -->
+    <g transform="translate(865, 14)">
+      <rect width="255" height="42" rx="21" fill="#F8FAFC" stroke="#E2E8F0" />
+      <circle cx="21" cy="21" r="16" fill="#2563EB" />
+      <text x="21" y="25" class="font-sans" font-size="11" font-weight="700" fill="#FFFFFF" text-anchor="middle">SJ</text>
+      <text x="44" y="18" class="font-sans" font-size="12" font-weight="700" fill="#0F172A">Sarah Jenkins</text>
+      <rect x="44" y="23" width="60" height="14" rx="7" fill="#EFF6FF" />
+      <text x="74" y="33" class="font-sans" font-size="8" font-weight="700" fill="#2563EB" text-anchor="middle">EMPLOYEE</text>
+      <g transform="translate(180, 7)">
+        <rect width="65" height="28" rx="8" fill="#FEE2E2" />
+        <text x="32" y="18" class="font-sans" font-size="10" font-weight="700" fill="#DC2626" text-anchor="middle">Logout</text>
+      </g>
+    </g>
+  </g>
+  <!-- Page Header -->
+  <g transform="translate(150, 120)">
+    <text x="0" y="30" class="font-sans" font-size="28" font-weight="800" fill="#0F172A">Leave Applications &amp; Absence Requests</text>
+    <text x="0" y="54" class="font-sans" font-size="14" font-weight="400" fill="#64748B">Apply for absence and track approval decisions directly from the HR director.</text>
+  </g>
+
+  <!-- Application Form Card -->
+  <g transform="translate(150, 190)">
+    <rect width="1140" height="290" rx="20" fill="#FFFFFF" stroke="#E2E8F0" class="card-shadow" />
+    <g transform="translate(40, 30)">
+      <text x="0" y="20" class="font-sans" font-size="18" font-weight="800" fill="#0F172A">New Absence Request</text>
+      <text x="0" y="40" class="font-sans" font-size="12" fill="#64748B">Applicant: Sarah Jenkins (#EMP-2041) • Department: Technology</text>
+
+      <!-- Row 1: Leave Type & Date Span -->
+      <g transform="translate(0, 60)">
+        <g>
+          <text x="0" y="0" class="font-sans" font-size="12" font-weight="700" fill="#334155">Leave Type</text>
+          <rect y="10" width="320" height="42" rx="8" fill="#FFFFFF" stroke="#CBD5E1" />
+          <text x="14" y="36" class="font-sans" font-size="13" fill="#0F172A">Annual Leave (Select: Annual / Sick / Departure / Unpaid)</text>
+        </g>
+        <g transform="translate(350, 0)">
+          <text x="0" y="0" class="font-sans" font-size="12" font-weight="700" fill="#334155">Start Date</text>
+          <rect y="10" width="160" height="42" rx="8" fill="#FFFFFF" stroke="#CBD5E1" />
+          <text x="14" y="36" class="font-sans" font-size="13" fill="#0F172A">2026-10-12</text>
+        </g>
+        <g transform="translate(530, 0)">
+          <text x="0" y="0" class="font-sans" font-size="12" font-weight="700" fill="#334155">End Date</text>
+          <rect y="10" width="160" height="42" rx="8" fill="#FFFFFF" stroke="#CBD5E1" />
+          <text x="14" y="36" class="font-sans" font-size="13" fill="#0F172A">2026-10-16</text>
+        </g>
+        <g transform="translate(710, 0)">
+          <text x="0" y="0" class="font-sans" font-size="12" font-weight="700" fill="#334155">Duration</text>
+          <rect y="10" width="160" height="42" rx="8" fill="#F1F5F9" stroke="#CBD5E1" />
+          <text x="14" y="36" class="font-sans" font-size="13" font-weight="600" fill="#2563EB">5 Working Days</text>
+        </g>
+      </g>
+
+      <!-- Row 2: Reason & Submit Button -->
+      <g transform="translate(0, 140)">
+        <text x="0" y="0" class="font-sans" font-size="12" font-weight="700" fill="#334155">Reason for Absence</text>
+        <rect y="10" width="850" height="42" rx="8" fill="#FFFFFF" stroke="#CBD5E1" />
+        <text x="14" y="36" class="font-sans" font-size="13" fill="#0F172A">Annual family vacation trip to Aqaba.</text>
+        <rect x="870" y="10" width="190" height="42" rx="8" fill="#2563EB" class="btn-shadow" />
+        <text x="965" y="36" class="font-sans" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">Submit Application →</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- My Requests Table Card -->
+  <g transform="translate(150, 510)">
+    <rect width="1140" height="380" rx="20" fill="#FFFFFF" stroke="#E2E8F0" class="card-shadow" />
+    <g transform="translate(40, 30)">
+      <text x="0" y="20" class="font-sans" font-size="18" font-weight="800" fill="#0F172A">My Absence History</text>
+      <text x="0" y="40" class="font-sans" font-size="12" fill="#64748B">History of leave applications submitted by Sarah Jenkins</text>
+
+      <!-- Table Header -->
+      <g transform="translate(0, 65)">
+        <rect width="1060" height="36" rx="6" fill="#F8FAFC" />
+        <text x="20" y="23" class="font-sans" font-size="12" font-weight="700" fill="#475569">LEAVE ID</text>
+        <text x="140" y="23" class="font-sans" font-size="12" font-weight="700" fill="#475569">TYPE</text>
+        <text x="320" y="23" class="font-sans" font-size="12" font-weight="700" fill="#475569">DATES</text>
+        <text x="540" y="23" class="font-sans" font-size="12" font-weight="700" fill="#475569">REASON</text>
+        <text x="820" y="23" class="font-sans" font-size="12" font-weight="700" fill="#475569">SUBMITTED</text>
+        <text x="960" y="23" class="font-sans" font-size="12" font-weight="700" fill="#475569">STATUS</text>
+      </g>
+
+      <!-- Row 1: LV-301 Pending -->
+      <g transform="translate(0, 115)">
+        <rect width="1060" height="50" rx="8" fill="#FFFFFF" stroke="#E2E8F0" />
+        <text x="20" y="30" class="font-sans" font-size="13" font-weight="700" fill="#0F172A">LV-301</text>
+        <text x="140" y="30" class="font-sans" font-size="13" fill="#0F172A">Annual Leave</text>
+        <text x="320" y="30" class="font-sans" font-size="13" fill="#64748B">12 Oct 2026 - 16 Oct 2026 (5d)</text>
+        <text x="540" y="30" class="font-sans" font-size="13" fill="#0F172A">Family vacation</text>
+        <text x="820" y="30" class="font-sans" font-size="13" fill="#64748B">28 Sep 2026</text>
+        <rect x="950" y="14" width="90" height="24" rx="12" fill="#FEF3C7" />
+        <text x="995" y="30" class="font-sans" font-size="11" font-weight="700" fill="#D97706" text-anchor="middle">Pending</text>
+      </g>
+
+      <!-- Row 2: LV-298 Approved -->
+      <g transform="translate(0, 175)">
+        <rect width="1060" height="50" rx="8" fill="#FFFFFF" stroke="#E2E8F0" />
+        <text x="20" y="30" class="font-sans" font-size="13" font-weight="700" fill="#0F172A">LV-298</text>
+        <text x="140" y="30" class="font-sans" font-size="13" fill="#0F172A">Departure / Early Leave</text>
+        <text x="320" y="30" class="font-sans" font-size="13" fill="#64748B">25 Sep 2026 (2 Hours)</text>
+        <text x="540" y="30" class="font-sans" font-size="13" fill="#0F172A">Dentist appointment</text>
+        <text x="820" y="30" class="font-sans" font-size="13" fill="#64748B">24 Sep 2026</text>
+        <rect x="950" y="14" width="90" height="24" rx="12" fill="#DCFCE7" />
+        <text x="995" y="30" class="font-sans" font-size="11" font-weight="700" fill="#059669" text-anchor="middle">Approved</text>
+      </g>
+    </g>
+  </g>
+  <!-- ==================== GLOBAL FOOTER (EMPLOYEE) ==================== -->
+  <g id="Footer" transform="translate(150, 930)">
+    <rect width="1140" height="350" rx="24" fill="#0F172A" />
+    
+    <!-- Left Column: HQ Details & Map Box -->
+    <g transform="translate(40, 36)">
+      <text x="0" y="20" class="font-sans" font-size="20" font-weight="800" fill="#FFFFFF">Bridgeway<tspan fill="#3B82F6">HR</tspan></text>
+      <text x="0" y="52" class="font-sans" font-size="13" font-weight="400" fill="#94A3B8">King Hussein Business Park • Building 23</text>
+      <text x="0" y="72" class="font-sans" font-size="13" font-weight="400" fill="#94A3B8">Amman 11831, Jordan</text>
+      <text x="0" y="100" class="font-sans" font-size="13" font-weight="600" fill="#60A5FA">📞 +962 6 550 4400</text>
+      <text x="0" y="120" class="font-sans" font-size="13" font-weight="600" fill="#60A5FA">✉ hr-ops@bridgeway.corp</text>
+      
+      <!-- Mini Map Box -->
+      <g transform="translate(0, 142)">
+        <rect width="280" height="70" rx="10" fill="#1E293B" stroke="#334155" />
+        <text x="16" y="28" class="font-sans" font-size="12" font-weight="700" fill="#FFFFFF">📍 Amman Innovation HQ Map</text>
+        <text x="16" y="48" class="font-sans" font-size="11" font-weight="400" fill="#38BDF8">View on Google Maps ↗ (31.9753° N, 35.8344° E)</text>
+      </g>
+    </g>
+
+    <!-- Center Navigation Links -->
+    <g transform="translate(420, 36)">
+      <text x="0" y="20" class="font-sans" font-size="14" font-weight="700" fill="#FFFFFF">Quick Navigation</text>
+      <text x="0" y="52" class="font-sans" font-size="13" font-weight="500" fill="#94A3B8">Home</text>
+      <text x="0" y="77" class="font-sans" font-size="13" font-weight="500" fill="#94A3B8">About Bridgeway</text>
+      <text x="0" y="102" class="font-sans" font-size="13" font-weight="500" fill="#94A3B8">Contact &amp; Inquiries</text>
+      <text x="0" y="127" class="font-sans" font-size="13" font-weight="500" fill="#94A3B8">Company Policies</text>
+      <text x="0" y="152" class="font-sans" font-size="13" font-weight="500" fill="#94A3B8">Meetings Portal (Jitsi)</text>
+    </g>
+    <!-- Right Column: Contact / Feedback Form (Subject Field Included) -->
+    <g transform="translate(680, 26)">
+      <rect width="420" height="295" rx="16" fill="#1E293B" stroke="#334155" />
+      <text x="24" y="28" class="font-sans" font-size="14" font-weight="700" fill="#FFFFFF">Send Feedback to HR</text>
+      <text x="24" y="46" class="font-sans" font-size="11" font-weight="400" fill="#94A3B8">Direct inquiry conduit to People Operations</text>
+      
+      <rect x="24" y="60" width="180" height="34" rx="8" fill="#0F172A" stroke="#334155" />
+      <text x="36" y="81" class="font-sans" font-size="11" fill="#64748B">Your Name</text>
+      <rect x="216" y="60" width="180" height="34" rx="8" fill="#0F172A" stroke="#334155" />
+      <text x="228" y="81" class="font-sans" font-size="11" fill="#64748B">Work Email</text>
+      
+      <rect x="24" y="104" width="372" height="34" rx="8" fill="#0F172A" stroke="#334155" />
+      <text x="36" y="125" class="font-sans" font-size="11" fill="#64748B">Subject (e.g. Leave Inquiry, Technical Suggestion)</text>
+      
+      <rect x="24" y="148" width="372" height="74" rx="8" fill="#0F172A" stroke="#334155" />
+      <text x="36" y="170" class="font-sans" font-size="11" fill="#64748B">Write your confidential feedback here...</text>
+      
+      <rect x="24" y="234" width="372" height="36" rx="8" fill="#2563EB" />
+      <text x="210" y="257" class="font-sans" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">Submit Feedback to HR →</text>
+    </g>
+    <line x1="40" y1="305" x2="1100" y2="305" stroke="#1E293B" stroke-width="1" />
+    <text x="40" y="330" class="font-sans" font-size="12" font-weight="500" fill="#64748B">© 2026 Bridgeway HR Management System • Project Deliverable</text>
+    <text x="1100" y="330" class="font-sans" font-size="12" font-weight="500" fill="#64748B" text-anchor="end">Amman, Jordan</text>
+  </g>
+</svg>
