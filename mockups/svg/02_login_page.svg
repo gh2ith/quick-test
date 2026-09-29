@@ -40,43 +40,126 @@
       <text x="60" y="21" class="font-sans" font-size="13" font-weight="600" fill="#FFFFFF" text-anchor="middle" dominant-baseline="central">Login →</text>
     </g>
   </g>
-  <!-- Centered Login Card -->
-  <g transform="translate(470, 130)">
-    <rect width="500" height="520" rx="20" fill="#FFFFFF" stroke="#E2E8F0" class="hero-shadow" />
+  <!-- Split-Screen Login Card (Character on Left, Form on Right) -->
+  <g transform="translate(240, 115)">
+    <!-- Container Card Shadow -->
+    <rect width="960" height="540" rx="24" fill="#FFFFFF" stroke="#E2E8F0" class="hero-shadow" />
     
-    <g transform="translate(50, 40)">
+    <!-- LEFT PANEL: HR Security Assistant Character Stage -->
+    <g id="Left-Panel-Character">
+      <!-- Background Clip -->
+      <path d="M0 24 C0 10.745, 10.745 0, 24 0 L440 0 L440 540 L24 540 C10.745 540, 0 529.255, 0 516 Z" fill="url(#pill-grad)" />
+      <line x1="440" y1="0" x2="440" y2="540" stroke="#BFDBFE" stroke-width="1" />
+
+      <!-- Watermark Shield -->
+      <path d="M220 80 C270 80, 310 100, 310 160 C310 240, 220 300, 220 300 C220 300, 130 240, 130 160 C130 100, 170 80, 220 80 Z" stroke="#2563EB" stroke-width="3" fill="none" opacity="0.06" />
+
+      <!-- Speech Bubble -->
+      <g transform="translate(90, 35)">
+        <rect width="260" height="34" rx="17" fill="#FFFFFF" stroke="#BFDBFE" stroke-width="1" />
+        <circle cx="18" cy="17" r="4" fill="#2563EB" />
+        <text x="32" y="21" class="font-sans" font-size="11" font-weight="700" fill="#1D4ED8">🔒 "I'm looking away! Password is private."</text>
+      </g>
+
+      <!-- Assistant Character Illustration (Covering Eyes State) -->
+      <g transform="translate(95, 85)">
+        <!-- Floor Shadow -->
+        <ellipse cx="125" cy="270" rx="75" ry="8" fill="rgba(15, 23, 42, 0.08)" />
+
+        <!-- Torso & Suit -->
+        <path d="M50 270 C50 205, 80 190, 125 190 C170 190, 200 205, 200 270 Z" fill="#1E293B" />
+        <path d="M100 190 L125 240 L150 190 Z" fill="#EFF6FF" />
+        <path d="M120 200 L130 200 L134 255 L125 265 L116 255 Z" fill="#2563EB" />
+        <!-- Badge -->
+        <rect x="114" y="240" width="22" height="30" rx="3" fill="#FFFFFF" stroke="#CBD5E1" />
+        <rect x="117" y="243" width="16" height="5" rx="1" fill="#2563EB" />
+        <circle cx="125" cy="254" r="4" fill="#94A3B8" />
+
+        <!-- Head -->
+        <rect x="112" y="160" width="26" height="35" rx="6" fill="#FCD34D" />
+        <circle cx="75" cy="120" r="11" fill="#FCD34D" />
+        <circle cx="175" cy="120" r="11" fill="#FCD34D" />
+        <rect x="76" y="65" width="98" height="110" rx="49" fill="#FDE047" />
+
+        <!-- Hair -->
+        <path d="M72 90 C70 55, 100 45, 125 45 C155 45, 180 58, 178 90 C170 75, 155 70, 138 70 C114 70, 94 78, 72 90 Z" fill="#1E293B" />
+
+        <!-- Eyes (Peeking slightly) -->
+        <ellipse cx="102" cy="118" rx="11" ry="13" fill="#FFFFFF" stroke="#CBD5E1" />
+        <circle cx="104" cy="118" r="6" fill="#0F172A" />
+        <ellipse cx="148" cy="118" rx="11" ry="13" fill="#FFFFFF" stroke="#CBD5E1" />
+        <circle cx="146" cy="118" r="6" fill="#0F172A" />
+
+        <!-- Hands Covering Eyes (The Signature Privacy Gesture) -->
+        <g id="HandsCovering">
+          <!-- Left Sleeve & Hand -->
+          <path d="M50 240 C50 190, 72 160, 92 138" stroke="#1E293B" stroke-width="20" stroke-linecap="round" fill="none" />
+          <g transform="translate(82, 104)">
+            <rect width="38" height="28" rx="14" fill="#FDE047" stroke="#D97706" stroke-width="1.5" />
+            <path d="M8 8 Q18 6 30 10" stroke="#D97706" stroke-width="1.5" fill="none" />
+            <path d="M6 16 Q18 14 30 18" stroke="#D97706" stroke-width="1.5" fill="none" />
+          </g>
+          <!-- Right Sleeve & Hand -->
+          <path d="M200 240 C200 190, 178 160, 158 138" stroke="#1E293B" stroke-width="20" stroke-linecap="round" fill="none" />
+          <g transform="translate(130, 104)">
+            <rect width="38" height="28" rx="14" fill="#FDE047" stroke="#D97706" stroke-width="1.5" />
+            <path d="M8 10 Q20 6 30 8" stroke="#D97706" stroke-width="1.5" fill="none" />
+            <path d="M8 18 Q20 14 30 16" stroke="#D97706" stroke-width="1.5" fill="none" />
+          </g>
+        </g>
+
+        <!-- Smile / Surprised Mouth -->
+        <circle cx="125" cy="150" r="4" fill="#B45309" />
+      </g>
+
+      <!-- Assistant Desk ID Card -->
+      <g transform="translate(45, 455)">
+        <rect width="350" height="50" rx="12" fill="#FFFFFF" stroke="#BFDBFE" />
+        <rect x="14" y="10" width="30" height="30" rx="8" fill="#2563EB" />
+        <text x="29" y="30" class="font-sans" font-size="14" fill="#FFFFFF" text-anchor="middle">🛡</text>
+        <text x="56" y="24" class="font-sans" font-size="12" font-weight="700" fill="#0F172A">Sam • Security &amp; Privacy Guardian</text>
+        <text x="56" y="38" class="font-sans" font-size="10" font-weight="500" fill="#64748B">Reacts dynamically to user cursor &amp; password focus</text>
+        <rect x="265" y="15" width="70" height="20" rx="10" fill="#ECFDF5" stroke="#A7F3D0" />
+        <text x="300" y="28" class="font-sans" font-size="9" font-weight="800" fill="#059669" text-anchor="middle">● PRIVACY</text>
+      </g>
+    </g>
+
+    <!-- RIGHT PANEL: Authentication Form -->
+    <g transform="translate(475, 40)">
       <!-- Logo + Header -->
-      <rect width="40" height="40" rx="10" fill="#2563EB" />
-      <path d="M12 20L17 25L28 14" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-      <text x="52" y="27" class="font-sans" font-size="22" font-weight="800" fill="#0F172A">Bridgeway<tspan fill="#2563EB">HR</tspan></text>
+      <rect width="38" height="38" rx="9" fill="#2563EB" />
+      <path d="M11 19L16 24L27 13" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="48" y="25" class="font-sans" font-size="20" font-weight="800" fill="#0F172A">Bridgeway<tspan fill="#2563EB">HR</tspan></text>
       
-      <text x="0" y="70" class="font-sans" font-size="20" font-weight="800" fill="#0F172A">Sign In to Your Workspace</text>
-      <text x="0" y="92" class="font-sans" font-size="13" font-weight="400" fill="#64748B">Enter your official employee or administrator credentials</text>
+      <text x="0" y="72" class="font-sans" font-size="22" font-weight="800" fill="#0F172A">Sign In to Your Workspace</text>
+      <text x="0" y="94" class="font-sans" font-size="13" font-weight="400" fill="#64748B">Enter your official employee or administrator credentials</text>
 
       <!-- Role-Routing Notice -->
-      <rect x="0" y="110" width="400" height="34" rx="8" fill="#EFF6FF" stroke="#BFDBFE" />
-      <text x="14" y="131" class="font-sans" font-size="11" font-weight="600" fill="#1D4ED8">ℹ System auto-detects user role upon login and redirects to console.</text>
+      <rect x="0" y="112" width="440" height="32" rx="8" fill="#EFF6FF" stroke="#BFDBFE" />
+      <text x="14" y="132" class="font-sans" font-size="11" font-weight="600" fill="#1D4ED8">ℹ System auto-detects user role upon login and redirects to console.</text>
 
-      <!-- Form Inputs -->
       <!-- Email Field -->
       <text x="0" y="172" class="font-sans" font-size="12" font-weight="700" fill="#334155">Work Email Address</text>
-      <rect x="0" y="182" width="400" height="44" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5" />
+      <rect x="0" y="182" width="440" height="44" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5" />
       <text x="14" y="209" class="font-sans" font-size="13" fill="#0F172A">sarah.jenkins@bridgeway.corp</text>
 
-      <!-- Password Field -->
-      <text x="0" y="252" class="font-sans" font-size="12" font-weight="700" fill="#334155">Password</text>
-      <rect x="0" y="262" width="400" height="44" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5" />
+      <!-- Password Field with Show/Hide Eye -->
+      <text x="0" y="252" class="font-sans" font-size="12" font-weight="700" fill="#334155">Password (Private)</text>
+      <rect x="0" y="262" width="440" height="44" rx="10" fill="#FFFFFF" stroke="#2563EB" stroke-width="2" />
       <text x="14" y="291" class="font-sans" font-size="16" fill="#0F172A" letter-spacing="2">••••••••••••</text>
+      <!-- Show/Hide Icon -->
+      <circle cx="415" cy="284" r="14" fill="#F1F5F9" />
+      <text x="415" y="289" class="font-sans" font-size="13" fill="#64748B" text-anchor="middle">👁</text>
 
       <!-- Sign In Button -->
-      <rect x="0" y="325" width="400" height="46" rx="10" fill="#2563EB" class="btn-shadow" />
-      <text x="200" y="353" class="font-sans" font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="middle">Sign In to Portal →</text>
+      <rect x="0" y="325" width="440" height="46" rx="10" fill="#2563EB" class="btn-shadow" />
+      <text x="220" y="353" class="font-sans" font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="middle">Sign In to Portal →</text>
 
-      <!-- HR Provisioning Security Badge -->
+      <!-- HR Security Footnote -->
       <g transform="translate(0, 395)">
-        <rect width="400" height="40" rx="8" fill="#F8FAFC" stroke="#E2E8F0" />
-        <text x="200" y="24" class="font-sans" font-size="11" font-weight="500" fill="#64748B" text-anchor="middle">
-          🔒 Accounts are provisioned by HR. Public registration is disabled.
+        <rect width="440" height="38" rx="8" fill="#F8FAFC" stroke="#E2E8F0" />
+        <text x="220" y="23" class="font-sans" font-size="11" font-weight="500" fill="#64748B" text-anchor="middle">
+          🔒 Zero public registration. All user accounts are provisioned exclusively by HR.
         </text>
       </g>
     </g>

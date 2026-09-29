@@ -880,14 +880,9 @@
       showToast(`Switched active view to: ${role === 'guest' ? 'Guest (Scroll Journey)' : role === 'employee' ? 'Employee (Sarah Jenkins)' : 'HR Admin (Alex Vance)'}`);
     }
 
-    // Login prompt helper (exact existing handler)
+    // Login prompt helper (routes directly to the redesigned interactive Login Page)
     function openLoginPrompt() {
-      const choice = confirm("Demonstration Mode: Which role would you like to enter?\n\n[OK] = Sarah Jenkins (Employee Console)\n[Cancel] = Alex Vance (HR Director Console)");
-      if (choice) {
-        setRole('employee');
-      } else {
-        setRole('hr');
-      }
+      window.location.href = 'login.html';
     }
 
     // Toast notification

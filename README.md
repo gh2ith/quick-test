@@ -18,8 +18,9 @@
 
 ## 🌐 Live Interactive Demo
 
-- **Live Application**: [**https://gh2ith.github.io/quick-test/**](https://gh2ith.github.io/quick-test/)
-- **Mockup Gallery**: [**https://gh2ith.github.io/quick-test/mockups/**](https://gh2ith.github.io/quick-test/mockups/)
+- **Live Application & Journey**: [**https://gh2ith.github.io/quick-test/**](https://gh2ith.github.io/quick-test/)
+- **Interactive Character Login**: [**https://gh2ith.github.io/quick-test/login.html**](https://gh2ith.github.io/quick-test/login.html)
+- **Mockup & Wireframe Gallery**: [**https://gh2ith.github.io/quick-test/mockups/**](https://gh2ith.github.io/quick-test/mockups/)
 
 ---
 
