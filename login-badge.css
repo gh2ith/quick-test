@@ -365,21 +365,21 @@
   100% { transform: translate(80%, 80%); opacity: 0; }
 }
 
-/* Staggered Entrance for Front Content (Fade/slide 6px, 60ms stagger) */
+/* Staggered Entrance for Front Content (Fade/slide 6px, fast & responsive reveal) */
 .login-page .lb-stagger-item {
   opacity: 0;
   transform: translateY(6px);
-  transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1), transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity 0.2s cubic-bezier(0.22, 1, 0.36, 1), transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .login-page .lb-badge-card.is-landed .lb-stagger-item {
   opacity: 1;
   transform: translateY(0);
 }
 .login-page .lb-stagger-1 { transition-delay: 0ms; }
-.login-page .lb-stagger-2 { transition-delay: 60ms; }
-.login-page .lb-stagger-3 { transition-delay: 120ms; }
-.login-page .lb-stagger-4 { transition-delay: 180ms; }
-.login-page .lb-stagger-5 { transition-delay: 240ms; }
+.login-page .lb-stagger-2 { transition-delay: 25ms; }
+.login-page .lb-stagger-3 { transition-delay: 50ms; }
+.login-page .lb-stagger-4 { transition-delay: 75ms; }
+.login-page .lb-stagger-5 { transition-delay: 100ms; }
 
 /* Name Typing Animation (160ms: opacity 0.4->1, translateY 3px->0; initials scale 0.9->1) */
 @keyframes lbNameTyping {

@@ -271,7 +271,11 @@
   // ==========================================================================
   // DROP-IN ENTRANCE (Once per load: overshoot translateY, landing impulse, stagger content)
   // ==========================================================================
+  let hasDropped = false;
   function triggerDropIn() {
+    if (hasDropped) return;
+    hasDropped = true;
+
     if (prefersReducedMotion.matches) {
       updateLanyardVisual(0);
       badgeCard.classList.add('is-landed');
@@ -280,6 +284,13 @@
 
     // Trigger CSS keyframe drop-in (translateY: -110% -> 2% -> -1% -> 0)
     badgeAssembly.classList.add('is-dropping');
+
+    // Reveal names and front content briskly as the card makes touchdown (~480ms)
+    // so identity details appear smoothly right on landing
+    const revealDelay = Math.min(480, Math.round(CONFIG.dropMs * 0.48));
+    setTimeout(() => {
+      badgeCard.classList.add('is-landed');
+    }, revealDelay);
 
     setTimeout(() => {
       badgeAssembly.classList.remove('is-dropping');
