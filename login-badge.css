@@ -1,0 +1,826 @@
+/* ==========================================================================
+   PHYSICS-BASED EMPLOYEE ID BADGE LOGIN PRESENTATION STYLES
+   Scope: Strictly scoped under .login-page wrapper
+   Zero global selector modifications (*, body, :root are NOT modified here)
+   ========================================================================== */
+
+.login-page {
+  --lb-bg: #f8fafc;
+  --lb-surface: #ffffff;
+  --lb-surface-muted: #f1f5f9;
+  --lb-border: #e2e8f0;
+  --lb-border-subtle: rgba(15, 23, 42, 0.08);
+  --lb-text: #0f172a;
+  --lb-text-secondary: #475569;
+  --lb-text-muted: #94a3b8;
+  --lb-primary: #2563eb;
+  --lb-primary-dark: #1d4ed8;
+  --lb-primary-light: #eff6ff;
+  --lb-primary-border: #bfdbfe;
+  --lb-navy-deep: #0b1f3a;
+  --lb-navy-card: #0f172a;
+  --lb-gold: #f59e0b;
+  --lb-gold-light: #fef3c7;
+  --lb-danger: #dc2626;
+  --lb-danger-light: #fef2f2;
+  --lb-success: #059669;
+  --lb-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  display: flex;
+  min-height: 100dvh;
+  width: 100%;
+  background-color: var(--lb-bg);
+  color: var(--lb-text);
+  position: relative;
+  overflow-x: hidden;
+  font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Ambient Subtle Background */
+.login-page .lb-ambience {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: 
+    radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.05) 0%, transparent 45%),
+    radial-gradient(circle at 90% 25%, rgba(99, 102, 241, 0.04) 0%, transparent 45%),
+    linear-gradient(rgba(37, 99, 235, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(37, 99, 235, 0.015) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 36px 36px, 36px 36px;
+}
+
+/* Main Split-Screen Container */
+.login-page .lb-container {
+  display: flex;
+  width: 100%;
+  min-height: 100dvh;
+  position: relative;
+  z-index: 1;
+}
+
+/* ==========================================================================
+   LEFT PANEL: PHYSICS BADGE & LANYARD STAGE (~55% on ≥1024px)
+   ========================================================================== */
+.login-page .lb-badge-panel {
+  flex: 1.2;
+  background: linear-gradient(155deg, #0b1f3a 0%, #172554 45%, #1e3a8a 100%);
+  border-inline-end: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2.25rem 2.5rem;
+  overflow: hidden;
+  user-select: none;
+  perspective: 1200px;
+}
+
+/* Panel Header Brand */
+.login-page .lb-panel-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  z-index: 10;
+  color: #ffffff;
+}
+.login-page .lb-brand-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--lb-primary);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+}
+.login-page .lb-brand-title {
+  font-weight: 800;
+  font-size: 1.2rem;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+}
+.login-page .lb-brand-accent {
+  color: #60a5fa;
+}
+
+/* Faint Decorative HR Cards (Positioned so they never overlap the badge) */
+.login-page .lb-deco-item {
+  position: absolute;
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 0.6rem 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: #e2e8f0;
+  z-index: 1;
+}
+.login-page .lb-deco-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  background: rgba(37, 99, 235, 0.3);
+  color: #93c5fd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+}
+.login-page .lb-deco-text {
+  display: flex;
+  flex-direction: column;
+}
+.login-page .lb-deco-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #f8fafc;
+}
+.login-page .lb-deco-desc {
+  font-size: 0.625rem;
+  color: #94a3b8;
+}
+
+.login-page .lb-deco-1 { top: 12%; left: 8%; }
+.login-page .lb-deco-2 { top: 16%; right: 8%; }
+.login-page .lb-deco-3 { bottom: 12%; left: 7%; }
+.login-page .lb-deco-4 { bottom: 16%; right: 9%; }
+
+/* Stage Area Containing Lanyard & Badge */
+.login-page .lb-stage-area {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  z-index: 4;
+}
+
+/* SVG Lanyard Canvas (Fixed at Top of Panel) */
+.login-page .lb-lanyard-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 140px;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 5;
+}
+
+/* Physics Badge Anchor & Assembly */
+.login-page .lb-badge-assembly {
+  position: relative;
+  margin-top: 100px;
+  transform-origin: 50% 0px; /* Swings from the metal clip pivot */
+  will-change: transform;
+  perspective: 1000px;
+  cursor: grab;
+  touch-action: none;
+}
+.login-page .lb-badge-assembly:active {
+  cursor: grabbing;
+}
+
+/* 3D Flip Card Container */
+.login-page .lb-badge-card {
+  width: 216px;
+  height: 340px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.55s var(--lb-ease);
+  border-radius: 18px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.15);
+}
+
+/* Flipped State (When Password Field is Focused) */
+.login-page .lb-badge-card.is-flipped {
+  transform: rotateY(180deg);
+}
+
+/* Common Face Styles */
+.login-page .lb-badge-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Glare Layer (Moves with 3D Tilt) */
+.login-page .lb-badge-glare {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at var(--glare-x, 50%) var(--glare-y, 30%), rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 65%);
+  mix-blend-mode: overlay;
+  z-index: 8;
+  opacity: 0.65;
+  transition: opacity 0.2s ease;
+}
+
+/* ==========================================================================
+   BADGE FRONT FACE
+   ========================================================================== */
+.login-page .lb-badge-front {
+  background: #ffffff;
+  color: var(--lb-text);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  padding: 1.25rem 1.1rem 1rem;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+}
+
+/* Clip Slot Cutout */
+.login-page .lb-badge-slot {
+  width: 38px;
+  height: 8px;
+  background: #cbd5e1;
+  border-radius: 9999px;
+  margin: 0 auto 0.65rem;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* Front Brand Wordmark */
+.login-page .lb-card-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--lb-text);
+  letter-spacing: -0.01em;
+}
+.login-page .lb-card-brand i {
+  color: var(--lb-primary);
+  font-size: 0.95rem;
+}
+
+/* Avatar Circle */
+.login-page .lb-avatar-wrap {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  border: 3px solid #ffffff;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.15), 0 0 0 1px #bfdbfe;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0.5rem auto;
+  position: relative;
+}
+.login-page .lb-avatar-initials {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--lb-primary-dark);
+  letter-spacing: 0.02em;
+}
+
+/* Name & Role Preview */
+.login-page .lb-name-line {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--lb-text);
+  margin-bottom: 0.2rem;
+  max-width: 180px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+}
+.login-page .lb-role-line {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--lb-text-secondary);
+  background: var(--lb-surface-muted);
+  border-radius: 9999px;
+  padding: 0.2rem 0.65rem;
+  display: inline-block;
+  margin-bottom: 0.5rem;
+}
+
+/* Decorative ID Details */
+.login-page .lb-front-details {
+  width: 100%;
+  border-top: 1px dashed var(--lb-border);
+  padding-top: 0.65rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.675rem;
+  color: var(--lb-text-muted);
+}
+.login-page .lb-front-chip {
+  width: 24px;
+  height: 18px;
+  border-radius: 4px;
+  background: linear-gradient(135deg, #fcd34d 0%, #f59e0b 100%);
+  border: 1px solid #d97706;
+  position: relative;
+}
+.login-page .lb-front-stripe {
+  height: 4px;
+  width: 100%;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #2563eb, #3b82f6, #60a5fa);
+  margin-top: 0.4rem;
+}
+
+/* ==========================================================================
+   BADGE BACK FACE (Dark Navy, Confidential, Animated Padlock)
+   ========================================================================== */
+.login-page .lb-badge-back {
+  background: var(--lb-navy-card);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transform: rotateY(180deg);
+  padding: 1.25rem 1.1rem;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+}
+
+/* Confidential Banner */
+.login-page .lb-back-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(220, 38, 38, 0.15);
+  border: 1px solid rgba(220, 38, 38, 0.4);
+  color: #fca5a5;
+  font-size: 0.675rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+  text-transform: uppercase;
+}
+
+/* Centered Padlock Graphic */
+.login-page .lb-padlock-stage {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin: 0.75rem auto 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Padlock SVG Layers */
+.login-page .lb-padlock-svg {
+  width: 70px;
+  height: 70px;
+  overflow: visible;
+}
+.login-page .lb-shackle {
+  transition: transform 0.32s var(--lb-ease);
+  transform-origin: 35px 25px;
+}
+.login-page .lb-padlock-glow {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* When Password is Show / Text: Shackle Lifts Open & Amber Glow illuminates */
+.login-page .lb-badge-card.is-unlatched .lb-shackle {
+  transform: translateY(-9px);
+}
+.login-page .lb-badge-card.is-unlatched .lb-padlock-glow {
+  opacity: 0.85;
+}
+
+/* Back Titles */
+.login-page .lb-back-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: #ffffff;
+  margin-bottom: 0.2rem;
+}
+.login-page .lb-back-desc {
+  font-size: 0.68rem;
+  color: #94a3b8;
+  max-width: 170px;
+  line-height: 1.35;
+}
+
+/* Decorative Barcode Stripe */
+.login-page .lb-barcode-wrap {
+  width: 100%;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
+.login-page .lb-barcode-svg {
+  width: 130px;
+  height: 24px;
+}
+.login-page .lb-barcode-num {
+  font-family: monospace;
+  font-size: 0.65rem;
+  color: #64748b;
+  letter-spacing: 0.1em;
+}
+
+/* Error Shake Animation (Applied on Form Error) */
+.login-page .lb-badge-assembly.has-error {
+  animation: lbBadgeErrorShake 0.4s var(--lb-ease);
+}
+.login-page .lb-badge-assembly.has-error .lb-badge-card {
+  box-shadow: 0 0 0 2px var(--lb-danger), 0 20px 40px rgba(220, 38, 38, 0.35);
+}
+@keyframes lbBadgeErrorShake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-12px) rotate(-4deg); }
+  40% { transform: translateX(10px) rotate(3deg); }
+  60% { transform: translateX(-6px) rotate(-2deg); }
+  80% { transform: translateX(4px) rotate(1deg); }
+}
+
+/* Panel Footer */
+.login-page .lb-panel-footer {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 10;
+}
+
+/* ==========================================================================
+   RIGHT PANEL: AUTHENTICATION FORM (~45% on ≥1024px)
+   ========================================================================== */
+.login-page .lb-form-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 3rem 4rem;
+  background: var(--lb-surface);
+  position: relative;
+  z-index: 2;
+}
+
+.login-page .lb-form-container {
+  max-width: 440px;
+  width: 100%;
+  margin-inline: auto;
+}
+
+.login-page .lb-header-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--lb-primary-light);
+  border: 1px solid var(--lb-primary-border);
+  color: var(--lb-primary-dark);
+  font-size: 0.725rem;
+  font-weight: 800;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  margin-bottom: 0.85rem;
+  letter-spacing: 0.04em;
+}
+.login-page .lb-title {
+  font-size: 1.85rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: var(--lb-text);
+  line-height: 1.25;
+  margin-bottom: 0.4rem;
+}
+.login-page .lb-subtitle {
+  font-size: 0.925rem;
+  color: var(--lb-text-secondary);
+  margin-bottom: 2rem;
+  line-height: 1.45;
+}
+
+/* Form Groups & Inputs */
+.login-page .form-group-custom {
+  margin-bottom: 1.35rem;
+}
+.login-page .field-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--lb-text);
+  margin-bottom: 0.45rem;
+}
+.login-page .field-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.login-page .field-icon {
+  position: absolute;
+  left: 1.05rem;
+  color: var(--lb-text-muted);
+  font-size: 1.1rem;
+  pointer-events: none;
+  transition: color 0.2s ease;
+}
+
+/* Form Input Controls (Touch target ≥44px, Font size ≥16px) */
+.login-page .form-control-custom {
+  width: 100%;
+  height: 50px;
+  min-height: 44px;
+  padding: 0.65rem 1rem 0.65rem 2.85rem;
+  font-size: 1rem; /* 16px avoids mobile iOS zoom */
+  font-family: inherit;
+  color: var(--lb-text);
+  background: var(--lb-surface);
+  border: 1.5px solid var(--lb-border);
+  border-radius: 12px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+}
+.login-page .form-control-custom:focus {
+  border-color: var(--lb-primary);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+.login-page .form-control-custom:focus + .field-icon,
+.login-page .field-input-wrapper:focus-within .field-icon {
+  color: var(--lb-primary);
+}
+.login-page .form-control-custom.is-invalid {
+  border-color: var(--lb-danger);
+  background-color: var(--lb-danger-light);
+}
+
+/* Show/Hide Password Toggle Button */
+.login-page .password-toggle-btn {
+  position: absolute;
+  right: 0.4rem;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--lb-text-muted);
+  font-size: 1.15rem;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+.login-page .password-toggle-btn:hover {
+  color: var(--lb-text);
+  background: var(--lb-surface-muted);
+}
+.login-page .password-toggle-btn:focus-visible {
+  outline: 2px solid var(--lb-primary);
+  outline-offset: 1px;
+}
+
+/* Feedback Error Elements */
+.login-page .feedback-error {
+  display: none;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.775rem;
+  font-weight: 600;
+  color: var(--lb-danger);
+  margin-top: 0.4rem;
+  padding-left: 0.25rem;
+}
+
+/* Submit Button */
+.login-page .btn-login-submit {
+  width: 100%;
+  height: 50px;
+  min-height: 44px;
+  background: var(--lb-primary);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+  transition: all 0.2s var(--lb-ease);
+  margin-top: 0.5rem;
+}
+.login-page .btn-login-submit:hover:not(:disabled) {
+  background: var(--lb-primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+}
+.login-page .btn-login-submit:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.4);
+  outline-offset: 2px;
+}
+.login-page .btn-login-submit:disabled {
+  opacity: 0.75;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Fast-Fill Demo Roles Tray */
+.login-page .quick-test-tray {
+  width: 100%;
+  background: var(--lb-surface-muted);
+  border: 1px dashed var(--lb-primary-border);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  margin-top: 1.5rem;
+  text-align: center;
+}
+.login-page .quick-test-tray-title {
+  font-size: 0.725rem;
+  font-weight: 800;
+  color: var(--lb-text-muted);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.login-page .quick-btn-pill {
+  background: var(--lb-surface);
+  border: 1px solid var(--lb-border);
+  border-radius: 9999px;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--lb-text);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 36px;
+}
+.login-page .quick-btn-pill:hover {
+  background: var(--lb-primary-light);
+  border-color: var(--lb-primary-border);
+  color: var(--lb-primary);
+}
+
+/* Governance Callout Box */
+.login-page .security-callout-box {
+  margin-top: 1.5rem;
+  padding: 0.85rem 1rem;
+  background: var(--lb-surface-muted);
+  border: 1px solid var(--lb-border);
+  border-radius: 12px;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.775rem;
+  color: var(--lb-text-secondary);
+  line-height: 1.45;
+}
+.login-page .security-callout-icon {
+  font-size: 1.15rem;
+  color: var(--lb-primary);
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+/* Toast Container */
+.login-page .toast-container-custom {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 1100;
+}
+.login-page .custom-toast {
+  background: var(--lb-navy-card);
+  color: #ffffff;
+  padding: 0.85rem 1.35rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-inline-start: 4px solid var(--lb-success);
+}
+
+/* ==========================================================================
+   RESPONSIVE BREAKPOINTS (768–1023px, <768px, and Short Viewports)
+   ========================================================================== */
+
+/* 768px – 1023px: Stacked; badge panel above the form (max ~300px tall), badge scaled ~0.6 */
+@media (max-width: 1023px) {
+  .login-page .lb-container {
+    flex-direction: column;
+  }
+  .login-page .lb-badge-panel {
+    flex: none;
+    border-inline-end: none;
+    border-block-end: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1.25rem 2rem;
+    max-height: 290px;
+    align-items: center;
+    justify-content: center;
+  }
+  .login-page .lb-panel-brand,
+  .login-page .lb-panel-footer,
+  .login-page .lb-deco-item {
+    display: none;
+  }
+  .login-page .lb-badge-assembly {
+    margin-top: 60px;
+    transform: scale(0.65);
+    transform-origin: 50% 0px;
+  }
+  .login-page .lb-form-panel {
+    flex: 1;
+    padding: 2.25rem 2rem;
+  }
+}
+
+/* <768px: Mobile layout, badge scaled ~0.45–0.5, decoration removed, form primary */
+@media (max-width: 767px) {
+  .login-page .lb-badge-panel {
+    padding: 0.75rem 1rem 0.25rem;
+    max-height: 180px;
+  }
+  .login-page .lb-badge-assembly {
+    margin-top: 40px;
+    transform: scale(0.48);
+  }
+  .login-page .lb-form-panel {
+    padding: 1.75rem 1.25rem 2.5rem;
+  }
+  .login-page .lb-title {
+    font-size: 1.5rem;
+  }
+  .login-page .lb-subtitle {
+    font-size: 0.85rem;
+    margin-bottom: 1.25rem;
+  }
+}
+
+/* Short viewports or with on-screen keyboard open: badge ≤ 90px tall */
+@media (max-height: 620px) {
+  .login-page .lb-badge-panel {
+    padding: 0.35rem;
+    max-height: 85px;
+  }
+  .login-page .lb-badge-assembly {
+    margin-top: 15px;
+    transform: scale(0.28);
+  }
+  .login-page .lb-form-panel {
+    padding: 0.85rem 1.25rem;
+  }
+  .login-page .lb-subtitle {
+    margin-bottom: 0.85rem;
+  }
+  .login-page .security-callout-box {
+    display: none;
+  }
+  .login-page .quick-test-tray {
+    margin-top: 0.75rem;
+    padding: 0.5rem;
+  }
+}
+
+/* ==========================================================================
+   ACCESSIBILITY & PREFERS-REDUCED-MOTION
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .login-page *,
+  .login-page *::before,
+  .login-page *::after {
+    animation: none !important;
+    transition-duration: 0.001s !important;
+  }
+  .login-page .lb-badge-card {
+    transition: opacity 0.15s ease !important;
+  }
+  .login-page .lb-badge-card.is-flipped {
+    transform: rotateY(180deg) !important;
+  }
+  .login-page .lb-shackle {
+    transition: transform 0.1s ease !important;
+  }
+}
