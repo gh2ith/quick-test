@@ -6,621 +6,37 @@
   <title>Sign In — Bridgeway HR Management System</title>
   <meta name="description" content="Secure role-based portal login for Bridgeway HR Management System." />
 
-  <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+  <!-- Google Fonts: Plus Jakarta Sans & Inter (Project Standard) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-  <!-- Bootstrap 5.3.2 CSS & Bootstrap Icons -->
+  <!-- Bootstrap 5.3.2 CSS & Bootstrap Icons (Project Standard) -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.css" rel="stylesheet" />
 
-  <style>
-    /* ==========================================================================
-       DESIGN TOKENS & BASE PALETTE (Matches Bridgeway Executive Blue System)
-       ========================================================================== */
-    :root {
-      --bg: #f8fafc;
-      --surface: #ffffff;
-      --surface-muted: #f1f5f9;
-      --border: #e2e8f0;
-      --border-subtle: rgba(15, 23, 42, 0.08);
+  <!-- Scoped Login Character & Split-Screen Stylesheet -->
+  <link rel="stylesheet" href="login-character.css" />
 
-      --text: #0f172a;
-      --text-secondary: #475569;
-      --text-muted: #94a3b8;
-
-      --primary: #2563eb;
-      --primary-dark: #1d4ed8;
-      --primary-light: #eff6ff;
-      --primary-border: #bfdbfe;
-      --primary-glow: rgba(37, 99, 235, 0.35);
-
-      --success: #059669;
-      --warning: #d97706;
-      --danger: #dc2626;
-
-      --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
-      --shadow-card: 0 25px 60px -15px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(226, 232, 240, 0.8);
-      --shadow-primary: 0 4px 14px rgba(37, 99, 235, 0.35);
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background-color: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* Ambient HR-Tech Background */
-    .bg-ambience {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: -1;
-      background: 
-        radial-gradient(circle at 15% 20%, rgba(37, 99, 235, 0.06) 0%, transparent 45%),
-        radial-gradient(circle at 85% 25%, rgba(99, 102, 241, 0.05) 0%, transparent 45%),
-        radial-gradient(circle at 50% 80%, rgba(14, 165, 233, 0.05) 0%, transparent 50%),
-        linear-gradient(rgba(37, 99, 235, 0.015) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(37, 99, 235, 0.015) 1px, transparent 1px),
-        #f8fafc;
-      background-size: 100% 100%, 100% 100%, 100% 100%, 48px 48px, 48px 48px;
-    }
-
-    /* Demo Switcher Bar */
-    .demo-bar {
-      background: #0f172a;
-      color: #94a3b8;
-      padding: 0.45rem 1rem;
-      font-size: 0.775rem;
-      border-bottom: 1px solid #1e293b;
-      position: relative;
-      z-index: 1050;
-    }
-    .demo-role-btn {
-      background: transparent;
-      border: 1px solid #334155;
-      color: #cbd5e1;
-      padding: 0.2rem 0.65rem;
-      border-radius: 6px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      transition: all 0.2s ease;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-    }
-    .demo-role-btn:hover { background: #1e293b; color: #fff; }
-    .demo-role-btn.active { background: #2563eb; border-color: #2563eb; color: #fff; }
-
-    /* Top Floating Locked Navbar */
-    .navbar-wrapper {
-      position: sticky;
-      top: 0.85rem;
-      z-index: 1000;
-      padding: 0 1rem;
-    }
-    .navbar-custom {
-      max-width: 1160px;
-      margin: 0 auto;
-      background: rgba(255, 255, 255, 0.94);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 0.65rem 1.4rem;
-      box-shadow: var(--shadow-sm);
-    }
-    .brand-logo-box {
-      width: 38px;
-      height: 38px;
-      border-radius: 10px;
-      background: var(--primary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-size: 1.15rem;
-      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
-    }
-    .brand-title {
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: var(--text);
-      letter-spacing: -0.02em;
-    }
-    .nav-link-custom {
-      font-size: 0.885rem;
-      font-weight: 600;
-      color: var(--text-secondary);
-      padding: 0.4rem 0.85rem;
-      border-radius: 8px;
-      text-decoration: none;
-      transition: color 0.15s ease;
-      cursor: pointer;
-    }
-    .nav-link-custom:hover, .nav-link-custom.active { color: var(--primary); }
-
-    /* ==========================================================================
-       LOGIN MAIN CONTAINER & BALANCED CARD
-       ========================================================================== */
-    .login-page-wrapper {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2.5rem 1rem 3.5rem 1rem;
-    }
-
-    .login-card-container {
-      width: 100%;
-      max-width: 1060px;
-      background: #ffffff;
-      border-radius: 28px;
-      box-shadow: var(--shadow-card);
-      overflow: hidden;
-      display: flex;
-      position: relative;
-    }
-
-    /* LEFT SIDE: Interactive Character & HR Security Stage */
-    .character-panel {
-      flex: 1;
-      min-width: 440px;
-      background: linear-gradient(145deg, #f0f7ff 0%, #e2eeff 100%);
-      padding: 2.5rem 2rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      position: relative;
-      border-right: 1px solid rgba(226, 232, 240, 0.8);
-      overflow: hidden;
-    }
-
-    /* Background Watermark Shield */
-    .character-panel-bg-art {
-      position: absolute;
-      top: -20px;
-      right: -30px;
-      font-size: 14rem;
-      color: rgba(37, 99, 235, 0.04);
-      pointer-events: none;
-      user-select: none;
-    }
-
-    /* Interactive Speech/Status Bubble */
-    .character-speech-bubble {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(12px);
-      border: 1px solid #bfdbfe;
-      border-radius: 9999px;
-      padding: 0.45rem 1.15rem;
-      font-size: 0.825rem;
-      font-weight: 700;
-      color: var(--primary-dark);
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.1);
-      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-      margin-bottom: 1rem;
-      position: relative;
-      z-index: 10;
-    }
-    .speech-bubble-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--primary);
-      display: inline-block;
-      animation: pulseDot 2s infinite ease-in-out;
-    }
-    @keyframes pulseDot {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.4); opacity: 0.5; }
-    }
-
-    /* Character SVG Canvas */
-    .character-canvas-wrap {
-      width: 320px;
-      height: 320px;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto;
-    }
-
-    .character-svg {
-      width: 100%;
-      height: 100%;
-      overflow: visible;
-    }
-
-    /* Hands Covering Eyes - Keyframe & Smooth Transition */
-    .character-hands {
-      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease;
-      transform-box: view-box;
-      transform-origin: 160px 240px;
-    }
-
-    /* Default: Hands resting below view */
-    .character-hands.resting {
-      transform: translateY(110px);
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    /* Covering Eyes (Password Focused) */
-    .character-hands.covering {
-      transform: translateY(0);
-      opacity: 1;
-    }
-
-    /* Peeking State (Show Password Clicked) */
-    .character-hands.peeking {
-      transform: translate(-18px, 22px) rotate(-10deg);
-      opacity: 1;
-    }
-
-    /* Subtle Head Tilt and Pupils */
-    .character-head {
-      transform-origin: 160px 145px;
-      transition: transform 0.08s ease-out;
-      will-change: transform;
-    }
-    .pupil-group {
-      transition: transform 0.08s ease-out;
-      will-change: transform;
-    }
-
-    /* Desk & Security Base */
-    .character-desk-surface {
-      width: 100%;
-      background: rgba(255, 255, 255, 0.7);
-      backdrop-filter: blur(10px);
-      border: 1px solid #dbeafe;
-      border-radius: 16px;
-      padding: 0.85rem 1.25rem;
-      margin-top: 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.75rem;
-      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
-      z-index: 5;
-    }
-
-    .badge-assistant-id {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-    .badge-icon-box {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      background: var(--primary);
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.95rem;
-    }
-
-    /* Evaluation Quick Test Bar */
-    .quick-test-tray {
-      width: 100%;
-      background: #ffffff;
-      border: 1px dashed #bfdbfe;
-      border-radius: 14px;
-      padding: 0.75rem 1rem;
-      margin-top: 1rem;
-      text-align: center;
-    }
-    .quick-test-tray-title {
-      font-size: 0.725rem;
-      font-weight: 800;
-      color: var(--text-muted);
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      margin-bottom: 0.45rem;
-    }
-    .quick-btn-pill {
-      background: var(--surface-muted);
-      border: 1px solid var(--border);
-      border-radius: 9999px;
-      padding: 0.25rem 0.75rem;
-      font-size: 0.76rem;
-      font-weight: 700;
-      color: var(--text-secondary);
-      cursor: pointer;
-      transition: all 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-    }
-    .quick-btn-pill:hover {
-      background: var(--primary-light);
-      border-color: var(--primary-border);
-      color: var(--primary-dark);
-    }
-
-    /* RIGHT SIDE: The Official Login Form */
-    .form-panel {
-      flex: 1.15;
-      padding: 3.5rem 3.5rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .form-brand-header {
-      margin-bottom: 2rem;
-    }
-    .form-brand-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      background: #eff6ff;
-      border: 1px solid #dbeafe;
-      color: #1d4ed8;
-      font-size: 0.75rem;
-      font-weight: 800;
-      padding: 0.25rem 0.7rem;
-      border-radius: 9999px;
-      margin-bottom: 0.85rem;
-      letter-spacing: 0.04em;
-    }
-    .form-title {
-      font-size: 2rem;
-      font-weight: 800;
-      color: var(--text);
-      letter-spacing: -0.025em;
-      line-height: 1.2;
-      margin-bottom: 0.5rem;
-    }
-    .form-subtitle {
-      font-size: 0.95rem;
-      color: var(--text-secondary);
-      line-height: 1.45;
-    }
-
-    /* Form Fields */
-    .form-group-custom {
-      margin-bottom: 1.35rem;
-    }
-    .field-label {
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 0.45rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .field-input-wrapper {
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
-    .field-icon {
-      position: absolute;
-      left: 1.05rem;
-      color: var(--text-muted);
-      font-size: 1.1rem;
-      pointer-events: none;
-      transition: color 0.2s ease;
-    }
-    .form-control-custom {
-      width: 100%;
-      height: 50px;
-      padding: 0.65rem 1rem 0.65rem 2.85rem;
-      font-size: 0.925rem;
-      font-family: inherit;
-      color: var(--text);
-      background: #ffffff;
-      border: 1.5px solid var(--border);
-      border-radius: 14px;
-      transition: all 0.2s ease;
-      outline: none;
-    }
-    .form-control-custom:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
-    }
-    .form-control-custom:focus + .field-icon {
-      color: var(--primary);
-    }
-    .form-control-custom.is-invalid {
-      border-color: var(--danger);
-      background-image: none;
-    }
-
-    /* Password Show/Hide Toggle Button */
-    .password-toggle-btn {
-      position: absolute;
-      right: 0.85rem;
-      background: transparent;
-      border: none;
-      color: var(--text-muted);
-      font-size: 1.15rem;
-      padding: 0.4rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 8px;
-      transition: color 0.2s ease, background 0.2s ease;
-    }
-    .password-toggle-btn:hover {
-      color: var(--text);
-      background: var(--surface-muted);
-    }
-
-    /* Validation Feedback */
-    .feedback-error {
-      font-size: 0.785rem;
-      font-weight: 600;
-      color: var(--danger);
-      margin-top: 0.35rem;
-      display: none;
-      align-items: center;
-      gap: 0.35rem;
-    }
-
-    /* Submit Button */
-    .btn-login-submit {
-      width: 100%;
-      height: 50px;
-      background: var(--primary);
-      color: #ffffff;
-      font-size: 0.985rem;
-      font-weight: 700;
-      border: none;
-      border-radius: 14px;
-      box-shadow: var(--shadow-primary);
-      cursor: pointer;
-      transition: all 0.2s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.55rem;
-      margin-top: 0.75rem;
-    }
-    .btn-login-submit:hover {
-      background: var(--primary-dark);
-      transform: translateY(-1px);
-      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
-    }
-    .btn-login-submit:active {
-      transform: translateY(0);
-    }
-
-    /* Role Security Footnote */
-    .security-callout-box {
-      margin-top: 1.75rem;
-      background: #f8fafc;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 0.85rem 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.65rem;
-      font-size: 0.8rem;
-      color: var(--text-secondary);
-    }
-    .security-callout-icon {
-      font-size: 1.15rem;
-      color: var(--primary);
-      flex-shrink: 0;
-    }
-
-    /* Toast Notification */
-    .toast-container-custom {
-      position: fixed;
-      bottom: 1.5rem;
-      right: 1.5rem;
-      z-index: 2000;
-    }
-    .custom-toast {
-      background: #0f172a;
-      color: #fff;
-      padding: 0.85rem 1.4rem;
-      border-radius: 14px;
-      box-shadow: var(--shadow-card);
-      font-size: 0.875rem;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      border: 1px solid #334155;
-    }
-
-    /* ==========================================================================
-       RESPONSIVE DESIGN (Desktop, Laptop, Tablet, Mobile)
-       ========================================================================== */
-    @media (max-width: 991.98px) {
-      .login-card-container {
-        flex-direction: column;
-        max-width: 600px;
-      }
-      .character-panel {
-        min-width: 100%;
-        padding: 2rem 1.5rem 1.5rem 1.5rem;
-        border-right: none;
-        border-bottom: 1px solid var(--border);
-      }
-      .character-canvas-wrap {
-        width: 220px;
-        height: 220px;
-      }
-      .form-panel {
-        padding: 2.25rem 2rem;
-      }
-      .form-title {
-        font-size: 1.65rem;
-      }
-    }
-
-    @media (max-width: 575.98px) {
-      .login-page-wrapper {
-        padding: 1.25rem 0.75rem 2.5rem 0.75rem;
-      }
-      .login-card-container {
-        border-radius: 20px;
-      }
-      .character-panel {
-        padding: 1.5rem 1rem 1rem 1rem;
-      }
-      .character-canvas-wrap {
-        width: 180px;
-        height: 180px;
-      }
-      .form-panel {
-        padding: 1.75rem 1.25rem;
-      }
-      .character-speech-bubble {
-        font-size: 0.75rem;
-        padding: 0.35rem 0.85rem;
-      }
-    }
-  </style>
+  <!-- Presentation-Only Character Engine (Deferred) -->
+  <script src="login-character.js" defer></script>
 </head>
 <body>
 
-  <!-- Ambient Backdrop -->
-  <div class="bg-ambience"></div>
-
-  <!-- Demo View Controller Bar -->
-  <div class="demo-bar">
+  <!-- Demo Switcher Bar (Existing Project Utility) -->
+  <aside class="demo-bar" aria-label="Demo Role Switcher" style="background: #0f172a; color: #94a3b8; padding: 0.45rem 1rem; font-size: 0.775rem; border-bottom: 1px solid #1e293b; position: relative; z-index: 1050;">
     <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap gap-2">
       <div class="d-flex align-items-center gap-2">
         <span class="badge bg-primary text-white" style="font-size: 0.68rem; letter-spacing: 0.03em;">PROJECT DEMO</span>
         <span class="d-none d-sm-inline">Switch View:</span>
         <div class="btn-group btn-group-sm">
-          <a href="index.html" class="demo-role-btn">
+          <a href="index.html" class="demo-role-btn" style="background: transparent; border: 1px solid #334155; color: #cbd5e1; padding: 0.2rem 0.65rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600; text-decoration: none;">
             <i class="bi bi-compass"></i> Guest (Scroll Journey)
           </a>
-          <button class="demo-role-btn" onclick="directLogin('employee')">
+          <button type="button" class="demo-role-btn" onclick="directLogin('employee')" style="background: transparent; border: 1px solid #334155; color: #cbd5e1; padding: 0.2rem 0.65rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600;">
             <i class="bi bi-person-badge"></i> Employee (Sarah)
           </button>
-          <button class="demo-role-btn" onclick="directLogin('hr')">
+          <button type="button" class="demo-role-btn" onclick="directLogin('hr')" style="background: transparent; border: 1px solid #334155; color: #cbd5e1; padding: 0.2rem 0.65rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600;">
             <i class="bi bi-shield-lock"></i> HR Admin (Alex)
           </button>
         </div>
@@ -630,355 +46,399 @@
         <span><i class="bi bi-eye-slash text-success"></i> Privacy Mode Enabled</span>
       </div>
     </div>
-  </div>
+  </aside>
 
-  <!-- Top Floating Header (Locked Navbar Spec) -->
-  <header class="navbar-wrapper">
-    <nav class="navbar-custom d-flex align-items-center justify-content-between" aria-label="Main Navigation">
-      <a href="index.html" class="d-flex align-items-center gap-2 text-decoration-none">
-        <div class="brand-logo-box">
-          <i class="bi bi-diagram-3-fill"></i>
-        </div>
-        <div class="d-flex flex-column text-start">
-          <span class="brand-title">Bridgeway<span class="text-primary">.hr</span></span>
-        </div>
-      </a>
+  <!-- ========================================================================
+       LOGIN PAGE SCOPED WRAPPER (.login-page)
+       ======================================================================== -->
+  <div class="login-page">
+    <div class="lp-ambience" aria-hidden="true"></div>
 
-      <!-- Navigation Links -->
-      <div class="d-none d-lg-flex align-items-center gap-1">
-        <a href="index.html" class="nav-link-custom">Home</a>
-        <a href="index.html#stop-1" class="nav-link-custom">About</a>
-        <a href="index.html#stop-2" class="nav-link-custom">Services</a>
-        <a href="index.html#stop-7" class="nav-link-custom">Contact Us</a>
-      </div>
-
-      <!-- Right Header Area -->
-      <div class="d-flex align-items-center gap-2">
-        <a href="index.html" class="btn btn-outline-secondary btn-sm rounded-pill px-3 fw-bold" style="font-size: 0.8rem;">
-          <i class="bi bi-arrow-left"></i> Back to Tour
-        </a>
-      </div>
-    </nav>
-  </header>
-
-  <!-- ==========================================================================
-       MAIN CONTENT: SPLIT-SCREEN INTERACTIVE LOGIN EXPERIENCE
-       ========================================================================== -->
-  <main class="login-page-wrapper">
-    <div class="login-card-container">
+    <div class="lp-container">
 
       <!-- ====================================================================
-           LEFT SIDE: INTERACTIVE HR PRIVACY ASSISTANT ("SAM")
+           LEFT SIDE: ILLUSTRATION & INTERACTIVE HR ASSISTANT PANEL (~55%)
            ==================================================================== -->
-      <section class="character-panel" aria-label="Interactive HR Privacy Assistant">
-        <i class="bi bi-shield-check character-panel-bg-art" aria-hidden="true"></i>
+      <section class="lp-illustration-panel" aria-label="Interactive HR Security Assistant Overview">
+        
+        <!-- Header Brand (Reused Project Brand) -->
+        <header class="lp-panel-brand">
+          <a href="index.html" class="d-flex align-items-center gap-2 text-decoration-none">
+            <div class="lp-brand-icon" aria-hidden="true">
+              <i class="bi bi-diagram-3-fill"></i>
+            </div>
+            <div class="lp-brand-name">
+              Bridgeway<span class="lp-brand-accent">.hr</span>
+            </div>
+          </a>
+        </header>
 
-        <!-- Dynamic Privacy Speech Bubble -->
-        <div class="character-speech-bubble" id="characterSpeech">
-          <span class="speech-bubble-dot"></span>
-          <span id="speechText">🔒 "Your credentials are safe & confidential."</span>
+        <!-- Low-Contrast Floating HR Elements -->
+        <div class="lp-deco-element lp-deco-1" aria-hidden="true">
+          <div class="lp-deco-icon" style="background: #eff6ff; color: #2563eb;">
+            <i class="bi bi-diagram-3"></i>
+          </div>
+          <div class="lp-deco-text">
+            <span class="lp-deco-label">Org Directory</span>
+            <span class="lp-deco-sub">Role Hierarchy Active</span>
+          </div>
         </div>
 
-        <!-- Character Vector Canvas -->
-        <div class="character-canvas-wrap" id="characterCanvasWrap">
-          <svg class="character-svg" id="characterSvg" viewBox="0 0 320 340" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <!-- Eye Clip Paths -->
-              <clipPath id="leftEyeClip">
-                <ellipse cx="132" cy="148" rx="14" ry="17" />
-              </clipPath>
-              <clipPath id="rightEyeClip">
-                <ellipse cx="188" cy="148" rx="14" ry="17" />
-              </clipPath>
+        <div class="lp-deco-element lp-deco-2" aria-hidden="true">
+          <div class="lp-deco-icon" style="background: #ecfdf5; color: #059669;">
+            <i class="bi bi-shield-check"></i>
+          </div>
+          <div class="lp-deco-text">
+            <span class="lp-deco-label">256-Bit Protection</span>
+            <span class="lp-deco-sub">Confidential Mode</span>
+          </div>
+        </div>
 
-              <!-- Radial Highlights & Gradients -->
-              <linearGradient id="blazerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#1e293b" />
-                <stop offset="100%" stop-color="#0f172a" />
-              </linearGradient>
-              <linearGradient id="tieGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#2563eb" />
-                <stop offset="100%" stop-color="#1d4ed8" />
-              </linearGradient>
-              <linearGradient id="skinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="#fde047" />
-                <stop offset="0%" stop-color="#fcd34d" />
-                <stop offset="100%" stop-color="#f59e0b" />
-              </linearGradient>
-            </defs>
+        <div class="lp-deco-element lp-deco-3" aria-hidden="true">
+          <div class="lp-deco-icon" style="background: #fffbeb; color: #d97706;">
+            <i class="bi bi-check2-circle"></i>
+          </div>
+          <div class="lp-deco-text">
+            <span class="lp-deco-label">Onboarding Verification</span>
+            <span class="lp-deco-sub">Identity Governed</span>
+          </div>
+        </div>
 
-            <!-- 1. Soft Floor Shadow -->
-            <ellipse cx="160" cy="330" rx="95" ry="10" fill="rgba(15, 23, 42, 0.08)" />
+        <div class="lp-deco-element lp-deco-4" aria-hidden="true">
+          <div class="lp-deco-icon" style="background: #eef2ff; color: #4f46e5;">
+            <i class="bi bi-calendar2-check"></i>
+          </div>
+          <div class="lp-deco-text">
+            <span class="lp-deco-label">Shift & Leave Status</span>
+            <span class="lp-deco-sub">Automated Approvals</span>
+          </div>
+        </div>
 
-            <!-- 2. Torso & Corporate Outfit -->
-            <g id="characterTorso">
-              <!-- Navy Blazer Shoulders -->
-              <path d="M70 330 C70 255, 105 235, 160 235 C215 235, 250 255, 250 330 Z" fill="url(#blazerGrad)" />
-              
-              <!-- Light Blue Inner Shirt -->
-              <path d="M125 235 L160 295 L195 235 Z" fill="#eff6ff" />
-              <path d="M138 235 L160 280 L182 235 Z" fill="#dbeafe" />
+        <!-- Central Character Stage -->
+        <div class="lp-character-stage">
 
-              <!-- Royal Blue Necktie -->
-              <path d="M154 246 L166 246 L170 310 L160 322 L150 310 Z" fill="url(#tieGrad)" />
-              <polygon points="152,242 168,242 165,254 155,254" fill="#1e40af" />
+          <!-- Dynamic Speech / Privacy Bubble -->
+          <div class="lp-speech-bubble" id="characterSpeech" role="status" aria-live="polite">
+            <span class="lp-speech-dot" aria-hidden="true"></span>
+            <span id="speechText">🔒 "Your credentials are safe & confidential."</span>
+          </div>
 
-              <!-- Lapels -->
-              <path d="M110 240 L145 285 L135 330 L95 330 Z" fill="#1e293b" opacity="0.9" />
-              <path d="M210 240 L175 285 L185 330 L225 330 Z" fill="#0f172a" opacity="0.9" />
+          <!-- Character Vector Container (aria-hidden and pointer-events:none) -->
+          <div class="character-container" id="loginCharacter" data-state="idle" aria-hidden="true">
+            <svg class="character-svg" viewBox="0 0 320 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <!-- Eye Clip Paths -->
+                <clipPath id="charLeftEyeClip">
+                  <ellipse cx="134" cy="148" rx="13" ry="16" />
+                </clipPath>
+                <clipPath id="charRightEyeClip">
+                  <ellipse cx="186" cy="148" rx="13" ry="16" />
+                </clipPath>
 
-              <!-- Lanyard with HR Badge -->
-              <path d="M142 235 L156 295" stroke="#3b82f6" stroke-width="2.5" stroke-linecap="round" />
-              <path d="M178 235 L164 295" stroke="#3b82f6" stroke-width="2.5" stroke-linecap="round" />
-              <!-- Badge Clip & Card -->
-              <rect x="146" y="295" width="28" height="38" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
-              <rect x="150" y="299" width="20" height="6" rx="2" fill="#2563eb" />
-              <circle cx="160" cy="314" r="5" fill="#94a3b8" />
-              <rect x="151" y="323" width="18" height="2" fill="#cbd5e1" />
-              <rect x="153" y="327" width="14" height="2" fill="#cbd5e1" />
-            </g>
+                <!-- Brand Gradients -->
+                <linearGradient id="blazerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#1e293b" />
+                  <stop offset="100%" stop-color="#0f172a" />
+                </linearGradient>
+                <linearGradient id="tieGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#2563eb" />
+                  <stop offset="100%" stop-color="#1d4ed8" />
+                </linearGradient>
+              </defs>
 
-            <!-- 3. Articulated Head & Eyes (Tracks Mouse Smoothly) -->
-            <g id="characterHead" class="character-head">
-              <!-- Neck -->
-              <rect x="144" y="200" width="32" height="42" rx="8" fill="#fcd34d" />
-              <path d="M144 220 C154 228, 166 228, 176 220 L176 235 L144 235 Z" fill="#f59e0b" opacity="0.4" />
+              <!-- Base Ground Shadow -->
+              <ellipse cx="160" cy="330" rx="90" ry="9" fill="rgba(15, 23, 42, 0.08)" />
 
-              <!-- Ears -->
-              <circle cx="98" cy="150" r="14" fill="#fcd34d" />
-              <circle cx="98" cy="150" r="8" fill="#f59e0b" opacity="0.3" />
-              <circle cx="222" cy="150" r="14" fill="#fcd34d" />
-              <circle cx="222" cy="150" r="8" fill="#f59e0b" opacity="0.3" />
+              <!-- ================= LAYER: BODY & LANYARD BADGE ================= -->
+              <g id="charBody" class="char-body">
+                <!-- Navy Blazer Shoulders -->
+                <path d="M72 330 C72 255, 106 235, 160 235 C214 235, 248 255, 248 330 Z" fill="url(#blazerGradient)" />
+                
+                <!-- Inner Light Shirt -->
+                <path d="M126 235 L160 295 L194 235 Z" fill="#eff6ff" />
+                <path d="M138 235 L160 280 L182 235 Z" fill="#dbeafe" />
 
-              <!-- Face Base -->
-              <rect x="100" y="80" width="120" height="135" rx="60" fill="#fef08a" />
-              <path d="M102 95 C102 80, 218 80, 218 95 C218 165, 210 205, 160 205 C110 205, 102 165, 102 95 Z" fill="#fde047" />
+                <!-- Royal Blue Necktie -->
+                <path d="M154 246 L166 246 L170 310 L160 322 L150 310 Z" fill="url(#tieGradient)" />
+                <polygon points="152,242 168,242 165,254 155,254" fill="#1e40af" />
 
-              <!-- Modern Professional Haircut -->
-              <path d="M96 110 C92 70, 130 55, 160 55 C200 55, 228 72, 224 110 C214 90, 195 85, 175 85 C145 85, 120 95, 96 110 Z" fill="#1e293b" />
-              <path d="M100 95 C125 78, 180 75, 218 92 C210 75, 188 65, 160 65 C132 65, 110 76, 100 95 Z" fill="#334155" />
+                <!-- Blazer Lapels -->
+                <path d="M112 240 L145 285 L135 330 L95 330 Z" fill="#1e293b" opacity="0.9" />
+                <path d="M208 240 L175 285 L185 330 L225 330 Z" fill="#0f172a" opacity="0.9" />
 
-              <!-- Cheeks Blush -->
-              <circle cx="118" cy="170" r="8" fill="#f87171" opacity="0.3" />
-              <circle cx="202" cy="170" r="8" fill="#f87171" opacity="0.3" />
+                <!-- Lanyard with Employee ID Badge -->
+                <path d="M142 235 L156 295" stroke="#3b82f6" stroke-width="2.5" stroke-linecap="round" />
+                <path d="M178 235 L164 295" stroke="#3b82f6" stroke-width="2.5" stroke-linecap="round" />
+                <!-- ID Badge Card -->
+                <rect x="146" y="295" width="28" height="38" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+                <rect x="150" y="299" width="20" height="6" rx="2" fill="#2563eb" />
+                <!-- Badge Shield / Person Icon -->
+                <circle cx="160" cy="314" r="4.5" fill="#94a3b8" />
+                <path d="M155 323 C155 319, 165 319, 165 323 Z" fill="#94a3b8" />
+                <rect x="151" y="326" width="18" height="1.8" fill="#cbd5e1" />
+              </g>
 
-              <!-- Eyebrows -->
-              <path id="leftEyebrow" d="M120 122 Q132 116 144 122" stroke="#1e293b" stroke-width="3.5" stroke-linecap="round" fill="none" />
-              <path id="rightEyebrow" d="M176 122 Q188 116 200 122" stroke="#1e293b" stroke-width="3.5" stroke-linecap="round" fill="none" />
+              <!-- ================= LAYER: HEAD, EYES & BROWS ================= -->
+              <g id="charHead" class="char-head">
+                <!-- Neck -->
+                <rect x="144" y="200" width="32" height="42" rx="8" fill="#fcd34d" />
+                <path d="M144 220 C154 228, 166 228, 176 220 L176 235 L144 235 Z" fill="#f59e0b" opacity="0.35" />
 
-              <!-- Eyes Open Group (Active in Normal State) -->
-              <g id="eyesOpenGroup">
-                <!-- Left Eye Open -->
-                <g id="leftEyeOpen">
-                  <ellipse cx="132" cy="148" rx="14" ry="17" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
-                  <g clip-path="url(#leftEyeClip)">
-                    <g id="leftPupilGroup" class="pupil-group">
-                      <circle cx="132" cy="148" r="8.5" fill="#0f172a" />
-                      <circle cx="132" cy="148" r="6" fill="#2563eb" />
-                      <circle cx="130" cy="145" r="2.5" fill="#ffffff" />
+                <!-- Ears -->
+                <circle cx="98" cy="150" r="13" fill="#fcd34d" />
+                <circle cx="98" cy="150" r="7" fill="#f59e0b" opacity="0.25" />
+                <circle cx="222" cy="150" r="13" fill="#fcd34d" />
+                <circle cx="222" cy="150" r="7" fill="#f59e0b" opacity="0.25" />
+
+                <!-- Face Base -->
+                <rect x="100" y="80" width="120" height="135" rx="60" fill="#fef08a" />
+                <path d="M102 95 C102 80, 218 80, 218 95 C218 165, 210 205, 160 205 C110 205, 102 165, 102 95 Z" fill="#fde047" />
+
+                <!-- Polished Business Haircut -->
+                <path d="M96 110 C92 70, 130 55, 160 55 C200 55, 228 72, 224 110 C214 90, 195 85, 175 85 C145 85, 120 95, 96 110 Z" fill="#1e293b" />
+                <path d="M100 95 C125 78, 180 75, 218 92 C210 75, 188 65, 160 65 C132 65, 110 76, 100 95 Z" fill="#334155" />
+
+                <!-- Soft Cheeks -->
+                <circle cx="118" cy="170" r="8" fill="#f87171" opacity="0.28" />
+                <circle cx="202" cy="170" r="8" fill="#f87171" opacity="0.28" />
+
+                <!-- Eyebrows Layer -->
+                <g id="charBrows" class="char-brows">
+                  <path id="charLeftEyebrow" d="M120 122 Q132 116 144 122" stroke="#1e293b" stroke-width="3.5" stroke-linecap="round" fill="none" />
+                  <path id="charRightEyebrow" d="M176 122 Q188 116 200 122" stroke="#1e293b" stroke-width="3.5" stroke-linecap="round" fill="none" />
+                </g>
+
+                <!-- Eyes Layer (Sclera + Pupils + Eyelids) -->
+                <g id="charEyes" class="char-eyes">
+                  
+                  <!-- OPEN EYES GROUP -->
+                  <g class="char-eye-open" id="charEyesOpenGroup">
+                    <!-- Left Eye Open -->
+                    <g id="charLeftEyeOpen" class="char-eye">
+                      <ellipse cx="134" cy="148" rx="13" ry="16" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+                      <g clip-path="url(#charLeftEyeClip)">
+                        <g id="charLeftPupilGroup" class="char-pupil">
+                          <circle cx="134" cy="148" r="8.5" fill="#0f172a" />
+                          <circle cx="134" cy="148" r="6" fill="#2563eb" />
+                          <circle cx="132" cy="145" r="2.5" fill="#ffffff" />
+                        </g>
+                      </g>
+                    </g>
+
+                    <!-- Right Eye Open -->
+                    <g id="charRightEyeOpen" class="char-eye">
+                      <ellipse cx="186" cy="148" rx="13" ry="16" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+                      <g clip-path="url(#charRightEyeClip)">
+                        <g id="charRightPupilGroup" class="char-pupil">
+                          <circle cx="186" cy="148" r="8.5" fill="#0f172a" />
+                          <circle cx="186" cy="148" r="6" fill="#2563eb" />
+                          <circle cx="184" cy="145" r="2.5" fill="#ffffff" />
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+
+                  <!-- CLOSED EYES GROUP (Active when password focused) -->
+                  <g class="char-eye-closed" id="charEyesClosedGroup">
+                    <!-- Left Eye Closed -->
+                    <g id="charLeftEyeClosed">
+                      <path d="M120 149 Q134 160 148 149" stroke="#1e293b" stroke-width="3.5" stroke-linecap="round" fill="none" />
+                      <path d="M125 154 L121 159" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
+                      <path d="M134 156 L134 162" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
+                      <path d="M143 154 L147 159" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
+                    </g>
+                    <!-- Right Eye Closed -->
+                    <g id="charRightEyeClosed">
+                      <path d="M172 149 Q186 160 200 149" stroke="#1e293b" stroke-width="3.5" stroke-linecap="round" fill="none" />
+                      <path d="M177 154 L173 159" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
+                      <path d="M186 156 L186 162" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
+                      <path d="M195 154 L199 159" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
                     </g>
                   </g>
                 </g>
 
-                <!-- Right Eye Open -->
-                <g id="rightEyeOpen">
-                  <ellipse cx="188" cy="148" rx="14" ry="17" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
-                  <g clip-path="url(#rightEyeClip)">
-                    <g id="rightPupilGroup" class="pupil-group">
-                      <circle cx="188" cy="148" r="8.5" fill="#0f172a" />
-                      <circle cx="188" cy="148" r="6" fill="#2563eb" />
-                      <circle cx="186" cy="145" r="2.5" fill="#ffffff" />
-                    </g>
+                <!-- Professional Friendly Nose -->
+                <path d="M157 156 Q160 166 164 165" stroke="#d97706" stroke-width="2.5" stroke-linecap="round" fill="none" />
+
+                <!-- Smile Mouth -->
+                <path id="charMouth" d="M148 180 Q160 190 172 180" stroke="#b45309" stroke-width="3" stroke-linecap="round" fill="none" />
+              </g>
+
+              <!-- ================= LAYER: ARMS & HANDS ================= -->
+              <g id="charHands" class="char-hands">
+                <!-- Left Hand -->
+                <g id="charLeftHand">
+                  <!-- Blazer Sleeve -->
+                  <path d="M70 290 C70 230, 95 190, 116 165" stroke="url(#blazerGradient)" stroke-width="26" stroke-linecap="round" fill="none" />
+                  <path d="M112 168 L122 158" stroke="#eff6ff" stroke-width="12" stroke-linecap="round" />
+                  <!-- Palm & Fingers covering Left Eye -->
+                  <g transform="translate(110, 126)">
+                    <rect width="46" height="34" rx="17" fill="#fde047" stroke="#d97706" stroke-width="1.5" />
+                    <path d="M10 8 Q24 6 38 12" stroke="#d97706" stroke-width="1.5" stroke-linecap="round" fill="none" />
+                    <path d="M8 18 Q24 16 38 22" stroke="#d97706" stroke-width="1.5" stroke-linecap="round" fill="none" />
+                    <circle cx="12" cy="17" r="10" fill="#fcd34d" />
+                  </g>
+                </g>
+
+                <!-- Right Hand -->
+                <g id="charRightHand">
+                  <!-- Blazer Sleeve -->
+                  <path d="M250 290 C250 230, 225 190, 204 165" stroke="url(#blazerGradient)" stroke-width="26" stroke-linecap="round" fill="none" />
+                  <path d="M208 168 L198 158" stroke="#eff6ff" stroke-width="12" stroke-linecap="round" />
+                  <!-- Palm & Fingers covering Right Eye -->
+                  <g transform="translate(164, 126)">
+                    <rect width="46" height="34" rx="17" fill="#fde047" stroke="#d97706" stroke-width="1.5" />
+                    <path d="M8 12 Q22 6 36 8" stroke="#d97706" stroke-width="1.5" stroke-linecap="round" fill="none" />
+                    <path d="M8 22 Q22 16 38 18" stroke="#d97706" stroke-width="1.5" stroke-linecap="round" fill="none" />
+                    <circle cx="34" cy="17" r="10" fill="#fcd34d" />
                   </g>
                 </g>
               </g>
 
-              <!-- Eyes Closed Group (Active on Password Focus) -->
-              <g id="eyesClosedGroup" style="display: none;">
-                <!-- Left Eye Closed (Curved shut eyelid + sweet eyelashes) -->
-                <g id="leftEyeClosed" style="display: none;">
-                  <path d="M118 149 Q132 160 146 149" stroke="#1e293b" stroke-width="3.5" stroke-linecap="round" fill="none" />
-                  <path d="M123 154 L119 159" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
-                  <path d="M132 156 L132 162" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
-                  <path d="M141 154 L145 159" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
-                </g>
-                <!-- Right Eye Closed (Curved shut eyelid + sweet eyelashes) -->
-                <g id="rightEyeClosed" style="display: none;">
-                  <path d="M174 149 Q188 160 202 149" stroke="#1e293b" stroke-width="3.5" stroke-linecap="round" fill="none" />
-                  <path d="M179 154 L175 159" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
-                  <path d="M188 156 L188 162" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
-                  <path d="M197 154 L201 159" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
-                </g>
-              </g>
-
-              <!-- Friendly Nose -->
-              <path d="M157 156 Q160 166 164 165" stroke="#d97706" stroke-width="2.5" stroke-linecap="round" fill="none" />
-
-              <!-- Smile Mouth -->
-              <path id="characterMouth" d="M148 180 Q160 190 172 180" stroke="#b45309" stroke-width="3" stroke-linecap="round" fill="none" />
-            </g>
-
-            <!-- 4. Interactive Arms & Hands (Covers eyes on Password Focus) -->
-            <g id="characterHands" class="character-hands resting" transform="translate(0, 110)">
-              <!-- Left Arm & Hand -->
-              <g id="leftHandCover">
-                <!-- Sleeve -->
-                <path d="M70 290 C70 230, 95 190, 116 165" stroke="url(#blazerGrad)" stroke-width="26" stroke-linecap="round" fill="none" />
-                <path d="M112 168 L122 158" stroke="#eff6ff" stroke-width="12" stroke-linecap="round" />
-                <!-- Palm & Fingers covering Left Eye -->
-                <g transform="translate(108, 126)">
-                  <rect width="46" height="34" rx="17" fill="#fde047" stroke="#d97706" stroke-width="1.5" />
-                  <!-- Thumb & Fingers -->
-                  <path d="M10 8 Q24 6 38 12" stroke="#d97706" stroke-width="1.5" stroke-linecap="round" fill="none" />
-                  <path d="M8 18 Q24 16 38 22" stroke="#d97706" stroke-width="1.5" stroke-linecap="round" fill="none" />
-                  <circle cx="12" cy="17" r="10" fill="#fcd34d" />
-                </g>
-              </g>
-
-              <!-- Right Arm & Hand -->
-              <g id="rightHandCover">
-                <!-- Sleeve -->
-                <path d="M250 290 C250 230, 225 190, 204 165" stroke="url(#blazerGrad)" stroke-width="26" stroke-linecap="round" fill="none" />
-                <path d="M208 168 L198 158" stroke="#eff6ff" stroke-width="12" stroke-linecap="round" />
-                <!-- Palm & Fingers covering Right Eye -->
-                <g transform="translate(166, 126)">
-                  <rect width="46" height="34" rx="17" fill="#fde047" stroke="#d97706" stroke-width="1.5" />
-                  <!-- Thumb & Fingers -->
-                  <path d="M8 12 Q22 6 36 8" stroke="#d97706" stroke-width="1.5" stroke-linecap="round" fill="none" />
-                  <path d="M8 22 Q22 16 38 18" stroke="#d97706" stroke-width="1.5" stroke-linecap="round" fill="none" />
-                  <circle cx="34" cy="17" r="10" fill="#fcd34d" />
-                </g>
-              </g>
-            </g>
-          </svg>
-        </div>
-
-        <!-- Assistant Desk Credential Card -->
-        <div class="character-desk-surface">
-          <div class="badge-assistant-id">
-            <div class="badge-icon-box">
-              <i class="bi bi-shield-lock-fill"></i>
-            </div>
-            <div>
-              <div class="fw-bold" style="font-size: 0.8rem; line-height: 1.1;">Sam • Security Assistant</div>
-              <div class="text-muted" style="font-size: 0.7rem;">Confidential Credentials Guardian</div>
-            </div>
+            </svg>
           </div>
-          <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-2 py-1" style="font-size: 0.65rem; font-weight: 800;">
-            ● ACTIVE GUARD
-          </span>
+
+          <!-- Assistant Desk Badge Card -->
+          <div class="lp-assistant-badge">
+            <div class="lp-assistant-info">
+              <div class="lp-assistant-icon" aria-hidden="true">
+                <i class="bi bi-shield-lock-fill"></i>
+              </div>
+              <div>
+                <div class="lp-assistant-title">Sam • HR Security Guardian</div>
+                <div class="lp-assistant-sub">Confidential Identity Gatekeeper</div>
+              </div>
+            </div>
+            <span class="lp-status-pill">● ACTIVE</span>
+          </div>
+
         </div>
 
-        <!-- One-Click Evaluation Fast-Fill Buttons -->
-        <div class="quick-test-tray">
-          <div class="quick-test-tray-title"><i class="bi bi-lightning-charge-fill text-warning"></i> Fast-Fill Demo Roles</div>
-          <div class="d-flex justify-content-center gap-2 flex-wrap">
-            <button type="button" class="quick-btn-pill" onclick="quickFill('employee')">
-              <i class="bi bi-person-fill text-primary"></i> Sarah (Employee)
-            </button>
-            <button type="button" class="quick-btn-pill" onclick="quickFill('hr')">
-              <i class="bi bi-shield-fill text-danger"></i> Alex (HR Admin)
-            </button>
-          </div>
-        </div>
+        <!-- Panel Footer -->
+        <footer class="lp-panel-footer">
+          <span>Enterprise HR Security</span>
+          <span>Confidential Session</span>
+        </footer>
+
       </section>
 
       <!-- ====================================================================
-           RIGHT SIDE: AUTHENTICATION FORM & CREDENTIAL VALIDATION
+           RIGHT SIDE: AUTHENTICATION FORM PANEL (~45%)
+           Preserves all existing IDs, names, classes, attributes & handlers
            ==================================================================== -->
-      <section class="form-panel" aria-label="Portal Login Form">
-        <div class="form-brand-header">
-          <div class="form-brand-badge">
+      <section class="lp-form-panel" aria-label="Portal Login Form Panel">
+        <div class="lp-form-container">
+          
+          <div class="lp-header-tag">
             <i class="bi bi-shield-check"></i> OFFICIAL GATEWAY
           </div>
-          <h1 class="form-title">Sign In to Your Workspace</h1>
-          <p class="form-subtitle">Enter your official employee or HR administrator credentials. Role and access are determined automatically.</p>
-        </div>
+          <h1 class="lp-title">Sign In to Your Workspace</h1>
+          <p class="lp-subtitle">Enter your official employee or HR administrator credentials. Role and access are determined automatically.</p>
 
-        <!-- The Login Form -->
-        <form id="hrLoginForm" onsubmit="handleLoginSubmit(event)" novalidate>
-          <!-- Work Email -->
-          <div class="form-group-custom">
-            <label for="loginEmail" class="field-label">
-              <span>Work Email Address</span>
-              <span class="text-muted fw-normal" style="font-size: 0.725rem;">e.g. sarah.jenkins@bridgeway.corp</span>
-            </label>
-            <div class="field-input-wrapper">
-              <i class="bi bi-envelope field-icon"></i>
-              <input 
-                type="email" 
-                id="loginEmail" 
-                class="form-control-custom" 
-                placeholder="name@bridgeway.corp" 
-                autocomplete="username" 
-                required 
-              />
+          <!-- THE AUTHENTICATION FORM (All existing IDs and handlers preserved) -->
+          <form id="hrLoginForm" onsubmit="handleLoginSubmit(event)" novalidate>
+            
+            <!-- Work Email -->
+            <div class="form-group-custom">
+              <label for="loginEmail" class="field-label">
+                <span>Work Email Address</span>
+                <span class="text-muted fw-normal" style="font-size: 0.725rem;">e.g. sarah.jenkins@bridgeway.corp</span>
+              </label>
+              <div class="field-input-wrapper">
+                <i class="bi bi-envelope field-icon" aria-hidden="true"></i>
+                <input 
+                  type="email" 
+                  id="loginEmail" 
+                  name="email"
+                  class="form-control-custom" 
+                  placeholder="name@bridgeway.corp" 
+                  autocomplete="username" 
+                  required 
+                />
+              </div>
+              <div class="feedback-error" id="emailError">
+                <i class="bi bi-exclamation-circle-fill" aria-hidden="true"></i> <span id="emailErrorMsg">Please enter a valid corporate email.</span>
+              </div>
             </div>
-            <div class="feedback-error" id="emailError">
-              <i class="bi bi-exclamation-circle-fill"></i> <span id="emailErrorMsg">Please enter a valid corporate email.</span>
-            </div>
-          </div>
 
-          <!-- Password with Show/Hide Control -->
-          <div class="form-group-custom">
-            <label for="loginPassword" class="field-label">
-              <span>Password</span>
-              <span class="text-primary fw-semibold" style="font-size: 0.725rem;">Confidential</span>
-            </label>
-            <div class="field-input-wrapper">
-              <i class="bi bi-lock field-icon"></i>
-              <input 
-                type="password" 
-                id="loginPassword" 
-                class="form-control-custom" 
-                placeholder="••••••••••••" 
-                autocomplete="current-password" 
-                required 
-              />
-              <button 
-                type="button" 
-                class="password-toggle-btn" 
-                id="togglePasswordBtn" 
-                aria-label="Show or hide password" 
-                onclick="togglePasswordVisibility(event)"
-              >
-                <i class="bi bi-eye" id="togglePasswordIcon"></i>
+            <!-- Password with Show/Hide Control -->
+            <div class="form-group-custom">
+              <label for="loginPassword" class="field-label">
+                <span>Password</span>
+                <span class="text-primary fw-semibold" style="font-size: 0.725rem;">Confidential</span>
+              </label>
+              <div class="field-input-wrapper">
+                <i class="bi bi-lock field-icon" aria-hidden="true"></i>
+                <input 
+                  type="password" 
+                  id="loginPassword" 
+                  name="password"
+                  class="form-control-custom" 
+                  placeholder="••••••••••••" 
+                  autocomplete="current-password" 
+                  required 
+                />
+                <button 
+                  type="button" 
+                  class="password-toggle-btn" 
+                  id="togglePasswordBtn" 
+                  aria-label="Show or hide password" 
+                  aria-pressed="false"
+                  onclick="togglePasswordVisibility(event)"
+                >
+                  <i class="bi bi-eye" id="togglePasswordIcon" aria-hidden="true"></i>
+                </button>
+              </div>
+              <div class="feedback-error" id="passwordError">
+                <i class="bi bi-exclamation-circle-fill" aria-hidden="true"></i> <span id="passwordErrorMsg">Please enter your password.</span>
+              </div>
+            </div>
+
+            <!-- Submit Button (Preserves loading / disabled state logic) -->
+            <button type="submit" class="btn-login-submit" id="loginSubmitBtn">
+              <span>Sign In to Portal</span> <i class="bi bi-arrow-right" aria-hidden="true"></i>
+            </button>
+          </form>
+
+          <!-- Fast-Fill Demo Roles Tray -->
+          <div class="quick-test-tray">
+            <div class="quick-test-tray-title"><i class="bi bi-lightning-charge-fill text-warning"></i> Fast-Fill Demo Roles</div>
+            <div class="d-flex justify-content-center gap-2 flex-wrap">
+              <button type="button" class="quick-btn-pill" onclick="quickFill('employee')">
+                <i class="bi bi-person-fill text-primary"></i> Sarah (Employee)
+              </button>
+              <button type="button" class="quick-btn-pill" onclick="quickFill('hr')">
+                <i class="bi bi-shield-fill text-danger"></i> Alex (HR Admin)
               </button>
             </div>
-            <div class="feedback-error" id="passwordError">
-              <i class="bi bi-exclamation-circle-fill"></i> <span id="passwordErrorMsg">Please enter your password.</span>
+          </div>
+
+          <!-- HR Security Governance Information Callout -->
+          <div class="security-callout-box">
+            <i class="bi bi-shield-lock-fill security-callout-icon" aria-hidden="true"></i>
+            <div>
+              <strong>Strict Identity Governance:</strong> Public self-registration is disabled. All employee accounts are provisioned exclusively by Human Resources administration.
             </div>
           </div>
 
-          <!-- Submit Button -->
-          <button type="submit" class="btn-login-submit" id="loginSubmitBtn">
-            <span>Sign In to Portal</span> <i class="bi bi-arrow-right"></i>
-          </button>
-        </form>
-
-        <!-- HR Security Information Callout -->
-        <div class="security-callout-box">
-          <i class="bi bi-shield-lock-fill security-callout-icon"></i>
-          <div>
-            <strong>Strict Identity Governance:</strong> Public self-registration is disabled. All employee accounts are provisioned exclusively by Human Resources administration.
-          </div>
         </div>
       </section>
 
     </div>
-  </main>
 
-  <!-- Toast Notification -->
-  <div class="toast-container-custom">
-    <div class="custom-toast" id="loginToast" style="display: none;">
-      <i class="bi bi-check-circle-fill text-success fs-5" id="toastIcon"></i>
-      <span id="loginToastMsg">Signing you into workspace...</span>
+    <!-- Toast Notification (Existing Toast Preserved) -->
+    <div class="toast-container-custom">
+      <div class="custom-toast" id="loginToast" style="display: none;" role="alert" aria-live="assertive">
+        <i class="bi bi-check-circle-fill text-success fs-5" id="toastIcon" aria-hidden="true"></i>
+        <span id="loginToastMsg">Signing you into workspace...</span>
+      </div>
     </div>
+
   </div>
 
-  <!-- ==========================================================================
-       INTERACTIVE CHARACTER JAVASCRIPT ENGINE & CREDENTIAL LOGIC
-       ========================================================================== -->
+  <!-- ========================================================================
+       CORE AUTHENTICATION & CREDENTIAL VALIDATION LOGIC (PRESERVED UNTOUCHED)
+       ======================================================================== -->
   <script>
     (function () {
       'use strict';
@@ -1002,29 +462,9 @@
       };
 
       // State Flags
-      let isPasswordFocused = false;
-      let isPasswordVisible = false;
       let isFormSubmitting = false;
 
-      // DOM Elements
-      const characterPanel = document.querySelector('.character-panel');
-      const characterCanvas = document.getElementById('characterCanvasWrap');
-      const characterHead = document.getElementById('characterHead');
-      const leftPupil = document.getElementById('leftPupilGroup');
-      const rightPupil = document.getElementById('rightPupilGroup');
-      const eyesOpenGroup = document.getElementById('eyesOpenGroup');
-      const eyesClosedGroup = document.getElementById('eyesClosedGroup');
-      const leftEyeOpen = document.getElementById('leftEyeOpen');
-      const leftEyeClosed = document.getElementById('leftEyeClosed');
-      const rightEyeOpen = document.getElementById('rightEyeOpen');
-      const rightEyeClosed = document.getElementById('rightEyeClosed');
-      const leftEyebrow = document.getElementById('leftEyebrow');
-      const rightEyebrow = document.getElementById('rightEyebrow');
-      const characterHands = document.getElementById('characterHands');
-      const characterSpeech = document.getElementById('characterSpeech');
-      const speechText = document.getElementById('speechText');
-      const characterMouth = document.getElementById('characterMouth');
-
+      // Form DOM Elements
       const emailInput = document.getElementById('loginEmail');
       const passwordInput = document.getElementById('loginPassword');
       const togglePasswordBtn = document.getElementById('togglePasswordBtn');
@@ -1036,260 +476,39 @@
       const loginSubmitBtn = document.getElementById('loginSubmitBtn');
       const loginToast = document.getElementById('loginToast');
       const loginToastMsg = document.getElementById('loginToastMsg');
-      const toastIcon = document.getElementById('toastIcon');
 
-      // Mouse Lerp Coordinates
-      let mouseX = window.innerWidth / 2;
-      let mouseY = window.innerHeight / 2;
-      let currentHeadX = 0;
-      let currentHeadY = 0;
-      let currentHeadRot = 0;
-      let currentPupilX = 0;
-      let currentPupilY = 0;
-      let rafId = null;
-
-      // Check if device supports hover/fine pointer
-      const hasFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-
-      // ======================================================================
-      // 1. MOUSE TRACKING & INTERPOLATION ENGINE
-      // ======================================================================
-      function onMouseMove(e) {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-      }
-
-      function updateCharacterTracking() {
-        if (!characterCanvas) return;
-
-        // Bounding rect for relative offset
-        const rect = characterCanvas.getBoundingClientRect();
-        const charCenterX = rect.left + rect.width / 2;
-        const charCenterY = rect.top + rect.height * 0.45;
-
-        // Normalized delta (-1 to 1)
-        const dx = Math.max(-1, Math.min(1, (mouseX - charCenterX) / (window.innerWidth * 0.45)));
-        const dy = Math.max(-1, Math.min(1, (mouseY - charCenterY) / (window.innerHeight * 0.45)));
-
-        // Target coordinates
-        let targetPupilX = dx * 6.5;
-        let targetPupilY = dy * 5.5;
-        let targetHeadRot = dx * 7.5;
-        let targetHeadX = dx * 9.0;
-        let targetHeadY = dy * 6.5;
-
-        // While Password is focused:
-        if (isPasswordFocused) {
-          if (!isPasswordVisible) {
-            // Looking away / hands covering eyes
-            targetHeadRot = dx * 3.5 - 2;
-            targetHeadX = dx * 4.0;
-            targetHeadY = dy * 3.0;
-          } else {
-            // Peeking: pupil focuses toward password field on the right!
-            targetPupilX = 5.0;
-            targetPupilY = 1.5;
-          }
-        }
-
-        // Smooth Lerp (Linear Interpolation)
-        const lerpFactor = 0.12;
-        currentHeadX += (targetHeadX - currentHeadX) * lerpFactor;
-        currentHeadY += (targetHeadY - currentHeadY) * lerpFactor;
-        currentHeadRot += (targetHeadRot - currentHeadRot) * lerpFactor;
-        currentPupilX += (targetPupilX - currentPupilX) * lerpFactor;
-        currentPupilY += (targetPupilY - currentPupilY) * lerpFactor;
-
-        // Apply transforms
-        if (characterHead) {
-          characterHead.style.transform = `translate(${currentHeadX.toFixed(2)}px, ${currentHeadY.toFixed(2)}px) rotate(${currentHeadRot.toFixed(2)}deg)`;
-        }
-        if (leftPupil && rightPupil && !isPasswordFocused) {
-          leftPupil.style.transform = `translate(${currentPupilX.toFixed(2)}px, ${currentPupilY.toFixed(2)}px)`;
-          rightPupil.style.transform = `translate(${currentPupilX.toFixed(2)}px, ${currentPupilY.toFixed(2)}px)`;
-        } else if (leftPupil && isPasswordFocused && isPasswordVisible) {
-          leftPupil.style.transform = `translate(${currentPupilX.toFixed(2)}px, ${currentPupilY.toFixed(2)}px)`;
-        }
-
-        rafId = requestAnimationFrame(updateCharacterTracking);
-      }
-
-      if (hasFinePointer) {
-        window.addEventListener('mousemove', onMouseMove, { passive: true });
-        rafId = requestAnimationFrame(updateCharacterTracking);
-      }
-
-      // ======================================================================
-      // 2. CHARACTER STATE MACHINE (Privacy Reactions)
-      // ======================================================================
-
-      // Normal State (Eyes open, hands lowered at desk)
-      function setCharacterNormal() {
-        if (eyesOpenGroup) eyesOpenGroup.style.display = 'block';
-        if (eyesClosedGroup) eyesClosedGroup.style.display = 'none';
-        if (leftEyeOpen) leftEyeOpen.style.display = 'block';
-        if (leftEyeClosed) leftEyeClosed.style.display = 'none';
-        if (rightEyeOpen) rightEyeOpen.style.display = 'block';
-        if (rightEyeClosed) rightEyeClosed.style.display = 'none';
-
-        if (leftEyebrow) leftEyebrow.setAttribute('d', 'M120 122 Q132 116 144 122');
-        if (rightEyebrow) rightEyebrow.setAttribute('d', 'M176 122 Q188 116 200 122');
-
-        if (characterHands) {
-          characterHands.setAttribute('class', 'character-hands resting');
-          characterHands.setAttribute('transform', 'translate(0, 110)');
-          characterHands.style.opacity = '0';
-        }
-        if (speechText) {
-          speechText.innerHTML = '🔒 "Your credentials are safe & confidential."';
-        }
-        if (characterMouth) {
-          characterMouth.setAttribute('d', 'M148 180 Q160 190 172 180');
-        }
-      }
-
-      // Email Field Focused State
-      function setCharacterEmailFocus() {
-        setCharacterNormal();
-        if (speechText) {
-          speechText.innerHTML = '👀 "Searching corporate employee directory..."';
-        }
-        if (characterMouth) {
-          characterMouth.setAttribute('d', 'M150 181 Q160 188 170 181');
-        }
-      }
-
-      // Password Field Focused State (VISIBLY SHUTS EYES & COVERS WITH HANDS)
-      function setCharacterPasswordFocus() {
-        isPasswordFocused = true;
-
-        if (!isPasswordVisible) {
-          // Both eyes visibly shut
-          if (eyesOpenGroup) eyesOpenGroup.style.display = 'none';
-          if (eyesClosedGroup) eyesClosedGroup.style.display = 'block';
-          if (leftEyeOpen) leftEyeOpen.style.display = 'none';
-          if (leftEyeClosed) leftEyeClosed.style.display = 'block';
-          if (rightEyeOpen) rightEyeOpen.style.display = 'none';
-          if (rightEyeClosed) rightEyeClosed.style.display = 'block';
-
-          if (leftEyebrow) leftEyebrow.setAttribute('d', 'M120 119 Q132 112 144 119');
-          if (rightEyebrow) rightEyebrow.setAttribute('d', 'M176 119 Q188 112 200 119');
-
-          // Hands smoothly glide up to face
-          if (characterHands) {
-            characterHands.setAttribute('class', 'character-hands covering');
-            characterHands.setAttribute('transform', 'translate(0, 0)');
-            characterHands.style.opacity = '1';
-          }
-          if (speechText) {
-            speechText.innerHTML = '🙈 "I\'m closing my eyes! Your password is confidential."';
-          }
-          if (characterMouth) {
-            // Surprised, innocent small 'o' mouth
-            characterMouth.setAttribute('d', 'M153 182 Q160 186 167 182');
-          }
-        } else {
-          // Peeking State: Left eye opens and looks at password, right eye remains shut!
-          if (eyesOpenGroup) eyesOpenGroup.style.display = 'block';
-          if (eyesClosedGroup) eyesClosedGroup.style.display = 'block';
-          if (leftEyeOpen) leftEyeOpen.style.display = 'block';
-          if (leftEyeClosed) leftEyeClosed.style.display = 'none';
-          if (rightEyeOpen) rightEyeOpen.style.display = 'none';
-          if (rightEyeClosed) rightEyeClosed.style.display = 'block';
-
-          if (characterHands) {
-            characterHands.setAttribute('class', 'character-hands peeking');
-            characterHands.setAttribute('transform', 'translate(-18, 22) rotate(-10 160 240)');
-            characterHands.style.opacity = '1';
-          }
-          if (speechText) {
-            speechText.innerHTML = '👀 "Just a peek! Make sure no one\'s looking."';
-          }
-          if (characterMouth) {
-            characterMouth.setAttribute('d', 'M150 181 Q160 188 170 181');
-          }
-        }
-      }
-
-      // Password Blurred State
-      function setCharacterPasswordBlur() {
-        isPasswordFocused = false;
-        setCharacterNormal();
-      }
-
-      // Show / Hide Password Peek
-      window.togglePasswordVisibility = function (e) {
-        if (e && e.preventDefault) e.preventDefault();
-        if (!passwordInput) return;
-        isPasswordVisible = !isPasswordVisible;
-
-        if (isPasswordVisible) {
-          passwordInput.type = 'text';
-          togglePasswordIcon.className = 'bi bi-eye-slash';
-          togglePasswordBtn.setAttribute('title', 'Hide password');
-        } else {
-          passwordInput.type = 'password';
-          togglePasswordIcon.className = 'bi bi-eye';
-          togglePasswordBtn.setAttribute('title', 'Show password');
-        }
-
-        // Re-focus password input and update character state
-        passwordInput.focus();
-        setCharacterPasswordFocus();
-      };
-
-      // ======================================================================
-      // 3. INPUT EVENT LISTENERS
-      // ======================================================================
+      // Clear inline errors on input
       if (emailInput) {
-        emailInput.addEventListener('focus', () => {
-          if (!isPasswordFocused) setCharacterEmailFocus();
-        });
-        emailInput.addEventListener('blur', () => {
-          if (!isPasswordFocused) setCharacterNormal();
-        });
         emailInput.addEventListener('input', () => {
           emailError.style.display = 'none';
           emailInput.classList.remove('is-invalid');
         });
       }
-
       if (passwordInput) {
-        // Multi-event binding: reacts instantly on click, press, or focus
-        ['focus', 'focusin', 'click', 'pointerdown'].forEach((evt) => {
-          passwordInput.addEventListener(evt, () => {
-            setCharacterPasswordFocus();
-          });
-        });
-
-        passwordInput.addEventListener('blur', () => {
-          // Slight delay so clicking the Show Password button does not prematurely reset the character
-          setTimeout(() => {
-            if (document.activeElement !== passwordInput && document.activeElement !== togglePasswordBtn) {
-              setCharacterPasswordBlur();
-            }
-          }, 80);
-        });
-
         passwordInput.addEventListener('input', () => {
           passwordError.style.display = 'none';
           passwordInput.classList.remove('is-invalid');
-          if (!isPasswordFocused) {
-            setCharacterPasswordFocus();
-          }
         });
       }
 
-      if (togglePasswordBtn) {
-        // Prevent toggle button click from losing focus on the password input
-        togglePasswordBtn.addEventListener('mousedown', (e) => {
-          e.preventDefault();
-        });
-      }
+      // Show / Hide Password Toggle
+      window.togglePasswordVisibility = function (e) {
+        if (e && e.preventDefault) e.preventDefault();
+        if (!passwordInput) return;
 
-      // ======================================================================
-      // 4. QUICK TEST AUTOFIL HELPERS
-      // ======================================================================
+        const isCurrentlyPassword = (passwordInput.type === 'password');
+        passwordInput.type = isCurrentlyPassword ? 'text' : 'password';
+
+        if (togglePasswordIcon) {
+          togglePasswordIcon.className = isCurrentlyPassword ? 'bi bi-eye-slash' : 'bi bi-eye';
+        }
+        if (togglePasswordBtn) {
+          togglePasswordBtn.setAttribute('title', isCurrentlyPassword ? 'Hide password' : 'Show password');
+          togglePasswordBtn.setAttribute('aria-pressed', isCurrentlyPassword ? 'true' : 'false');
+        }
+      };
+
+      // Quick-fill helper for demo evaluations
       window.quickFill = function (role) {
         const acc = REGISTERED_ACCOUNTS[role];
         if (!acc) return;
@@ -1299,20 +518,15 @@
         passwordError.style.display = 'none';
         emailInput.classList.remove('is-invalid');
         passwordInput.classList.remove('is-invalid');
-
-        if (speechText) {
-          speechText.innerHTML = `✨ "Loaded demo credentials for ${acc.name}."`;
-        }
       };
 
+      // Direct login role helper
       window.directLogin = function (role) {
         localStorage.setItem('bridgeway_current_role', role);
         window.location.href = 'index.html';
       };
 
-      // ======================================================================
-      // 5. LOGIN SUBMISSION & ROLE-BASED REDIRECTION LOGIC
-      // ======================================================================
+      // Handle Login Submission & Role-Based Redirection
       window.handleLoginSubmit = function (e) {
         e.preventDefault();
         if (isFormSubmitting) return;
@@ -1343,9 +557,6 @@
         }
 
         if (hasError) {
-          if (speechText) {
-            speechText.innerHTML = '⚠️ "Please check the highlighted errors."';
-          }
           return;
         }
 
@@ -1360,7 +571,7 @@
           matchedRole = 'employee';
           matchedUser = REGISTERED_ACCOUNTS.employee;
         } else {
-          // Default fallback based on domain or permit generic login
+          // Default fallback based on domain or permit generic employee
           matchedRole = 'employee';
           matchedUser = { name: email.split('@')[0], role: 'employee' };
         }
@@ -1370,10 +581,6 @@
         loginSubmitBtn.disabled = true;
         loginSubmitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span> Verifying Identity...';
 
-        if (speechText) {
-          speechText.innerHTML = `🎉 "Identity verified! Welcome back, ${matchedUser.name}."`;
-        }
-
         // Store active session in localStorage (Strict existing mechanism)
         localStorage.setItem('bridgeway_current_role', matchedRole);
 
@@ -1381,7 +588,7 @@
         loginToastMsg.textContent = `Authenticated as ${matchedUser.name} (${matchedRole.toUpperCase()}). Redirecting to workspace...`;
         loginToast.style.display = 'flex';
 
-        // Redirect to main workspace after brief celebration
+        // Redirect to main workspace
         setTimeout(() => {
           window.location.href = 'index.html';
         }, 850);
