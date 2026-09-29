@@ -79,8 +79,8 @@
             <i class="bi bi-diagram-3"></i>
           </div>
           <div class="lb-deco-text">
-            <span class="lb-deco-title">Org Hierarchy</span>
-            <span class="lb-deco-desc">Live Workforce Tree</span>
+            <span class="lb-deco-title">Org Directory</span>
+            <span class="lb-deco-desc">Workforce Structure</span>
           </div>
         </div>
 
@@ -89,8 +89,8 @@
             <i class="bi bi-shield-check"></i>
           </div>
           <div class="lb-deco-text">
-            <span class="lb-deco-title">Identity Guard</span>
-            <span class="lb-deco-desc">Role-Based Access</span>
+            <span class="lb-deco-title">Role-based access</span>
+            <span class="lb-deco-desc">Permissions Governed</span>
           </div>
         </div>
 
@@ -99,8 +99,8 @@
             <i class="bi bi-check2-circle"></i>
           </div>
           <div class="lb-deco-text">
-            <span class="lb-deco-title">Task Pipeline</span>
-            <span class="lb-deco-desc">Automated Review</span>
+            <span class="lb-deco-title">Onboarding Verification</span>
+            <span class="lb-deco-desc">Identity Provisioned</span>
           </div>
         </div>
 
@@ -109,7 +109,7 @@
             <i class="bi bi-calendar2-check"></i>
           </div>
           <div class="lb-deco-text">
-            <span class="lb-deco-title">Leave Approvals</span>
+            <span class="lb-deco-title">Shift & Leave Status</span>
             <span class="lb-deco-desc">Balance Tracking</span>
           </div>
         </div>
@@ -475,8 +475,6 @@
         if (!acc) return;
         emailInput.value = acc.email;
         passwordInput.value = 'SecurityPass2026!';
-        // Dispatch input event so badge name updates
-        emailInput.dispatchEvent(new Event('input', { bubbles: true }));
         emailError.style.display = 'none';
         passwordError.style.display = 'none';
         emailInput.classList.remove('is-invalid');
