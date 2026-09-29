@@ -16,9 +16,16 @@
 
 ---
 
-## 🚀 Live Demo & How to Run
+## 🌐 Live Interactive Demo
 
-1. Clone or download this repository:
+- **Live Application**: [**https://gh2ith.github.io/quick-test/**](https://gh2ith.github.io/quick-test/)
+- **Mockup Gallery**: [**https://gh2ith.github.io/quick-test/mockups/**](https://gh2ith.github.io/quick-test/mockups/)
+
+---
+
+## 🚀 How to Run Locally
+
+1. Clone this repository:
    ```bash
    git clone https://github.com/gh2ith/quick-test.git
    cd quick-test
