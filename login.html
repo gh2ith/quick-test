@@ -254,14 +254,15 @@
 
     /* Hands Covering Eyes - Keyframe & Smooth Transition */
     .character-hands {
-      transition: transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease;
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease;
+      transform-box: view-box;
       transform-origin: 160px 240px;
     }
 
-    /* Default: Hands resting at desk */
+    /* Default: Hands resting below view */
     .character-hands.resting {
-      transform: translateY(85px);
-      opacity: 0.15;
+      transform: translateY(110px);
+      opacity: 0;
       pointer-events: none;
     }
 
@@ -273,7 +274,7 @@
 
     /* Peeking State (Show Password Clicked) */
     .character-hands.peeking {
-      transform: translate(-14px, 18px) rotate(-10deg);
+      transform: translate(-18px, 22px) rotate(-10deg);
       opacity: 1;
     }
 
@@ -765,30 +766,48 @@
               <path id="leftEyebrow" d="M120 122 Q132 116 144 122" stroke="#1e293b" stroke-width="3.5" stroke-linecap="round" fill="none" />
               <path id="rightEyebrow" d="M176 122 Q188 116 200 122" stroke="#1e293b" stroke-width="3.5" stroke-linecap="round" fill="none" />
 
-              <!-- Eyes (White Sclera) -->
-              <g id="eyesSclera">
-                <!-- Left Eye -->
-                <ellipse cx="132" cy="148" rx="14" ry="17" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
-                <!-- Right Eye -->
-                <ellipse cx="188" cy="148" rx="14" ry="17" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
-              </g>
+              <!-- Eyes Open Group (Active in Normal State) -->
+              <g id="eyesOpenGroup">
+                <!-- Left Eye Open -->
+                <g id="leftEyeOpen">
+                  <ellipse cx="132" cy="148" rx="14" ry="17" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+                  <g clip-path="url(#leftEyeClip)">
+                    <g id="leftPupilGroup" class="pupil-group">
+                      <circle cx="132" cy="148" r="8.5" fill="#0f172a" />
+                      <circle cx="132" cy="148" r="6" fill="#2563eb" />
+                      <circle cx="130" cy="145" r="2.5" fill="#ffffff" />
+                    </g>
+                  </g>
+                </g>
 
-              <!-- Pupils (Interpolated Mouse Tracking) -->
-              <!-- Left Pupil -->
-              <g clip-path="url(#leftEyeClip)">
-                <g id="leftPupilGroup" class="pupil-group">
-                  <circle cx="132" cy="148" r="8.5" fill="#0f172a" />
-                  <circle cx="132" cy="148" r="6" fill="#2563eb" />
-                  <circle cx="130" cy="145" r="2.5" fill="#ffffff" />
+                <!-- Right Eye Open -->
+                <g id="rightEyeOpen">
+                  <ellipse cx="188" cy="148" rx="14" ry="17" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+                  <g clip-path="url(#rightEyeClip)">
+                    <g id="rightPupilGroup" class="pupil-group">
+                      <circle cx="188" cy="148" r="8.5" fill="#0f172a" />
+                      <circle cx="188" cy="148" r="6" fill="#2563eb" />
+                      <circle cx="186" cy="145" r="2.5" fill="#ffffff" />
+                    </g>
+                  </g>
                 </g>
               </g>
 
-              <!-- Right Pupil -->
-              <g clip-path="url(#rightEyeClip)">
-                <g id="rightPupilGroup" class="pupil-group">
-                  <circle cx="188" cy="148" r="8.5" fill="#0f172a" />
-                  <circle cx="188" cy="148" r="6" fill="#2563eb" />
-                  <circle cx="186" cy="145" r="2.5" fill="#ffffff" />
+              <!-- Eyes Closed Group (Active on Password Focus) -->
+              <g id="eyesClosedGroup" style="display: none;">
+                <!-- Left Eye Closed (Curved shut eyelid + sweet eyelashes) -->
+                <g id="leftEyeClosed" style="display: none;">
+                  <path d="M118 149 Q132 160 146 149" stroke="#1e293b" stroke-width="3.5" stroke-linecap="round" fill="none" />
+                  <path d="M123 154 L119 159" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
+                  <path d="M132 156 L132 162" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
+                  <path d="M141 154 L145 159" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
+                </g>
+                <!-- Right Eye Closed (Curved shut eyelid + sweet eyelashes) -->
+                <g id="rightEyeClosed" style="display: none;">
+                  <path d="M174 149 Q188 160 202 149" stroke="#1e293b" stroke-width="3.5" stroke-linecap="round" fill="none" />
+                  <path d="M179 154 L175 159" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
+                  <path d="M188 156 L188 162" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
+                  <path d="M197 154 L201 159" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
                 </g>
               </g>
 
@@ -800,7 +819,7 @@
             </g>
 
             <!-- 4. Interactive Arms & Hands (Covers eyes on Password Focus) -->
-            <g id="characterHands" class="character-hands resting">
+            <g id="characterHands" class="character-hands resting" transform="translate(0, 110)">
               <!-- Left Arm & Hand -->
               <g id="leftHandCover">
                 <!-- Sleeve -->
@@ -921,7 +940,7 @@
                 class="password-toggle-btn" 
                 id="togglePasswordBtn" 
                 aria-label="Show or hide password" 
-                onclick="togglePasswordVisibility()"
+                onclick="togglePasswordVisibility(event)"
               >
                 <i class="bi bi-eye" id="togglePasswordIcon"></i>
               </button>
@@ -993,6 +1012,14 @@
       const characterHead = document.getElementById('characterHead');
       const leftPupil = document.getElementById('leftPupilGroup');
       const rightPupil = document.getElementById('rightPupilGroup');
+      const eyesOpenGroup = document.getElementById('eyesOpenGroup');
+      const eyesClosedGroup = document.getElementById('eyesClosedGroup');
+      const leftEyeOpen = document.getElementById('leftEyeOpen');
+      const leftEyeClosed = document.getElementById('leftEyeClosed');
+      const rightEyeOpen = document.getElementById('rightEyeOpen');
+      const rightEyeClosed = document.getElementById('rightEyeClosed');
+      const leftEyebrow = document.getElementById('leftEyebrow');
+      const rightEyebrow = document.getElementById('rightEyebrow');
       const characterHands = document.getElementById('characterHands');
       const characterSpeech = document.getElementById('characterSpeech');
       const speechText = document.getElementById('speechText');
@@ -1051,18 +1078,17 @@
         let targetHeadX = dx * 9.0;
         let targetHeadY = dy * 6.5;
 
-        // While Password is focused: Hands stay covering eyes!
-        // Head still subtly acknowledges user movement (reduced range)
+        // While Password is focused:
         if (isPasswordFocused) {
           if (!isPasswordVisible) {
-            // Looking away / hands covering
+            // Looking away / hands covering eyes
             targetHeadRot = dx * 3.5 - 2;
             targetHeadX = dx * 4.0;
             targetHeadY = dy * 3.0;
           } else {
             // Peeking: pupil focuses toward password field on the right!
             targetPupilX = 5.0;
-            targetPupilY = 2.0;
+            targetPupilY = 1.5;
           }
         }
 
@@ -1081,6 +1107,8 @@
         if (leftPupil && rightPupil && !isPasswordFocused) {
           leftPupil.style.transform = `translate(${currentPupilX.toFixed(2)}px, ${currentPupilY.toFixed(2)}px)`;
           rightPupil.style.transform = `translate(${currentPupilX.toFixed(2)}px, ${currentPupilY.toFixed(2)}px)`;
+        } else if (leftPupil && isPasswordFocused && isPasswordVisible) {
+          leftPupil.style.transform = `translate(${currentPupilX.toFixed(2)}px, ${currentPupilY.toFixed(2)}px)`;
         }
 
         rafId = requestAnimationFrame(updateCharacterTracking);
@@ -1095,10 +1123,22 @@
       // 2. CHARACTER STATE MACHINE (Privacy Reactions)
       // ======================================================================
 
-      // Normal State
+      // Normal State (Eyes open, hands lowered at desk)
       function setCharacterNormal() {
+        if (eyesOpenGroup) eyesOpenGroup.style.display = 'block';
+        if (eyesClosedGroup) eyesClosedGroup.style.display = 'none';
+        if (leftEyeOpen) leftEyeOpen.style.display = 'block';
+        if (leftEyeClosed) leftEyeClosed.style.display = 'none';
+        if (rightEyeOpen) rightEyeOpen.style.display = 'block';
+        if (rightEyeClosed) rightEyeClosed.style.display = 'none';
+
+        if (leftEyebrow) leftEyebrow.setAttribute('d', 'M120 122 Q132 116 144 122');
+        if (rightEyebrow) rightEyebrow.setAttribute('d', 'M176 122 Q188 116 200 122');
+
         if (characterHands) {
-          characterHands.className = 'character-hands resting';
+          characterHands.setAttribute('class', 'character-hands resting');
+          characterHands.setAttribute('transform', 'translate(0, 110)');
+          characterHands.style.opacity = '0';
         }
         if (speechText) {
           speechText.innerHTML = '🔒 "Your credentials are safe & confidential."';
@@ -1110,9 +1150,7 @@
 
       // Email Field Focused State
       function setCharacterEmailFocus() {
-        if (characterHands) {
-          characterHands.className = 'character-hands resting';
-        }
+        setCharacterNormal();
         if (speechText) {
           speechText.innerHTML = '👀 "Searching corporate employee directory..."';
         }
@@ -1121,20 +1159,55 @@
         }
       }
 
-      // Password Field Focused State (COVERS EYES)
+      // Password Field Focused State (VISIBLY SHUTS EYES & COVERS WITH HANDS)
       function setCharacterPasswordFocus() {
         isPasswordFocused = true;
-        if (characterHands) {
-          characterHands.className = isPasswordVisible ? 'character-hands peeking' : 'character-hands covering';
-        }
-        if (speechText) {
-          speechText.innerHTML = isPasswordVisible 
-            ? '👀 "Just a peek! Make sure no one\'s looking."' 
-            : '🙈 "I\'m not looking! Your password is confidential."';
-        }
-        if (characterMouth) {
-          // Surprised small 'o' mouth
-          characterMouth.setAttribute('d', 'M154 182 Q160 187 166 182');
+
+        if (!isPasswordVisible) {
+          // Both eyes visibly shut
+          if (eyesOpenGroup) eyesOpenGroup.style.display = 'none';
+          if (eyesClosedGroup) eyesClosedGroup.style.display = 'block';
+          if (leftEyeOpen) leftEyeOpen.style.display = 'none';
+          if (leftEyeClosed) leftEyeClosed.style.display = 'block';
+          if (rightEyeOpen) rightEyeOpen.style.display = 'none';
+          if (rightEyeClosed) rightEyeClosed.style.display = 'block';
+
+          if (leftEyebrow) leftEyebrow.setAttribute('d', 'M120 119 Q132 112 144 119');
+          if (rightEyebrow) rightEyebrow.setAttribute('d', 'M176 119 Q188 112 200 119');
+
+          // Hands smoothly glide up to face
+          if (characterHands) {
+            characterHands.setAttribute('class', 'character-hands covering');
+            characterHands.setAttribute('transform', 'translate(0, 0)');
+            characterHands.style.opacity = '1';
+          }
+          if (speechText) {
+            speechText.innerHTML = '🙈 "I\'m closing my eyes! Your password is confidential."';
+          }
+          if (characterMouth) {
+            // Surprised, innocent small 'o' mouth
+            characterMouth.setAttribute('d', 'M153 182 Q160 186 167 182');
+          }
+        } else {
+          // Peeking State: Left eye opens and looks at password, right eye remains shut!
+          if (eyesOpenGroup) eyesOpenGroup.style.display = 'block';
+          if (eyesClosedGroup) eyesClosedGroup.style.display = 'block';
+          if (leftEyeOpen) leftEyeOpen.style.display = 'block';
+          if (leftEyeClosed) leftEyeClosed.style.display = 'none';
+          if (rightEyeOpen) rightEyeOpen.style.display = 'none';
+          if (rightEyeClosed) rightEyeClosed.style.display = 'block';
+
+          if (characterHands) {
+            characterHands.setAttribute('class', 'character-hands peeking');
+            characterHands.setAttribute('transform', 'translate(-18, 22) rotate(-10 160 240)');
+            characterHands.style.opacity = '1';
+          }
+          if (speechText) {
+            speechText.innerHTML = '👀 "Just a peek! Make sure no one\'s looking."';
+          }
+          if (characterMouth) {
+            characterMouth.setAttribute('d', 'M150 181 Q160 188 170 181');
+          }
         }
       }
 
@@ -1145,7 +1218,8 @@
       }
 
       // Show / Hide Password Peek
-      window.togglePasswordVisibility = function () {
+      window.togglePasswordVisibility = function (e) {
+        if (e && e.preventDefault) e.preventDefault();
         if (!passwordInput) return;
         isPasswordVisible = !isPasswordVisible;
 
@@ -1153,19 +1227,15 @@
           passwordInput.type = 'text';
           togglePasswordIcon.className = 'bi bi-eye-slash';
           togglePasswordBtn.setAttribute('title', 'Hide password');
-          if (isPasswordFocused) {
-            characterHands.className = 'character-hands peeking';
-            speechText.innerHTML = '👀 "Careful! Anyone behind you can see it."';
-          }
         } else {
           passwordInput.type = 'password';
           togglePasswordIcon.className = 'bi bi-eye';
           togglePasswordBtn.setAttribute('title', 'Show password');
-          if (isPasswordFocused) {
-            characterHands.className = 'character-hands covering';
-            speechText.innerHTML = '🙈 "Protected again! Safe and hidden."';
-          }
         }
+
+        // Re-focus password input and update character state
+        passwordInput.focus();
+        setCharacterPasswordFocus();
       };
 
       // ======================================================================
@@ -1185,15 +1255,35 @@
       }
 
       if (passwordInput) {
-        passwordInput.addEventListener('focus', () => {
-          setCharacterPasswordFocus();
+        // Multi-event binding: reacts instantly on click, press, or focus
+        ['focus', 'focusin', 'click', 'pointerdown'].forEach((evt) => {
+          passwordInput.addEventListener(evt, () => {
+            setCharacterPasswordFocus();
+          });
         });
+
         passwordInput.addEventListener('blur', () => {
-          setCharacterPasswordBlur();
+          // Slight delay so clicking the Show Password button does not prematurely reset the character
+          setTimeout(() => {
+            if (document.activeElement !== passwordInput && document.activeElement !== togglePasswordBtn) {
+              setCharacterPasswordBlur();
+            }
+          }, 80);
         });
+
         passwordInput.addEventListener('input', () => {
           passwordError.style.display = 'none';
           passwordInput.classList.remove('is-invalid');
+          if (!isPasswordFocused) {
+            setCharacterPasswordFocus();
+          }
+        });
+      }
+
+      if (togglePasswordBtn) {
+        // Prevent toggle button click from losing focus on the password input
+        togglePasswordBtn.addEventListener('mousedown', (e) => {
+          e.preventDefault();
         });
       }
 
